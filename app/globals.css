@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #04101F;
+  --foreground: #F5F7FA;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+::selection {
+  background: rgba(56, 189, 248, 0.35);
+  color: #ffffff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #04101F;
+}
+::-webkit-scrollbar-thumb {
+  background: #15263F;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2C4163;
+}
+
+/* Reusable utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #7DD3FC 0%, #38BDF8 35%, #ffffff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .glass {
+    background: rgba(11, 26, 46, 0.55);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(56, 189, 248, 0.12);
+  }
+
+  .glass-strong {
+    background: rgba(7, 20, 38, 0.85);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+  }
+
+  .border-gradient {
+    position: relative;
+  }
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.6),
+      rgba(56, 189, 248, 0.05) 40%,
+      rgba(56, 189, 248, 0) 60%,
+      rgba(56, 189, 248, 0.4) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .noise {
+    position: relative;
+  }
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+}
+
+/* Hexagon studio motif used in the hero — references the LED grid in the brand photos */
+.hex-overlay {
+  background-image:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='92' viewBox='0 0 80 92'%3E%3Cpath fill='none' stroke='%2338BDF8' stroke-width='0.7' stroke-opacity='0.16' d='M40 0 L80 23 L80 69 L40 92 L0 69 L0 23 Z'/%3E%3C/svg%3E");
+  background-size: auto, 80px 92px;
+}
+
+/* Subtle animated water drop ripple — used as small decoration */
+@keyframes ripple {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.ripple {
+  animation: ripple 2.5s ease-out infinite;
+}
+
+/* Hide arrows on number inputs */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
