@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { BUSINESS } from '@/lib/constants';
 
-// ✅ Prevent build-time execution issues
 export const dynamic = 'force-dynamic';
 
 interface ContactPayload {
@@ -25,6 +24,19 @@ function escapeHtml(s: string) {
     .replace(/'/g, '&#039;');
 }
 
+function row(label: string, value: string) {
+  return `
+    <tr>
+      <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:rgba(245,247,250,0.5);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;width:110px;">
+        ${label}
+      </td>
+      <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:#F5F7FA;font-size:14px;">
+        ${value}
+      </td>
+    </tr>
+  `;
+}
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as ContactPayload;
@@ -34,6 +46,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true });
     }
 
+    // Validation
     if (
       !body.name ||
       !body.email ||
@@ -48,67 +61,56 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ If no API key, skip sending but don't crash
+    // Env check
     if (!process.env.RESEND_API_KEY) {
-      console.warn('RESEND_API_KEY not set — skipping email send.');
+      console.warn('RESEND_API_KEY not set');
       return NextResponse.json({ ok: true, skipped: true });
     }
 
-    // ✅ Initialise Resend ONLY at runtime
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const fromAddress =
       process.env.RESEND_FROM ??
       `enquiries@${new URL(BUSINESS.url).hostname}`;
-    const toAddress = process.env.RESEND_TO ?? BUSINESS.email;
 
+    const toAddress =
+      process.env.RESEND_TO ?? 'Spotlessdetailing19@gmail.com';
+
+    // =========================
+    // MAIN EMAIL (TO YOU)
+    // =========================
     const html = `
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <title>New enquiry — Spotless Detailing</title>
-</head>
-<body style="margin:0;padding:0;background-color:#04101F;font-family:Arial,Helvetica,sans-serif;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#04101F;padding:40px 20px;">
+<body style="margin:0;padding:0;background-color:#04101F;font-family:Arial;">
+  <table width="100%" style="padding:40px 20px;background:#04101F;">
     <tr>
       <td align="center">
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#0B1A2E;border-radius:16px;overflow:hidden;border:1px solid rgba(56,189,248,0.15);">
+        <table width="600" style="background:#0B1A2E;border-radius:16px;padding:32px;">
           <tr>
-            <td style="padding:32px 32px 24px 32px;border-bottom:1px solid rgba(56,189,248,0.12);">
-              <div style="color:#38BDF8;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;">
-                New Enquiry
-              </div>
-              <div style="color:#F5F7FA;font-size:24px;font-weight:700;padding-top:6px;">
-                Spotless Detailing
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:28px 32px;">
-              <p style="color:#F5F7FA;font-size:15px;line-height:1.6;">
-                You have a new enquiry from the Spotless Detailing website.
-              </p>
+            <td>
+              <h2 style="color:#38BDF8;margin:0;">New Enquiry</h2>
+              <p style="color:#F5F7FA;">Spotless Detailing</p>
 
-              <table width="100%" cellpadding="0" cellspacing="0">
+              <table width="100%">
                 ${row('Name', escapeHtml(body.name))}
-                ${row('Phone', `<a href="tel:${escapeHtml(body.phone)}" style="color:#38BDF8;text-decoration:none;">${escapeHtml(body.phone)}</a>`)}
-                ${row('Email', `<a href="mailto:${escapeHtml(body.email)}" style="color:#38BDF8;text-decoration:none;">${escapeHtml(body.email)}</a>`)}
+                ${row('Phone', escapeHtml(body.phone))}
+                ${row('Email', escapeHtml(body.email))}
                 ${row('Postcode', escapeHtml(body.postcode))}
                 ${row('Vehicle', escapeHtml(body.vehicle))}
                 ${row('Service', escapeHtml(body.service))}
                 ${
                   body.message
-                    ? row('Message', escapeHtml(body.message).replace(/\n/g, '<br/>'))
+                    ? row(
+                        'Message',
+                        escapeHtml(body.message).replace(/\n/g, '<br/>')
+                      )
                     : ''
                 }
               </table>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:20px 32px 32px 32px;">
-              <p style="color:rgba(245,247,250,0.4);font-size:12px;text-align:center;">
-                Sent from spotlessdetailing.co.uk · ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}
+
+              <p style="color:#888;font-size:12px;text-align:center;margin-top:20px;">
+                ${new Date().toLocaleString('en-GB')}
               </p>
             </td>
           </tr>
@@ -120,41 +122,40 @@ export async function POST(req: Request) {
 </html>
     `.trim();
 
-    const { data, error } = await resend.emails.send({
+    // Send to YOU
+    await resend.emails.send({
       from: `Spotless Detailing <${fromAddress}>`,
       to: [toAddress],
       replyTo: body.email,
-      subject: `New enquiry — ${body.name} (${body.service})`,
+      subject: `New enquiry — ${body.name}`,
       html,
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      return NextResponse.json(
-        { error: 'Failed to send email.' },
-        { status: 500 }
-      );
-    }
+    // =========================
+    // CONFIRMATION EMAIL (TO CUSTOMER)
+    // =========================
+    const customerHtml = `
+      <p>Hi ${escapeHtml(body.name)},</p>
+      <p>Thanks for your enquiry — we’ll get back to you shortly.</p>
+      <p><strong>Service:</strong> ${escapeHtml(body.service)}</p>
+      <p><strong>Vehicle:</strong> ${escapeHtml(body.vehicle)}</p>
+      <br/>
+      <p>— Spotless Detailing</p>
+    `;
 
-    return NextResponse.json({ ok: true, id: data?.id });
+    await resend.emails.send({
+      from: `Spotless Detailing <${fromAddress}>`,
+      to: [body.email],
+      subject: 'Thanks for your enquiry — Spotless Detailing',
+      html: customerHtml,
+    });
+
+    return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('Contact route error:', err);
+    console.error(err);
     return NextResponse.json(
       { error: 'Something went wrong.' },
       { status: 500 }
     );
   }
-}
-
-function row(label: string, value: string) {
-  return `
-    <tr>
-      <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:rgba(245,247,250,0.5);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;width:110px;">
-        ${label}
-      </td>
-      <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:#F5F7FA;font-size:14px;">
-        ${value}
-      </td>
-    </tr>
-  `;
 }
