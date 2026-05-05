@@ -12,7 +12,7 @@ interface ContactPayload {
   vehicle: string;
   service: string;
   message?: string;
-  website?: string; // honeypot
+  website?: string;
 }
 
 function escapeHtml(s: string) {
@@ -61,7 +61,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Env check
     if (!process.env.RESEND_API_KEY) {
       console.warn('RESEND_API_KEY not set');
       return NextResponse.json({ ok: true, skipped: true });
@@ -69,10 +68,10 @@ export async function POST(req: Request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const fromAddress =
-      process.env.RESEND_FROM ??
-      `enquiries@${new URL(BUSINESS.url).hostname}`;
+    // ✅ FORCE correct sender (prevents your previous bug)
+    const fromAddress = 'enquiries@sl-detailing.co.uk';
 
+    // ✅ Send enquiries to your Gmail
     const toAddress =
       process.env.RESEND_TO ?? 'Spotlessdetailing19@gmail.com';
 
@@ -82,75 +81,93 @@ export async function POST(req: Request) {
     const html = `
 <!DOCTYPE html>
 <html>
-<body style="margin:0;padding:0;background-color:#04101F;font-family:Arial;">
-  <table width="100%" style="padding:40px 20px;background:#04101F;">
+<head>
+<meta charset="utf-8" />
+<title>New enquiry — Spotless Detailing</title>
+</head>
+<body style="margin:0;padding:0;background-color:#04101F;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#04101F;padding:40px 20px;">
     <tr>
       <td align="center">
-        <table width="600" style="background:#0B1A2E;border-radius:16px;padding:32px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#0B1A2E;border-radius:16px;overflow:hidden;border:1px solid rgba(56,189,248,0.15);">
+          
           <tr>
-            <td>
-              <h2 style="color:#38BDF8;margin:0;">New Enquiry</h2>
-              <p style="color:#F5F7FA;">Spotless Detailing</p>
+            <td style="padding:32px;border-bottom:1px solid rgba(56,189,248,0.12);">
+              <div style="color:#38BDF8;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;">
+                New Enquiry
+              </div>
+              <div style="color:#F5F7FA;font-size:24px;font-weight:700;padding-top:6px;">
+                Spotless Detailing
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:28px 32px;">
+              <p style="color:#F5F7FA;font-size:15px;line-height:1.6;">
+                You have a new enquiry from your website.
+              </p>
 
               <table width="100%">
                 ${row('Name', escapeHtml(body.name))}
-                ${row('Phone', escapeHtml(body.phone))}
-                ${row('Email', escapeHtml(body.email))}
+                ${row('Phone', `<a href="tel:${escapeHtml(body.phone)}" style="color:#38BDF8;text-decoration:none;">${escapeHtml(body.phone)}</a>`)}
+                ${row('Email', `<a href="mailto:${escapeHtml(body.email)}" style="color:#38BDF8;text-decoration:none;">${escapeHtml(body.email)}</a>`)}
                 ${row('Postcode', escapeHtml(body.postcode))}
                 ${row('Vehicle', escapeHtml(body.vehicle))}
                 ${row('Service', escapeHtml(body.service))}
                 ${
                   body.message
-                    ? row(
-                        'Message',
-                        escapeHtml(body.message).replace(/\n/g, '<br/>')
-                      )
+                    ? row('Message', escapeHtml(body.message).replace(/\n/g, '<br/>'))
                     : ''
                 }
               </table>
+            </td>
+          </tr>
 
-              <p style="color:#888;font-size:12px;text-align:center;margin-top:20px;">
-                ${new Date().toLocaleString('en-GB')}
+          <tr>
+            <td style="padding:20px 32px 32px 32px;">
+              <p style="color:rgba(245,247,250,0.4);font-size:12px;text-align:center;">
+                ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}
               </p>
             </td>
           </tr>
+
         </table>
       </td>
     </tr>
   </table>
 </body>
 </html>
-    `.trim();
+`.trim();
 
     // Send to YOU
     await resend.emails.send({
       from: `Spotless Detailing <${fromAddress}>`,
       to: [toAddress],
       replyTo: body.email,
-      subject: `New enquiry — ${body.name}`,
+      subject: `New enquiry — ${body.name} (${body.service})`,
       html,
     });
 
     // =========================
-    // CONFIRMATION EMAIL (TO CUSTOMER)
+    // CUSTOMER CONFIRMATION
     // =========================
-    const customerHtml = `
-      <p>Hi ${escapeHtml(body.name)},</p>
-      <p>Thanks for your enquiry — we’ll get back to you shortly.</p>
-      <p><strong>Service:</strong> ${escapeHtml(body.service)}</p>
-      <p><strong>Vehicle:</strong> ${escapeHtml(body.vehicle)}</p>
-      <br/>
-      <p>— Spotless Detailing</p>
-    `;
-
     await resend.emails.send({
       from: `Spotless Detailing <${fromAddress}>`,
       to: [body.email],
       subject: 'Thanks for your enquiry — Spotless Detailing',
-      html: customerHtml,
+      html: `
+        <p>Hi ${escapeHtml(body.name)},</p>
+        <p>Thanks for your enquiry — we’ll get back to you shortly.</p>
+        <p><strong>Service:</strong> ${escapeHtml(body.service)}</p>
+        <p><strong>Vehicle:</strong> ${escapeHtml(body.vehicle)}</p>
+        <br/>
+        <p>— Spotless Detailing</p>
+      `,
     });
 
     return NextResponse.json({ ok: true });
+
   } catch (err) {
     console.error(err);
     return NextResponse.json(
