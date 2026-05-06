@@ -51,8 +51,8 @@ export default function Navbar() {
           <Logo />
           <div className="leading-tight">
             <div className="font-display font-semibold text-base md:text-lg tracking-tight text-cream">
-              spotless
-              <span className="text-cyan"> detailing</span>
+              Spotless
+              <span className="text-cyan"> Detailing</span>
             </div>
             <div className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-cyan-glow/70 font-medium">
               Mobile · Glasgow
@@ -181,19 +181,18 @@ export default function Navbar() {
   );
 }
 
+import Image from 'next/image';
+
 function Logo() {
   return (
-    <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-cyan-glow via-cyan to-cyan-deep flex items-center justify-center shadow-glow-cyan">
-      <svg
-        viewBox="0 0 24 24"
-        className="w-5 h-5 text-midnight-900"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M12 2.5C12 2.5 5 10 5 14.5a7 7 0 0 0 14 0C19 10 12 2.5 12 2.5z" />
-        <ellipse cx="9.5" cy="11.5" rx="1.6" ry="2.2" fill="#fff" opacity="0.65" />
-      </svg>
-      <span className="absolute inset-0 rounded-full bg-cyan/30 ripple" aria-hidden="true" />
+    <div className="relative w-10 h-10 rounded-full overflow-hidden shadow-glow-cyan">
+      <Image
+        src="/logo.png" // <-- your file
+        alt="Spotless Detailing logo"
+        fill
+        className="object-cover"
+        priority
+      />
     </div>
   );
 }

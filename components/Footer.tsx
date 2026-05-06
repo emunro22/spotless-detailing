@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Instagram, MessageCircle } from 'lucide-react';
 import { BUSINESS, SERVICE_AREAS, SERVICES } from '@/lib/constants';
+import Image from 'next/image';              
+
 
 export default function Footer() {
   return (
@@ -12,9 +14,18 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-4">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-glow via-cyan to-cyan-deep shadow-glow-cyan" />
-              <div className="font-display text-lg font-semibold tracking-tight">
-                spotless<span className="text-cyan"> detailing</span>
+                
+                <div className="relative w-9 h-9 rounded-full overflow-hidden shadow-glow-cyan">
+                  <Image
+                    src="/logo.png"
+                    alt="Spotless Detailing logo"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                <div className="font-display text-lg font-semibold tracking-tight">
+                Spotless<span className="text-cyan"> Detailing</span>
               </div>
             </div>
             <p className="text-sm text-cream/60 leading-relaxed max-w-xs">
