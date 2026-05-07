@@ -11,12 +11,12 @@ export const BUSINESS = {
   region: 'Scotland',
   country: 'United Kingdom',
   countryCode: 'GB',
-  phone: '+44 7000 000000', // TODO: replace with real number
-  phoneDisplay: '07000 000000',
-  email: 'enquiries@spotlessdetailing.co.uk', // TODO: confirm
-  whatsapp: 'https://wa.me/447000000000', // TODO: replace
-  instagram: 'https://www.instagram.com/spotlessdetailing', // TODO: confirm
-  url: 'https://spotlessdetailing.co.uk', // TODO: confirm production URL
+  phone: '+44 7955 733053',
+  phoneDisplay: '07955 733053',
+  email: 'Spotlessdetailing19@gmail.com', // TODO: confirm
+  whatsapp: 'https://wa.me/447955733053',
+  instagram: 'https://www.instagram.com/_sl_detailing/',
+  url: 'https://sl-detailing.co.uk', // TODO: confirm production URL
   hours: 'Mon–Sat 8:00–18:00',
   founded: '2024',
 } as const;

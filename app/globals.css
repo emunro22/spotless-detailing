@@ -59,14 +59,18 @@ body {
     text-wrap: pretty;
   }
 
-  .gradient-text {
+.gradient-text {
     background: linear-gradient(135deg, #7DD3FC 0%, #38BDF8 35%, #ffffff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+    /* Italic glyphs (especially with descenders/punctuation) extend past the
+       background-clip box and get visually sliced. Inline-block + padding-right
+       gives the gradient enough room to render the full letterform. */
+    display: inline-block;
+    padding-right: 0.12em;
   }
-
   .glass {
     background: rgba(11, 26, 46, 0.55);
     backdrop-filter: blur(14px) saturate(140%);
