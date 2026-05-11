@@ -3,12 +3,11 @@ import WhyChooseUs from '@/components/WhyChooseUs';
 import ServiceAreas from '@/components/ServiceAreas';
 import CTA from '@/components/CTA';
 import { buildMetadata } from '@/lib/seo';
-import { BUSINESS } from '@/lib/constants';
 
 export const metadata = buildMetadata({
   title: 'About — Spotless Detailing Glasgow',
   description:
-    'Meet Spotless Detailing — Glasgow\'s mobile car detailing specialists. Showroom-level finishes brought to your driveway.',
+    'Meet Spotless Detailing — Glasgow\'s mobile car detailing specialists. A passion for cars and the craft of making them look their absolute best.',
   path: '/about',
 });
 
@@ -31,27 +30,36 @@ export default function AboutPage() {
                 About
               </div>
               <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.02] text-balance">
-                Detailing for people who notice the{' '}
-                <span className="gradient-text italic">small things.</span>
+                A passion turned into a{' '}
+                <span className="gradient-text italic">profession.</span>
               </h1>
               <div className="mt-7 space-y-5 text-base md:text-lg text-cream/70 leading-relaxed max-w-2xl">
                 <p>
-                  {BUSINESS.name} is a {BUSINESS.city}-based mobile detailer.
-                  We started because we were tired of seeing supermarket
-                  valets, swirl marks, dripping wet door shuts and "finished"
-                  cars with crumbs still in the seat rails.
+                  At the heart of our detailing service is a genuine passion
+                  for cars and the craft of making them look their absolute
+                  best. Founded at a young age and driven by a deep love for
+                  vehicles, this business was built from the ground up with
+                  dedication, ambition and a desire to stand out in the
+                  detailing scene.
                 </p>
                 <p>
-                  Every car gets the same approach: a real prewash, snow foam
-                  dwell, two-bucket method, decontaminated paint and a ceramic
-                  sealant. Inside — steam clean, shampooed seats, hand-finished
-                  glass, scent. Range Rovers and Tesla Model Ys get the same
-                  care as the daily-driver Corsa.
+                  Whether it&apos;s a quick refresh or a full transformation,
+                  every job is approached with the same level of care,
+                  precision and attention to detail.
                 </p>
                 <p>
-                  We come to you. Driveway. Office car park. Whatever works.
-                  You hand us the keys, you get them back with a car that feels
-                  brand new.
+                  What truly sets us apart is the pride we take in our work
+                  and the relationships we build along the way. Every vehicle
+                  is treated as if it were our own and every customer is
+                  valued. We don&apos;t just aim to deliver outstanding
+                  results — we aim to create an experience that keeps you
+                  coming back.
+                </p>
+                <p>
+                  We enjoy every detail of the process and every service we
+                  provide, constantly pushing ourselves to improve, grow and
+                  make a name in the detailing industry. This isn&apos;t just
+                  a job — it&apos;s a passion turned into a profession.
                 </p>
               </div>
             </div>
@@ -60,7 +68,7 @@ export default function AboutPage() {
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-gradient">
                 <Image
                   src="/images/gallery-1.jpg"
-                  alt="Range Rover Sport detailed in Spotless Detailing studio"
+                  alt="Blue Range Rover Sport SVR detailed by Spotless Detailing"
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-cover"
@@ -69,10 +77,10 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-midnight-900/60 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5">
                   <div className="text-[11px] uppercase tracking-[0.18em] text-cyan-glow/80 mb-1.5">
-                    The Glasgow studio
+                    Spotless work
                   </div>
                   <div className="font-display text-xl font-semibold text-cream">
-                    Where details get the time they deserve.
+                    Every detail given the time it deserves.
                   </div>
                 </div>
               </div>

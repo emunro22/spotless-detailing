@@ -6,41 +6,47 @@ export const BUSINESS = {
   legalName: 'Spotless Detailing & Valeting',
   tagline: 'Mobile Detailing & Valeting',
   description:
-    'Premium mobile car detailing and valeting in Glasgow. Safe wash, deep clean, ceramic protection — we come to you.',
+    'Premium mobile car detailing across Glasgow. Specialising in deep cleans and paint protection.',
   city: 'Glasgow',
   region: 'Scotland',
   country: 'United Kingdom',
   countryCode: 'GB',
   phone: '+44 7955 733053',
   phoneDisplay: '07955 733053',
-  email: 'Spotlessdetailing19@gmail.com', // TODO: confirm
+  email: 'enquiries@spotlessdetailing.co.uk', // TODO: confirm
   whatsapp: 'https://wa.me/447955733053',
   instagram: 'https://www.instagram.com/_sl_detailing/',
-  url: 'https://sl-detailing.co.uk', // TODO: confirm production URL
+  url: 'https://spotlessdetailing.co.uk', // TODO: confirm production URL
   hours: 'Mon–Sat 8:00–18:00',
   founded: '2024',
 } as const;
 
 export const SERVICE_AREAS = [
   'Glasgow',
-  'East Kilbride',
   'Paisley',
-  'Bearsden',
   'Bishopbriggs',
-  'Clydebank',
   'Newton Mearns',
-  'Giffnock',
   'Hamilton',
+  'East Kilbride',
+  'Bearsden',
+  'Clydebank',
+  'Giffnock',
   'Motherwell',
-  'Cumbernauld',
-  'Renfrew',
   'Rutherglen',
   'Cambuslang',
   'Milngavie',
-  'Lenzie',
-] as const;
+  'Renfrew',
+  'Lanark',
+  'Wishaw',
+];
 
-export type ServiceSlug = 'safe-wash' | 'valet' | 'deep-clean' | 'maintenance-plan';
+export type ServiceSlug =
+  | 'safe-wash'
+  | 'valet'
+  | 'deep-clean'
+  | 'polishing-package'
+  | 'protection-package'
+  | 'maintenance-plan';
 
 export interface Service {
   slug: ServiceSlug;
@@ -67,11 +73,11 @@ export const SERVICES: Service[] = [
     priceLabel: 'from £30',
     duration: '60–90 min',
     description:
-      'A swirl-free exterior wash using prewash, snow foam and the two-bucket method — finished with ceramic sealant and dressed tyres.',
+      'A swirl-free exterior wash using prewash, snow foam and the two-bucket method — finished with a hydrophobic sealant and dressed tyres.',
     exterior: [
       'Safe wash (prewash, snow foam, two-bucket method)',
       'Wheels, tyres and arches cleaned',
-      'Ceramic sealant applied',
+      'Hydrophobic sealant applied',
       'Paint dried with plush microfibre',
       'Tyres dressed',
     ],
@@ -84,7 +90,7 @@ export const SERVICES: Service[] = [
     tagline: 'Inside and out, restored',
     startingPrice: 60,
     priceLabel: 'from £60',
-    duration: '2–3 hours',
+    duration: '1.5–2.5 hours',
     description:
       'A complete inside-and-out clean. Interior hoover, surfaces wiped, glass polished, scent sprayed — exterior safe-washed and dressed.',
     interior: [
@@ -100,7 +106,6 @@ export const SERVICES: Service[] = [
       'Tyres dressed',
     ],
     bestFor: 'Anyone wanting a sharp, fresh-feeling car without going full deep clean.',
-    popular: true,
   },
   {
     slug: 'deep-clean',
@@ -109,27 +114,68 @@ export const SERVICES: Service[] = [
     tagline: 'New-car feeling. Restored.',
     startingPrice: 120,
     priceLabel: 'from £120',
-    duration: '4–6 hours',
+    duration: '3–8 hours',
     description:
-      'Our flagship detail. Steam-cleaned interior, shampooed seats and carpets, decontaminated paint, ceramic sealant — finished to showroom standard.',
+      'Our flagship detail. Steam-cleaned interior, shampooed seats and carpets, decontaminated paint — finished to showroom standard.',
     interior: [
       'Thoroughly hoovered',
       'Surfaces steam cleaned',
       'Seats, carpets and mats shampooed',
       'Door shuts deeply cleaned',
       'Glass cleaned',
-      'Carpets striped',
+      'Carpets stripped',
       'Luxury scent sprayed',
     ],
     exterior: [
       'Safe wash (prewash, snow foam, two-bucket method)',
       'Wheels, tyres and arches deeply cleaned',
       'Decontamination of whole exterior (wheels and paint)',
-      'Ceramic sealant applied',
+      'Hydrophobic sealant applied',
       'Paint dried',
       'Tyres dressed',
     ],
     bestFor: 'A neglected car, a pre-sale prep, or that proper "new car" feeling.',
+    popular: true,
+  },
+  {
+    slug: 'polishing-package',
+    name: 'Polishing Package',
+    shortName: 'Polishing',
+    tagline: 'Paint correction & gloss restoration',
+    startingPrice: 0,
+    priceLabel: 'POA',
+    duration: 'Job-dependent',
+    description:
+      'Restore the gloss, depth and clarity of your paintwork. A multi-stage decontamination and machine polish — optionally locked in with a professional-grade ceramic coating.',
+    exterior: [
+      'Full exterior safe wash',
+      'Chemical decontamination',
+      'Clay bar treatment to remove embedded contaminants',
+      'Paint polishing stage to achieve required finish',
+      'Final panel wipe for a pure, oil-free surface',
+      'Optional extra — lock in the new finish with a professional-grade ceramic coating',
+    ],
+    bestFor: 'Cars with swirl marks, holograms or dull paint — bringing the finish back to better than new.',
+  },
+  {
+    slug: 'protection-package',
+    name: 'Protection Package',
+    shortName: 'Protection',
+    tagline: 'Long-term ceramic coating',
+    startingPrice: 0,
+    priceLabel: 'POA',
+    duration: 'Job-dependent',
+    description:
+      'A full paint correction and machine polish locked in with a durable ceramic coating. 2, 3 or 5 year coatings available — choose the level of protection that suits.',
+    exterior: [
+      'Full exterior safe wash',
+      'Chemical decontamination',
+      'Clay bar treatment to remove embedded contaminants',
+      'Machine polishing process to remove required defects',
+      'Final panel wipe for a pure, oil-free surface',
+      'Application of your choice of professional-grade ceramic coating — 2, 3 or 5 year coatings available',
+    ],
+    bestFor: 'Long-term, easy-clean paint protection. Years of hydrophobic, dirt-shedding gloss.',
   },
   {
     slug: 'maintenance-plan',
@@ -140,7 +186,7 @@ export const SERVICES: Service[] = [
     priceLabel: 'Bespoke',
     duration: 'Recurring',
     description:
-      "After your car has received our Deep Clean or Protection package it's eligible for our Maintenance Plan — those standards repeated each visit, for a fraction of the cost.",
+      "After your car has had our Deep Clean, Polishing or Protection package, it's eligible for our Maintenance Plan — those standards repeated each visit, on a schedule that suits you, for a fraction of the cost.",
     exterior: [
       'Same showroom standards as Deep Clean',
       'Visit schedule that suits you (weekly / fortnightly / monthly)',
@@ -157,24 +203,28 @@ export const FAQS = [
     a: 'We are a mobile detailer based in Glasgow and cover the surrounding areas — East Kilbride, Paisley, Bearsden, Newton Mearns, Hamilton and most of Greater Glasgow. Get in touch with your postcode and we\'ll confirm.',
   },
   {
+    q: 'What vehicles do you detail?',
+    a: 'Cars, vans, trucks, caravans, taxis, bikes, quads — all vehicle types. We also offer fleet washing for businesses, with professional invoices supplied.',
+  },
+  {
     q: 'Do you come to me?',
-    a: 'Yes — we\'re fully mobile. We bring our own water and power, so all we need is a flat, accessible spot to work. Driveways, car parks and workplaces are all fine.',
+    a: 'Yes — we\'re fully mobile. We come to you on a schedule that suits — at your home, at your workplace, at your convenience.',
   },
   {
     q: 'How long does a deep clean take?',
-    a: 'A full Deep Clean is typically 4–6 hours depending on vehicle size and condition. Valets are 2–3 hours and a Safe Wash is 60–90 minutes.',
+    a: 'A full Deep Clean is typically 3–8 hours depending on vehicle size and condition. Valets are 1.5–2.5 hours and a Safe Wash is 60–90 minutes. Polishing and Protection packages are job-dependent.',
   },
   {
-    q: 'Why is the price "from"?',
-    a: 'Pricing is subject to vehicle size and condition. A small hatchback that\'s reasonably tidy will be at our starting price; a heavily soiled 7-seater takes longer and costs a bit more. We always confirm a fixed price before any work begins.',
+    q: 'How is the price calculated?',
+    a: 'All vehicles are subject to price adjustments based on vehicle size and condition. Please make your best effort to accurately describe your vehicle to allow for an accurate quote. We always confirm a fixed price before any work begins.',
   },
   {
-    q: 'What does the ceramic sealant actually do?',
-    a: 'It bonds to the paint to give a slick, hydrophobic layer that beads water, repels dirt and dramatically improves wash-after-wash gloss. It is not a permanent ceramic coating, but it is a serious upgrade on a normal wax.',
+    q: 'Can you tailor a package to my needs?',
+    a: 'Yes — we can tailor bespoke packages to suit many budgets and applications, ensuring every customer receives a service that fits their needs without compromising on quality.',
   },
   {
     q: 'How do I pay?',
-    a: 'Bank transfer or card on completion. Maintenance Plan customers can be invoiced monthly.',
+    a: 'Bank transfer or cash on completion. Maintenance Plan customers can be invoiced. Business customers receive professional invoices.',
   },
   {
     q: 'How do I book?',
@@ -182,6 +232,7 @@ export const FAQS = [
   },
 ];
 
+// Real Google reviews — preserved verbatim with original phrasing
 export const TESTIMONIALS = [
   {
     name: 'Aidan Healy',
@@ -234,10 +285,10 @@ export const SEO_KEYWORDS = [
   'car valeting Glasgow',
   'car detailing Glasgow',
   'mobile valeting Glasgow',
-  'ceramic sealant Glasgow',
+  'ceramic coating Glasgow',
+  'paint protection Glasgow',
   'deep clean car Glasgow',
   'car interior cleaning Glasgow',
   'best car detailer Glasgow',
-  'professional car wash Glasgow',
-  'mobile car wash Glasgow',
+  'fleet washing Glasgow',
 ];

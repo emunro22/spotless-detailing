@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: `%s | ${BUSINESS.name} Glasgow`,
   },
   description:
-    'Premium mobile car detailing and valeting in Glasgow. Safe wash from £30, valet from £60, deep clean from £120 — we come to you.',
+    'Premium mobile car detailing across Glasgow. Specialising in deep cleans and paint protection. Safe wash from £30, valet from £60, deep clean from £120 — we come to you.',
   keywords: [...SEO_KEYWORDS],
   applicationName: BUSINESS.name,
   authors: [{ name: BUSINESS.name }],

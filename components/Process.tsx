@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CalendarCheck, MapPin, Sparkles, ThumbsUp } from 'lucide-react';
+import { CalendarCheck, MapPin, Sparkles } from 'lucide-react';
 import { SectionHeader } from './Services';
 
 const STEPS = [
@@ -15,19 +15,13 @@ const STEPS = [
     icon: MapPin,
     n: '02',
     title: 'We come to you',
-    body: 'Driveway, car park or workplace. We bring water, power, kit and pro-grade products. You don\'t lift a finger.',
+    body: 'Fully mobile, on a schedule that suits — at your home, at your workplace, at your convenience.',
   },
   {
     icon: Sparkles,
     n: '03',
     title: 'Spotless treatment',
-    body: 'Safe wash, deep interior steam clean, paint decontamination, ceramic sealant — to a standard you\'ll feel as soon as you step in.',
-  },
-  {
-    icon: ThumbsUp,
-    n: '04',
-    title: 'Walk-around & pay',
-    body: 'We walk you around the finished car. Pay by card or transfer when you\'re happy. Maintenance plan customers get priority next time.',
+    body: 'Safe wash, deep interior steam clean, paint decontamination, professional-grade finish — to a standard you\'ll feel as soon as you step in.',
   },
 ];
 
@@ -41,14 +35,14 @@ export default function Process() {
           eyebrow="How it works"
           title={
             <>
-              Four steps. Zero hassle.{' '}
+              Three steps. Zero hassle.{' '}
               <span className="gradient-text italic">One spotless car.</span>
             </>
           }
           subtitle="Booking is simple. Our service is meticulous. Your experience should feel that way too."
         />
 
-        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {STEPS.map((step, i) => (
             <motion.div
               key={step.n}

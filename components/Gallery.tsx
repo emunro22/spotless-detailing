@@ -7,15 +7,16 @@ import { ArrowUpRight } from 'lucide-react';
 import { SectionHeader } from './Services';
 
 const IMAGES = [
-  { src: '/images/gallery-1.jpg', alt: 'Range Rover Sport SVR detailed in studio with hexagon LED lighting', tall: true },
-  { src: '/images/gallery-2.jpg', alt: 'Black Range Rover Sport detailed under hexagon LEDs' },
-  { src: '/images/gallery-3.jpg', alt: 'Mercedes G-Class Wagon after full mobile valet' },
-  { src: '/images/gallery-4.jpg', alt: 'Range Rover Vogue with deep clean and ceramic finish', tall: true },
-  { src: '/images/gallery-5.jpg', alt: 'Tesla Model Y after exterior detail in Glasgow' },
+  { src: '/images/gallery-1.jpg', alt: 'Blue Range Rover Sport SVR detailed by Spotless Detailing', tall: true },
+  { src: '/images/gallery-2.jpg', alt: 'Black Mercedes G-Class after full mobile detail in Glasgow' },
+  { src: '/images/gallery-3.jpg', alt: 'Green Porsche Macan after exterior detail' },
+  { src: '/images/gallery-4.jpg', alt: 'Blue VW Golf R after a Spotless Detailing valet', tall: true },
+  { src: '/images/gallery-5.jpg', alt: 'Black Tesla Model Y after exterior detail in Glasgow' },
+  { src: '/images/gallery-6.jpg', alt: 'Black Mercedes GLE after a full detail' },
 ];
 
 interface GalleryProps {
-  preview?: boolean; // homepage shows a 5-image preview, full gallery page shows all
+  preview?: boolean;
 }
 
 export default function Gallery({ preview = false }: GalleryProps) {
@@ -33,7 +34,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                 <span className="gradient-text italic">for itself.</span>
               </>
             }
-            subtitle="A selection of recent details — Range Rovers, Mercedes G-Class, Teslas and the everyday daily-drivers we treat to exactly the same standard."
+            subtitle="A selection of recent details — from daily-drivers to high-end SUVs, hot hatches to fleet vehicles. Every vehicle gets the same standard."
             align="left"
           />
           {preview && (
@@ -47,7 +48,6 @@ export default function Gallery({ preview = false }: GalleryProps) {
           )}
         </div>
 
-        {/* Bento grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
           {items.map((img, i) => (
             <motion.div

@@ -1,14 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Droplets, ShieldCheck, Truck, Award, Clock, Wrench } from 'lucide-react';
+import { Droplets, ShieldCheck, Truck, Car, Clock, Wrench } from 'lucide-react';
 import { SectionHeader } from './Services';
 
 const FEATURES = [
   {
     icon: Truck,
     title: 'Fully mobile across Glasgow',
-    body: 'Your driveway, your office, your spot. We arrive self-sufficient — water, power, every cloth, every product.',
+    body: 'Your driveway, your office, your spot. On a schedule that suits — at your work place at your convenience.',
   },
   {
     icon: Droplets,
@@ -17,18 +17,18 @@ const FEATURES = [
   },
   {
     icon: ShieldCheck,
-    title: 'Ceramic-grade protection',
-    body: 'Hydrophobic ceramic sealant on every detail. Beads water, repels dirt, makes future washes faster.',
+    title: 'Professional paint protection',
+    body: 'From hydrophobic sealants to 2, 3 or 5 year ceramic coatings — long-term gloss, easy washes, real protection.',
   },
   {
     icon: Wrench,
-    title: 'Pro tools, not supermarket kit',
+    title: 'Professional-grade tools',
     body: 'Steam machines, extractors, dual-action polishers, plush microfibres. The right tool for every panel.',
   },
   {
-    icon: Award,
-    title: 'Showroom-level finish',
-    body: 'We treat every car like our own — Range Rovers, Teslas, daily runabouts. Same standard.',
+    icon: Car,
+    title: 'All vehicles welcome',
+    body: 'Cars, vans, trucks, caravans, taxis, bikes, quads. Fleet washing for businesses, with professional invoices supplied.',
   },
   {
     icon: Clock,
@@ -49,7 +49,7 @@ export default function WhyChooseUs() {
               <span className="gradient-text italic">closest look.</span>
             </>
           }
-          subtitle="No supermarket valets. No corner-cutting. The methods, products and care your car actually deserves."
+          subtitle="The methods, products and care your car actually deserves. Professional car care solutions, delivered to you."
         />
 
         <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">

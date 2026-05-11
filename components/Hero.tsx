@@ -8,12 +8,10 @@ import { ArrowRight, Star, MapPin } from 'lucide-react';
 export default function Hero() {
   return (
     <section className="relative min-h-[100svh] pt-28 pb-20 md:pt-32 md:pb-24 flex items-center overflow-hidden">
-      {/* Background layers */}
       <div className="absolute inset-0 bg-midnight-900" />
       <div className="absolute inset-0 hex-overlay opacity-60" />
       <div className="absolute inset-0 bg-radial-glow" />
 
-      {/* Top gradient lights */}
       <div
         className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-30 pointer-events-none"
         style={{
@@ -61,12 +59,11 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-7 max-w-xl text-base md:text-lg text-cream/70 leading-relaxed"
             >
-              Premium mobile car detailing across Glasgow. Safe wash, full valet,
-              deep clean and ceramic protection — we bring everything to your
-              door and leave your car spotless.
+              Premium mobile car detailing across Glasgow. Specialising in deep
+              cleans and paint protection — we come to you on a schedule that
+              suits.
             </motion.p>
 
-            {/* CTA row */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -88,7 +85,6 @@ export default function Hero() {
               </Link>
             </motion.div>
 
-            {/* Stats row */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -96,12 +92,11 @@ export default function Hero() {
               className="mt-12 grid grid-cols-3 gap-4 max-w-md"
             >
               <Stat value="5.0" label="Avg. rating" prefix={<Star className="w-3.5 h-3.5 fill-cyan text-cyan" />} />
-              <Stat value="500+" label="Cars detailed" />
+              <Stat value="1000s" label="Vehicles detailed" />
               <Stat value="100%" label="Mobile service" />
             </motion.div>
           </div>
 
-          {/* Right column — visual block */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -112,7 +107,6 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Service ribbon */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -120,8 +114,8 @@ export default function Hero() {
           className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
         >
           <PriceTag service="Safe Wash" price="£30" tag="Refresh" />
-          <PriceTag service="Valet" price="£60" tag="Inside & Out" highlight />
-          <PriceTag service="Deep Clean" price="£120" tag="Showroom" />
+          <PriceTag service="Valet" price="£60" tag="Inside & Out" />
+          <PriceTag service="Deep Clean" price="£120" tag="Showroom" highlight />
           <PriceTag service="Maintenance" price="Bespoke" tag="Recurring" />
         </motion.div>
       </div>
@@ -168,9 +162,7 @@ function PriceTag({
     <Link
       href="/services"
       className={`relative group rounded-2xl p-5 transition-all overflow-hidden border-gradient ${
-        highlight
-          ? 'glass-strong'
-          : 'glass hover:border-cyan/30'
+        highlight ? 'glass-strong' : 'glass hover:border-cyan/30'
       }`}
     >
       {highlight && (
@@ -199,17 +191,15 @@ function PriceTag({
 function HeroVisual() {
   return (
     <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-gradient">
-      {/* Blue Range Rover SVR — studio shot */}
       <Image
         src="/images/gallery-1.jpg"
-        alt="Blue Range Rover Sport SVR detailed by Spotless Detailing in studio"
+        alt="Blue Range Rover Sport SVR detailed by Spotless Detailing"
         fill
         priority
         sizes="(max-width: 1024px) 100vw, 40vw"
         className="object-cover"
       />
 
-      {/* Subtle dark gradient over photo for badge legibility */}
       <div
         className="absolute inset-0"
         style={{
@@ -218,7 +208,6 @@ function HeroVisual() {
         }}
       />
 
-      {/* Cyan glow accent */}
       <div
         className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-2/3 h-32 opacity-50 pointer-events-none"
         style={{
@@ -227,7 +216,6 @@ function HeroVisual() {
         }}
       />
 
-      {/* Floating badge */}
       <div className="absolute top-5 left-5 glass rounded-2xl px-3.5 py-2.5 border-gradient">
         <div className="flex items-center gap-2">
           <span className="relative flex w-2 h-2">
@@ -235,7 +223,7 @@ function HeroVisual() {
             <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
           </span>
           <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-cream/90">
-            In the studio
+            Recent detail
           </span>
         </div>
       </div>

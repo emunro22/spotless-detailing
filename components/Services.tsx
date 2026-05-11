@@ -10,27 +10,28 @@ export default function Services() {
     <section id="services" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
-          eyebrow="Services & Pricing"
+          eyebrow="Our Detailing Services"
           title={
             <>
               Pick the level of <span className="gradient-text italic">spotless</span>{' '}
               you want.
             </>
           }
-          subtitle="Every service is fully mobile, we bring our own water, power, kit and ceramic-grade products to your driveway."
+          subtitle="Every service is fully mobile — professional car care solutions delivered on a schedule that suits you, at your work place at your convenience."
         />
 
-        <div className="mt-14 md:mt-20 grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-6">
-          {SERVICES.filter((s) => s.startingPrice > 0).map((service, i) => (
+        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {SERVICES.filter((s) => s.slug !== 'maintenance-plan').map((service, i) => (
             <ServiceCard key={service.slug} service={service} index={i} />
           ))}
         </div>
 
-        {/* Maintenance plan callout */}
         <MaintenanceCallout />
 
-        <p className="mt-10 text-center text-xs uppercase tracking-[0.18em] text-cream/40">
-          Pricing is subject to vehicle size & condition · Fixed quote confirmed before any work
+        <p className="mt-10 text-center text-xs md:text-sm text-cream/55 leading-relaxed max-w-2xl mx-auto px-4">
+          All vehicles are subject to price adjustments based on vehicle size
+          and condition. Please make best effort to accurately describe your
+          vehicle to allow for an accurate quote.
         </p>
       </div>
     </section>
@@ -38,8 +39,6 @@ export default function Services() {
 }
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const allItems = [...(service.interior ?? []), ...service.exterior];
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -47,9 +46,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, delay: index * 0.08 }}
       className={`relative group rounded-3xl p-7 md:p-8 border-gradient overflow-hidden transition-all ${
-        service.popular
-          ? 'glass-strong shadow-glow-cyan'
-          : 'glass hover:border-cyan/30'
+        service.popular ? 'glass-strong shadow-glow-cyan' : 'glass hover:border-cyan/30'
       }`}
     >
       {service.popular && (
@@ -66,11 +63,22 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       </h3>
 
       <div className="mt-5 flex items-baseline gap-2">
-        <span className="text-xs text-cream/50 uppercase tracking-wider">from</span>
-        <span className="font-display text-5xl font-bold gradient-text">
-          £{service.startingPrice}
-        </span>
-        <span className="text-sm text-cream/50">· {service.duration}</span>
+        {service.startingPrice > 0 ? (
+          <>
+            <span className="text-xs text-cream/50 uppercase tracking-wider">from</span>
+            <span className="font-display text-5xl font-bold gradient-text">
+              £{service.startingPrice}
+            </span>
+            <span className="text-sm text-cream/50">· {service.duration}</span>
+          </>
+        ) : (
+          <>
+            <span className="font-display text-4xl md:text-5xl font-bold gradient-text">
+              {service.priceLabel}
+            </span>
+            <span className="text-sm text-cream/50">· {service.duration}</span>
+          </>
+        )}
       </div>
 
       <p className="mt-5 text-sm text-cream/65 leading-relaxed">
@@ -94,7 +102,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <div>
         <div className="text-[11px] uppercase tracking-[0.18em] text-cream/50 mb-3">
-          Exterior
+          {service.interior ? 'Exterior' : 'What\u2019s included'}
         </div>
         <ul className="space-y-2">
           {service.exterior.map((item) => (
