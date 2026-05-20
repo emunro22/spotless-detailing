@@ -5,22 +5,15 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { SectionHeader } from './Services';
-
-const IMAGES = [
-  { src: '/images/gallery-1.jpg', alt: 'Blue Range Rover Sport SVR detailed by Spotless Detailing', tall: true },
-  { src: '/images/gallery-2.jpg', alt: 'Black Mercedes G-Class after full mobile detail in Glasgow' },
-  { src: '/images/gallery-3.jpg', alt: 'Green Porsche Macan after exterior detail' },
-  { src: '/images/gallery-4.jpg', alt: 'Blue VW Golf R after a Spotless Detailing valet', tall: true },
-  { src: '/images/gallery-5.jpg', alt: 'Black Tesla Model Y after exterior detail in Glasgow' },
-  { src: '/images/gallery-6.jpg', alt: 'Black Mercedes GLE after a full detail' },
-];
+import type { GalleryImage } from '@/lib/types';
 
 interface GalleryProps {
+  images: GalleryImage[];
   preview?: boolean;
 }
 
-export default function Gallery({ preview = false }: GalleryProps) {
-  const items = preview ? IMAGES.slice(0, 5) : IMAGES;
+export default function Gallery({ images, preview = false }: GalleryProps) {
+  const items = preview ? images.slice(0, 5) : images;
 
   return (
     <section className="relative py-24 md:py-32 bg-midnight-900">
@@ -51,7 +44,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
         <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
           {items.map((img, i) => (
             <motion.div
-              key={img.src}
+              key={img.id}
               initial={{ opacity: 0, scale: 0.97 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -61,7 +54,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
               } ${i === 0 ? 'col-span-2' : ''}`}
             >
               <Image
-                src={img.src}
+                src={img.url}
                 alt={img.alt}
                 fill
                 sizes="(max-width: 768px) 50vw, 25vw"

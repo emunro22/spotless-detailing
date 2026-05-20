@@ -8,6 +8,12 @@ import ServiceAreas from '@/components/ServiceAreas';
 import FAQ from '@/components/FAQ';
 import CTA from '@/components/CTA';
 import { buildMetadata } from '@/lib/seo';
+import {
+  getAllServices,
+  getHomepageServices,
+  getPreviewGalleryImages,
+  getAllSettings,
+} from '@/lib/queries';
 
 export const metadata = buildMetadata({
   title: 'Spotless Detailing | Mobile Car Detailing & Valeting Glasgow',
@@ -16,14 +22,24 @@ export const metadata = buildMetadata({
   path: '/',
 });
 
-export default function HomePage() {
+// Revalidate every 60s — admin edits show up shortly after saving.
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const [services, homepageServices, galleryImages, settings] = await Promise.all([
+    getAllServices(),
+    getHomepageServices(),
+    getPreviewGalleryImages(),
+    getAllSettings(),
+  ]);
+
   return (
     <>
-      <Hero />
-      <Services />
+      <Hero homepageServices={homepageServices} settings={settings} />
+      <Services services={services} />
       <Process />
       <WhyChooseUs />
-      <Gallery preview />
+      <Gallery images={galleryImages} preview />
       <Testimonials />
       <ServiceAreas />
       <FAQ />

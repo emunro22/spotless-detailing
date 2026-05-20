@@ -3,6 +3,7 @@ import Process from '@/components/Process';
 import FAQ from '@/components/FAQ';
 import CTA from '@/components/CTA';
 import { buildMetadata } from '@/lib/seo';
+import { getAllServices } from '@/lib/queries';
 
 export const metadata = buildMetadata({
   title: 'Services & Pricing — Mobile Detailing Glasgow',
@@ -11,7 +12,11 @@ export const metadata = buildMetadata({
   path: '/services',
 });
 
-export default function ServicesPage() {
+export const revalidate = 60;
+
+export default async function ServicesPage() {
+  const services = await getAllServices();
+
   return (
     <>
       <PageHeader
@@ -24,7 +29,7 @@ export default function ServicesPage() {
         }
         description="Pick the level of detail you need. Pricing is from-rates, with a fixed quote confirmed before any work — based on vehicle size and condition."
       />
-      <Services />
+      <Services services={services} />
       <Process />
       <FAQ />
       <CTA />

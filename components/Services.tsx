@@ -3,9 +3,16 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Check, ArrowUpRight } from 'lucide-react';
-import { SERVICES, type Service } from '@/lib/constants';
+import type { Service } from '@/lib/types';
 
-export default function Services() {
+interface ServicesProps {
+  services: Service[];
+}
+
+export default function Services({ services }: ServicesProps) {
+  const regular = services.filter((s) => !s.isMaintenanceCallout);
+  const maintenance = services.find((s) => s.isMaintenanceCallout);
+
   return (
     <section id="services" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -21,12 +28,12 @@ export default function Services() {
         />
 
         <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {SERVICES.filter((s) => s.slug !== 'maintenance-plan').map((service, i) => (
-            <ServiceCard key={service.slug} service={service} index={i} />
+          {regular.map((service, i) => (
+            <ServiceCard key={service.id} service={service} index={i} />
           ))}
         </div>
 
-        <MaintenanceCallout />
+        {maintenance && <MaintenanceCallout service={maintenance} />}
 
         <p className="mt-10 text-center text-xs md:text-sm text-cream/55 leading-relaxed max-w-2xl mx-auto px-4">
           All vehicles are subject to price adjustments based on vehicle size
@@ -74,7 +81,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         ) : (
           <>
             <span className="font-display text-4xl md:text-5xl font-bold gradient-text">
-              {service.priceLabel}
+              {service.priceLabel || 'POA'}
             </span>
             <span className="text-sm text-cream/50">· {service.duration}</span>
           </>
@@ -87,7 +94,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <div className="my-7 h-px bg-gradient-to-r from-transparent via-cyan/20 to-transparent" />
 
-      {service.interior && (
+      {service.interior && service.interior.length > 0 && (
         <div className="mb-5">
           <div className="text-[11px] uppercase tracking-[0.18em] text-cream/50 mb-3">
             Interior
@@ -102,7 +109,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <div>
         <div className="text-[11px] uppercase tracking-[0.18em] text-cream/50 mb-3">
-          {service.interior ? 'Exterior' : 'What\u2019s included'}
+          {service.interior && service.interior.length > 0 ? 'Exterior' : 'What\u2019s included'}
         </div>
         <ul className="space-y-2">
           {service.exterior.map((item) => (
@@ -133,9 +140,7 @@ function CheckItem({ children }: { children: React.ReactNode }) {
   );
 }
 
-function MaintenanceCallout() {
-  const maintenance = SERVICES.find((s) => s.slug === 'maintenance-plan')!;
-
+function MaintenanceCallout({ service }: { service: Service }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -154,13 +159,13 @@ function MaintenanceCallout() {
       <div className="relative grid md:grid-cols-3 gap-6 p-7 md:p-10 items-center">
         <div className="md:col-span-2">
           <div className="text-xs uppercase tracking-[0.18em] text-cyan-glow/80 mb-3">
-            {maintenance.tagline}
+            {service.tagline}
           </div>
           <h3 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-cream">
-            Maintenance Plan
+            {service.name}
           </h3>
           <p className="mt-3 text-sm md:text-base text-cream/70 leading-relaxed max-w-2xl">
-            {maintenance.description}
+            {service.description}
           </p>
         </div>
         <div className="flex md:justify-end">

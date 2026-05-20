@@ -4,8 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star, MapPin } from 'lucide-react';
+import type { Service, SiteSettings } from '@/lib/types';
 
-export default function Hero() {
+interface HeroProps {
+  homepageServices: Service[];
+  settings: SiteSettings;
+}
+
+export default function Hero({ homepageServices, settings }: HeroProps) {
   return (
     <section className="relative min-h-[100svh] pt-28 pb-20 md:pt-32 md:pb-24 flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-midnight-900" />
@@ -91,9 +97,13 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.45 }}
               className="mt-12 grid grid-cols-3 gap-4 max-w-md"
             >
-              <Stat value="5.0" label="Avg. rating" prefix={<Star className="w-3.5 h-3.5 fill-cyan text-cyan" />} />
-              <Stat value="1000s" label="Vehicles detailed" />
-              <Stat value="100%" label="Mobile service" />
+              <Stat
+                value={settings.stats_rating || '5.0'}
+                label="Avg. rating"
+                prefix={<Star className="w-3.5 h-3.5 fill-cyan text-cyan" />}
+              />
+              <Stat value={settings.stats_vehicles || '1000s'} label="Vehicles detailed" />
+              <Stat value={settings.stats_mobile || '100%'} label="Mobile service" />
             </motion.div>
           </div>
 
@@ -103,7 +113,11 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5 relative"
           >
-            <HeroVisual />
+            <HeroVisual
+              src={settings.hero_cover_url || '/images/gallery-1.jpg'}
+              label={settings.hero_cover_label || 'Recent detail'}
+              title={settings.hero_cover_title || 'Range Rover Sport SVR'}
+            />
           </motion.div>
         </div>
 
@@ -113,10 +127,19 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.55 }}
           className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
         >
-          <PriceTag service="Safe Wash" price="£30" tag="Refresh" />
-          <PriceTag service="Valet" price="£60" tag="Inside & Out" />
-          <PriceTag service="Deep Clean" price="£120" tag="Showroom" highlight />
-          <PriceTag service="Maintenance" price="Bespoke" tag="Recurring" />
+          {homepageServices.map((service) => (
+            <PriceTag
+              key={service.id}
+              service={service.shortName}
+              price={
+                service.startingPrice > 0
+                  ? `£${service.startingPrice}`
+                  : service.priceLabel || 'POA'
+              }
+              tag={service.homepageTag || service.tagline}
+              highlight={service.popular}
+            />
+          ))}
         </motion.div>
       </div>
     </section>
@@ -188,12 +211,12 @@ function PriceTag({
   );
 }
 
-function HeroVisual() {
+function HeroVisual({ src, label, title }: { src: string; label: string; title: string }) {
   return (
     <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-gradient">
       <Image
-        src="/images/gallery-1.jpg"
-        alt="Blue Range Rover Sport SVR detailed by Spotless Detailing"
+        src={src}
+        alt={title}
         fill
         priority
         sizes="(max-width: 1024px) 100vw, 40vw"
@@ -223,7 +246,7 @@ function HeroVisual() {
             <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
           </span>
           <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-cream/90">
-            Recent detail
+            {label}
           </span>
         </div>
       </div>
@@ -234,7 +257,7 @@ function HeroVisual() {
             Featured detail
           </div>
           <div className="font-display text-xl md:text-2xl font-semibold text-cream tracking-tight">
-            Range Rover Sport SVR
+            {title}
           </div>
         </div>
         <div className="glass rounded-full p-2.5 border-gradient">
