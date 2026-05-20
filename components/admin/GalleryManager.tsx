@@ -95,7 +95,7 @@ export default function GalleryManager({
   return (
     <div className="space-y-6">
       {/* Upload box */}
-      <div className="glass border-gradient rounded-2xl p-6">
+      <div className="glass border-gradient rounded-2xl p-4 md:p-6">
         <label className="block mb-3">
           <span className="block text-xs uppercase tracking-[0.16em] text-cream/60 mb-2">
             Upload new images
@@ -105,7 +105,7 @@ export default function GalleryManager({
           </span>
         </label>
         <label
-          className={`flex items-center justify-center gap-3 border-2 border-dashed rounded-xl px-6 py-10 cursor-pointer transition-colors ${
+          className={`flex items-center justify-center gap-3 border-2 border-dashed rounded-xl px-4 md:px-6 py-8 md:py-10 cursor-pointer transition-colors text-center ${
             uploading
               ? 'border-cyan/40 bg-cyan/5'
               : 'border-cream/15 hover:border-cyan/40 hover:bg-cyan/5'
@@ -122,14 +122,14 @@ export default function GalleryManager({
           />
           {uploading ? (
             <>
-              <Loader2 className="w-5 h-5 text-cyan animate-spin" />
+              <Loader2 className="w-5 h-5 text-cyan animate-spin flex-shrink-0" />
               <span className="text-sm text-cyan">Uploading…</span>
             </>
           ) : (
             <>
-              <Upload className="w-5 h-5 text-cream/60" />
+              <Upload className="w-5 h-5 text-cream/60 flex-shrink-0" />
               <span className="text-sm text-cream/70">
-                Click to select images, or drag and drop here
+                Tap to select images
               </span>
             </>
           )}
@@ -147,7 +147,7 @@ export default function GalleryManager({
           <p className="text-cream/50">No images yet. Upload some above.</p>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {images.map((img) => (
             <div
               key={img.id}
@@ -158,7 +158,7 @@ export default function GalleryManager({
                   src={img.url}
                   alt={img.alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -176,7 +176,7 @@ export default function GalleryManager({
                       )
                     }
                     onBlur={(e) => updateImage(img.id, { alt: e.target.value })}
-                    className="w-full bg-midnight-900 border border-cream/10 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-cyan/40"
+                    className="w-full bg-midnight-900 border border-cream/10 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-cyan/40"
                   />
                 </label>
 
@@ -196,7 +196,7 @@ export default function GalleryManager({
                       onBlur={(e) =>
                         updateImage(img.id, { sortOrder: Number(e.target.value) })
                       }
-                      className="w-16 bg-midnight-900 border border-cream/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-cyan/40"
+                      className="w-14 bg-midnight-900 border border-cream/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-cyan/40"
                     />
                   </label>
 
@@ -205,7 +205,7 @@ export default function GalleryManager({
                       type="checkbox"
                       checked={img.tall}
                       onChange={(e) => updateImage(img.id, { tall: e.target.checked })}
-                      className="accent-cyan"
+                      className="accent-cyan w-4 h-4"
                     />
                     Tall
                   </label>
@@ -217,14 +217,14 @@ export default function GalleryManager({
                       onChange={(e) =>
                         updateImage(img.id, { showInPreview: e.target.checked })
                       }
-                      className="accent-cyan"
+                      className="accent-cyan w-4 h-4"
                     />
                     Homepage
                   </label>
 
                   <button
                     onClick={() => deleteImage(img.id)}
-                    className="ml-auto inline-flex items-center gap-1 text-red-400 hover:text-red-300"
+                    className="ml-auto inline-flex items-center gap-1 text-red-400 hover:text-red-300 px-2 py-1"
                     aria-label="Delete image"
                   >
                     <Trash2 className="w-3.5 h-3.5" />

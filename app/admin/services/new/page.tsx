@@ -12,11 +12,11 @@ export default function NewServicePage() {
         <ArrowLeft className="w-4 h-4" />
         Back to services
       </Link>
-      <div className="mb-8">
+      <div className="mb-6 md:mb-8">
         <div className="text-xs uppercase tracking-[0.22em] text-cyan font-medium mb-2">
           New service
         </div>
-        <h1 className="font-display text-4xl font-bold tracking-tight">
+        <h1 className="font-display text-3xl md:text-4xl font-bold tracking-tight">
           Create a service
         </h1>
       </div>

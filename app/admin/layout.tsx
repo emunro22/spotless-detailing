@@ -1,5 +1,4 @@
 import { getSession } from '@/lib/auth';
-import { redirect } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
 export const dynamic = 'force-dynamic';
@@ -16,13 +15,12 @@ export default async function AdminLayout({
 }) {
   const session = await getSession();
 
-  // Login route renders its own page without sidebar
   return (
     <div className="min-h-screen bg-midnight-900 text-cream">
       {session ? (
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row">
           <AdminSidebar email={session.email} />
-          <main className="flex-1 min-h-screen p-6 md:p-10 overflow-x-hidden">
+          <main className="flex-1 min-h-screen p-4 md:p-6 lg:p-10 overflow-x-hidden">
             {children}
           </main>
         </div>

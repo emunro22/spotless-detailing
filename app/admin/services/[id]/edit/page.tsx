@@ -24,11 +24,11 @@ export default async function EditServicePage({
         <ArrowLeft className="w-4 h-4" />
         Back to services
       </Link>
-      <div className="mb-8">
+      <div className="mb-6 md:mb-8">
         <div className="text-xs uppercase tracking-[0.22em] text-cyan font-medium mb-2">
           Edit service
         </div>
-        <h1 className="font-display text-4xl font-bold tracking-tight">
+        <h1 className="font-display text-3xl md:text-4xl font-bold tracking-tight truncate">
           {service.name}
         </h1>
         <p className="mt-2 text-cream/60 text-sm">/{service.slug}</p>

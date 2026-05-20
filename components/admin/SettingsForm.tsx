@@ -15,7 +15,9 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
     stats_vehicles: initial.stats_vehicles || '1000s',
     stats_mobile: initial.stats_mobile || '100%',
     business_phone: initial.business_phone || '',
+    business_phone_tel: initial.business_phone_tel || '',
     business_email: initial.business_email || '',
+    business_whatsapp: initial.business_whatsapp || '',
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -75,23 +77,23 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24">
       <Card title="Hero cover image">
-        <div className="grid md:grid-cols-[1fr,1.2fr] gap-6 items-start">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-midnight-700 border border-cream/10">
+        <div className="grid md:grid-cols-[1fr,1.2fr] gap-4 md:gap-6 items-start">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-midnight-700 border border-cream/10 max-w-xs mx-auto md:mx-0 md:max-w-none w-full">
             {settings.hero_cover_url && (
               <Image
                 src={settings.hero_cover_url}
                 alt="Current hero cover"
                 fill
-                sizes="(max-width: 768px) 100vw, 300px"
+                sizes="(max-width: 768px) 80vw, 300px"
                 className="object-cover"
               />
             )}
           </div>
           <div className="space-y-4">
             <label
-              className={`flex items-center justify-center gap-3 border-2 border-dashed rounded-xl px-6 py-8 cursor-pointer transition-colors ${
+              className={`flex items-center justify-center gap-3 border-2 border-dashed rounded-xl px-4 md:px-6 py-6 md:py-8 cursor-pointer transition-colors text-center ${
                 uploading
                   ? 'border-cyan/40 bg-cyan/5'
                   : 'border-cream/15 hover:border-cyan/40 hover:bg-cyan/5'
@@ -107,12 +109,12 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
               />
               {uploading ? (
                 <>
-                  <Loader2 className="w-5 h-5 text-cyan animate-spin" />
+                  <Loader2 className="w-5 h-5 text-cyan animate-spin flex-shrink-0" />
                   <span className="text-sm text-cyan">Uploading…</span>
                 </>
               ) : (
                 <>
-                  <Upload className="w-5 h-5 text-cream/60" />
+                  <Upload className="w-5 h-5 text-cream/60 flex-shrink-0" />
                   <span className="text-sm text-cream/70">Upload new cover image</span>
                 </>
               )}
@@ -141,7 +143,7 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
       </Card>
 
       <Card title="Hero stats">
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-3 gap-4">
           <Field label="Avg. rating">
             <input
               type="text"
@@ -171,7 +173,7 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
 
       <Card title="Business contact">
         <div className="grid md:grid-cols-2 gap-4">
-          <Field label="Phone">
+          <Field label="Phone (display)" hint="e.g. 07955 733053 — shown to visitors">
             <input
               type="text"
               value={settings.business_phone}
@@ -180,6 +182,20 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
               placeholder="07955 733053"
             />
           </Field>
+          <Field
+            label="Phone (for tel: links)"
+            hint="International format, e.g. +44 7955 733053"
+          >
+            <input
+              type="text"
+              value={settings.business_phone_tel}
+              onChange={(e) => update('business_phone_tel', e.target.value)}
+              className={inputCls}
+              placeholder="+44 7955 733053"
+            />
+          </Field>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
           <Field label="Email">
             <input
               type="email"
@@ -189,13 +205,19 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
               placeholder="enquiries@spotlessdetailing.co.uk"
             />
           </Field>
+          <Field
+            label="WhatsApp link"
+            hint="Full URL — e.g. https://wa.me/447955733053"
+          >
+            <input
+              type="text"
+              value={settings.business_whatsapp}
+              onChange={(e) => update('business_whatsapp', e.target.value)}
+              className={inputCls}
+              placeholder="https://wa.me/447955733053"
+            />
+          </Field>
         </div>
-        <p className="text-xs text-cream/50 mt-1">
-          Note: phone and email are stored here for future use. They aren&rsquo;t yet wired
-          into the public footer/CTA — those still use hardcoded values from{' '}
-          <code className="text-cyan">lib/constants.ts</code>. Ask Euan to wire them up
-          when you&rsquo;re ready.
-        </p>
       </Card>
 
       {message && (
@@ -209,11 +231,11 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
         </div>
       )}
 
-      <div className="sticky bottom-4">
+      <div className="sticky bottom-0 -mx-4 md:-mx-6 lg:-mx-10 px-4 md:px-6 lg:px-10 py-4 bg-midnight-900/95 backdrop-blur border-t border-cream/10 z-10">
         <button
           onClick={handleSave}
           disabled={saving}
-          className="inline-flex items-center gap-2 bg-cyan hover:bg-cyan-glow disabled:opacity-50 disabled:cursor-not-allowed text-midnight-900 font-semibold rounded-full px-6 py-3 transition-all shadow-glow-cyan"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-cyan hover:bg-cyan-glow disabled:opacity-50 disabled:cursor-not-allowed text-midnight-900 font-semibold rounded-full px-6 py-3 transition-all shadow-glow-cyan"
         >
           <Save className="w-4 h-4" />
           {saving ? 'Saving…' : 'Save settings'}
@@ -228,7 +250,7 @@ const inputCls =
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="glass border-gradient rounded-2xl p-6 md:p-7 space-y-4">
+    <div className="glass border-gradient rounded-2xl p-4 md:p-6 lg:p-7 space-y-4">
       <h2 className="font-display text-lg font-semibold">{title}</h2>
       {children}
     </div>

@@ -100,7 +100,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 pb-24">
       <Card title="Basics">
         <div className="grid md:grid-cols-2 gap-4">
           <Field label="Service name" hint="e.g. Safe Wash, Full Valet">
@@ -157,7 +157,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
       </Card>
 
       <Card title="Pricing">
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Field label="Starting price (£)" hint="0 = show price label instead">
             <input
               type="number"
@@ -189,14 +189,14 @@ export default function ServiceForm({ service }: ServiceFormProps) {
       </Card>
 
       <Card title="What's included">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-start sm:items-center gap-3 mb-4 flex-col sm:flex-row">
           <ToggleField
             checked={hasInterior}
             onChange={setHasInterior}
             label="Has interior list"
           />
           <p className="text-xs text-cream/50">
-            Turn on for services that have separate interior + exterior lists (Valet, Deep Clean).
+            Turn on for services with separate interior + exterior lists (Valet, Deep Clean).
           </p>
         </div>
 
@@ -227,7 +227,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
       </Card>
 
       <Card title="Display">
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Homepage tag" hint="Short uppercase label for hero row card, e.g. Refresh">
             <input
               type="text"
@@ -255,7 +255,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
           />
         </Field>
 
-        <div className="grid md:grid-cols-3 gap-3 pt-2">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
           <Checkbox
             checked={form.showOnHomepage}
             onChange={(v) => update('showOnHomepage', v)}
@@ -292,41 +292,37 @@ export default function ServiceForm({ service }: ServiceFormProps) {
         </div>
       )}
 
-      <div className="flex items-center justify-between gap-3 sticky bottom-4">
-        <div className="flex items-center gap-3">
-          <button
-            type="submit"
-            disabled={saving}
-            className="inline-flex items-center gap-2 bg-cyan hover:bg-cyan-glow disabled:opacity-50 disabled:cursor-not-allowed text-midnight-900 font-semibold rounded-full px-6 py-3 transition-all shadow-glow-cyan"
-          >
-            <Save className="w-4 h-4" />
-            {saving ? 'Saving…' : isEdit ? 'Save changes' : 'Create service'}
-          </button>
-        </div>
+      <div className="sticky bottom-0 -mx-4 md:-mx-6 lg:-mx-10 px-4 md:px-6 lg:px-10 py-4 bg-midnight-900/95 backdrop-blur border-t border-cream/10 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 z-10">
         {isEdit && (
           <button
             type="button"
             onClick={handleDelete}
             disabled={deleting}
-            className="inline-flex items-center gap-2 text-sm text-red-400 hover:text-red-300 disabled:opacity-50 px-4 py-2 rounded-full border border-red-500/20 hover:bg-red-500/10 transition-colors"
+            className="inline-flex items-center justify-center gap-2 text-sm text-red-400 hover:text-red-300 disabled:opacity-50 px-4 py-3 sm:py-2 rounded-full border border-red-500/20 hover:bg-red-500/10 transition-colors"
           >
             <Trash2 className="w-4 h-4" />
             {deleting ? 'Deleting…' : 'Delete service'}
           </button>
         )}
+        <button
+          type="submit"
+          disabled={saving}
+          className="inline-flex items-center justify-center gap-2 bg-cyan hover:bg-cyan-glow disabled:opacity-50 disabled:cursor-not-allowed text-midnight-900 font-semibold rounded-full px-6 py-3 transition-all shadow-glow-cyan sm:ml-auto"
+        >
+          <Save className="w-4 h-4" />
+          {saving ? 'Saving…' : isEdit ? 'Save changes' : 'Create service'}
+        </button>
       </div>
     </form>
   );
 }
-
-// ---- Helpers ----------------------------------------------------
 
 const inputCls =
   'w-full bg-midnight-900 border border-cream/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-cyan/40 transition-colors';
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="glass border-gradient rounded-2xl p-6 md:p-7 space-y-4">
+    <div className="glass border-gradient rounded-2xl p-4 md:p-6 lg:p-7 space-y-4">
       <h2 className="font-display text-lg font-semibold">{title}</h2>
       {children}
     </div>
@@ -425,7 +421,7 @@ function ItemList({
           <button
             type="button"
             onClick={() => onChange(items.filter((_, idx) => idx !== i))}
-            className="text-cream/40 hover:text-red-400 p-2 transition-colors"
+            className="text-cream/40 hover:text-red-400 p-2 transition-colors flex-shrink-0"
             aria-label="Remove item"
           >
             <X className="w-4 h-4" />
@@ -435,7 +431,7 @@ function ItemList({
       <button
         type="button"
         onClick={() => onChange([...items, ''])}
-        className="inline-flex items-center gap-2 text-sm text-cyan hover:text-cyan-glow"
+        className="inline-flex items-center gap-2 text-sm text-cyan hover:text-cyan-glow py-1"
       >
         <Plus className="w-4 h-4" />
         Add item
