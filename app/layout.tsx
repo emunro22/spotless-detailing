@@ -3,8 +3,9 @@ import { Bricolage_Grotesque, DM_Sans } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 
-import Navbar from '@/components/Navbar';
+import NavbarServer from '@/components/NavbarServer';
 import Footer from '@/components/Footer';
+import LayoutShell from '@/components/LayoutShell';
 import { BUSINESS, SEO_KEYWORDS } from '@/lib/constants';
 import { localBusinessJsonLd } from '@/lib/seo';
 
@@ -108,9 +109,9 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-midnight-800 text-cream font-sans antialiased">
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <LayoutShell navbar={<NavbarServer />} footer={<Footer />}>
+          {children}
+        </LayoutShell>
       </body>
     </html>
   );

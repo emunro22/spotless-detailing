@@ -1,7 +1,7 @@
 import Services from '@/components/Services';
 import Process from '@/components/Process';
 import FAQ from '@/components/FAQ';
-import CTA from '@/components/CTA';
+import CTAWrapper from '@/components/CTAWrapper';
 import { buildMetadata } from '@/lib/seo';
 import { getAllServices } from '@/lib/queries';
 
@@ -32,7 +32,7 @@ export default async function ServicesPage() {
       <Services services={services} />
       <Process />
       <FAQ />
-      <CTA />
+      <CTAWrapper />
     </>
   );
 }

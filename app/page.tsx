@@ -6,7 +6,7 @@ import Gallery from '@/components/Gallery';
 import Testimonials from '@/components/Testimonials';
 import ServiceAreas from '@/components/ServiceAreas';
 import FAQ from '@/components/FAQ';
-import CTA from '@/components/CTA';
+import CTAWrapper from '@/components/CTAWrapper';
 import { buildMetadata } from '@/lib/seo';
 import {
   getAllServices,
@@ -43,7 +43,7 @@ export default async function HomePage() {
       <Testimonials />
       <ServiceAreas />
       <FAQ />
-      <CTA />
+      <CTAWrapper />
     </>
   );
 }

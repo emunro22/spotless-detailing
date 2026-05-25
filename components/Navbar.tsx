@@ -14,7 +14,13 @@ const NAV_LINKS = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export default function Navbar() {
+export default function Navbar({
+  phone = BUSINESS.phone,
+  phoneDisplay = BUSINESS.phoneDisplay,
+}: {
+  phone?: string;
+  phoneDisplay?: string;
+}) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -75,11 +81,11 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href={`tel:${BUSINESS.phone}`}
+            href={`tel:${phone}`}
             className="flex items-center gap-2 text-sm text-cream/70 hover:text-cyan transition-colors"
           >
             <Phone className="w-4 h-4" />
-            {BUSINESS.phoneDisplay}
+            {phoneDisplay}
           </a>
           <Link
             href="/booking"
@@ -154,11 +160,11 @@ export default function Navbar() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.25 }}
-                href={`tel:${BUSINESS.phone}`}
+                href={`tel:${phone}`}
                 className="flex items-center gap-3 px-4 py-3 text-cream/70 hover:text-cyan transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                {BUSINESS.phoneDisplay}
+                {phoneDisplay}
               </motion.a>
               <motion.div
                 initial={{ opacity: 0, x: -10 }}

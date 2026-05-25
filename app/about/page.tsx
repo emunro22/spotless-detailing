@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import ServiceAreas from '@/components/ServiceAreas';
-import CTA from '@/components/CTA';
+import CTAWrapper from '@/components/CTAWrapper';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata = buildMetadata({
@@ -10,6 +10,8 @@ export const metadata = buildMetadata({
     'Meet Spotless Detailing — Glasgow\'s mobile car detailing specialists. A passion for cars and the craft of making them look their absolute best.',
   path: '/about',
 });
+
+export const revalidate = 60;
 
 export default function AboutPage() {
   return (
@@ -91,7 +93,7 @@ export default function AboutPage() {
 
       <WhyChooseUs />
       <ServiceAreas />
-      <CTA />
+      <CTAWrapper />
     </>
   );
 }

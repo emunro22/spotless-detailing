@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { sql } from './db';
 import type { Service, GalleryImage, SiteSettings } from './types';
 
@@ -207,10 +208,10 @@ export async function deleteGalleryImage(id: number): Promise<GalleryImage | nul
 
 // ---- Settings --------------------------------------------------
 
-export async function getAllSettings(): Promise<SiteSettings> {
+export const getAllSettings = cache(async function getAllSettings(): Promise<SiteSettings> {
   const rows = (await sql`SELECT key, value FROM site_settings`) as { key: string; value: string }[];
   return Object.fromEntries(rows.map((r) => [r.key, r.value]));
-}
+});
 
 export async function updateSettings(settings: Record<string, string>): Promise<void> {
   for (const [key, value] of Object.entries(settings)) {

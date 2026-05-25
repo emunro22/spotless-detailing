@@ -1,5 +1,5 @@
 import Gallery from '@/components/Gallery';
-import CTA from '@/components/CTA';
+import CTAWrapper from '@/components/CTAWrapper';
 import { buildMetadata } from '@/lib/seo';
 import { getAllGalleryImages } from '@/lib/queries';
 
@@ -28,7 +28,7 @@ export default async function GalleryPage() {
         </div>
       </section>
       <Gallery images={images} />
-      <CTA />
+      <CTAWrapper />
     </>
   );
 }

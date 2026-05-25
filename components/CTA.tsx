@@ -5,7 +5,15 @@ import { motion } from 'framer-motion';
 import { ArrowRight, MessageCircle, Phone } from 'lucide-react';
 import { BUSINESS } from '@/lib/constants';
 
-export default function CTA() {
+export default function CTA({
+  phone = BUSINESS.phone,
+  phoneDisplay = BUSINESS.phoneDisplay,
+  whatsapp = BUSINESS.whatsapp,
+}: {
+  phone?: string;
+  phoneDisplay?: string;
+  whatsapp?: string;
+} = {}) {
   return (
     <section className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -48,14 +56,14 @@ export default function CTA() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
-                href={`tel:${BUSINESS.phone}`}
+                href={`tel:${phone}`}
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full glass text-cream font-medium hover:border-cyan/40 hover:text-cyan transition-all border-gradient"
               >
                 <Phone className="w-4 h-4" />
-                Call {BUSINESS.phoneDisplay}
+                Call {phoneDisplay}
               </a>
               <a
-                href={BUSINESS.whatsapp}
+                href={whatsapp}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full glass text-cream font-medium hover:border-cyan/40 hover:text-cyan transition-all border-gradient"

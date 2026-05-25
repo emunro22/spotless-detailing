@@ -1,10 +1,18 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Instagram, MessageCircle } from 'lucide-react';
 import { BUSINESS, SERVICE_AREAS, SERVICES } from '@/lib/constants';
-import Image from 'next/image';              
+import Image from 'next/image';
+import { getAllSettings } from '@/lib/queries';
 
-
-export default function Footer() {
+export default async function Footer() {
+  let settings: Record<string, string> = {};
+  try {
+    settings = await getAllSettings();
+  } catch {}
+  const phone = settings.business_phone_tel || BUSINESS.phone;
+  const phoneDisplay = settings.business_phone || BUSINESS.phoneDisplay;
+  const email = settings.business_email || BUSINESS.email;
+  const whatsapp = settings.business_whatsapp || BUSINESS.whatsapp;
   return (
     <footer className="relative mt-24 border-t border-cyan/10 bg-midnight-900">
       <div className="absolute inset-0 hex-overlay opacity-30 pointer-events-none" />
@@ -33,7 +41,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3 mt-6">
               <a
-                href={BUSINESS.whatsapp}
+                href={whatsapp}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="WhatsApp"
@@ -95,20 +103,20 @@ export default function Footer() {
             <ul className="space-y-3.5 text-sm">
               <li>
                 <a
-                  href={`tel:${BUSINESS.phone}`}
+                  href={`tel:${phone}`}
                   className="flex items-start gap-2.5 text-cream/70 hover:text-cyan transition-colors"
                 >
                   <Phone className="w-4 h-4 mt-0.5 flex-shrink-0 text-cyan" />
-                  {BUSINESS.phoneDisplay}
+                  {phoneDisplay}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${BUSINESS.email}`}
+                  href={`mailto:${email}`}
                   className="flex items-start gap-2.5 text-cream/70 hover:text-cyan transition-colors break-all"
                 >
                   <Mail className="w-4 h-4 mt-0.5 flex-shrink-0 text-cyan" />
-                  {BUSINESS.email}
+                  {email}
                 </a>
               </li>
               <li className="flex items-start gap-2.5 text-cream/70">
