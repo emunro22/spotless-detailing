@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import LayoutShell from '@/components/LayoutShell';
 import { BUSINESS, SEO_KEYWORDS } from '@/lib/constants';
 import { localBusinessJsonLd } from '@/lib/seo';
+import { Analytics } from '@vercel/analytics/next';
 
 const display = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -112,6 +113,7 @@ export default function RootLayout({
         <LayoutShell navbar={<NavbarServer />} footer={<Footer />}>
           {children}
         </LayoutShell>
+        <Analytics />
       </body>
     </html>
   );
