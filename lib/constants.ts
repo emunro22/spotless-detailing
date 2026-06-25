@@ -16,7 +16,7 @@ export const BUSINESS = {
   email: 'enquiries@spotlessdetailing.co.uk', // TODO: confirm
   whatsapp: 'https://wa.me/447955733053',
   instagram: 'https://www.instagram.com/_sl_detailing/',
-  url: 'https://spotlessdetailing.co.uk', // TODO: confirm production URL
+  url: 'https://sl-detailing.co.uk',
   hours: 'Mon–Sat 8:00–18:00',
   founded: '2024',
 } as const;
