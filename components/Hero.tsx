@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star, MapPin } from 'lucide-react';
+import { ArrowRight, Star, MapPin, Sparkles } from 'lucide-react';
 import type { Service, SiteSettings } from '@/lib/types';
 
 interface HeroProps {
@@ -92,10 +92,35 @@ export default function Hero({ homepageServices, settings }: HeroProps) {
             </motion.div>
 
             <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-8"
+            >
+              <Link
+                href="/cleaning"
+                className="group inline-flex items-center gap-3 glass rounded-2xl px-5 py-3.5 border-gradient hover:border-cyan/40 transition-all"
+              >
+                <div className="w-8 h-8 rounded-lg bg-cyan/15 border border-cyan/25 flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-cyan" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-cream">
+                    Commercial & Domestic Cleaning
+                  </div>
+                  <div className="text-xs text-cream/50">
+                    Pressure washing · Buildings · Driveways · Restaurants
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-cyan/60 group-hover:text-cyan group-hover:translate-x-1 transition-all ml-2" />
+              </Link>
+            </motion.div>
+
+            <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
-              className="mt-12 grid grid-cols-3 gap-4 max-w-md"
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-10 grid grid-cols-3 gap-4 max-w-md"
             >
               <Stat
                 value={settings.stats_rating || '5.0'}

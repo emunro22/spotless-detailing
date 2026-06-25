@@ -22,22 +22,216 @@ export const BUSINESS = {
 } as const;
 
 export const SERVICE_AREAS = [
+  'Uddingston',
+  'Bothwell',
+  'Viewpark',
+  'Bellshill',
+  'Cambuslang',
+  'Rutherglen',
+  'Blantyre',
+  'Holytown',
+  'Bargeddie',
+  'Baillieston',
+  'Mount Vernon',
+  'Hamilton',
+  'Motherwell',
+  'Wishaw',
+  'East Kilbride',
+  'Coatbridge',
+  'Airdrie',
   'Glasgow',
-  'Paisley',
+  'Chapelhall',
+  'Tollcross',
+  'Shettleston',
+  'Parkhead',
   'Bishopbriggs',
   'Newton Mearns',
-  'Hamilton',
-  'East Kilbride',
   'Bearsden',
-  'Clydebank',
   'Giffnock',
-  'Motherwell',
-  'Rutherglen',
-  'Cambuslang',
+  'Paisley',
+  'Clydebank',
   'Milngavie',
   'Renfrew',
   'Lanark',
-  'Wishaw',
+  'Kirkintilloch',
+  'Carluke',
+  'Larkhall',
+];
+
+export interface CleaningService {
+  slug: string;
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  features: string[];
+  bestFor: string;
+}
+
+export const CLEANING_SERVICES: CleaningService[] = [
+  {
+    slug: 'pressure-washing',
+    name: 'Pressure Washing',
+    shortName: 'Pressure Washing',
+    tagline: 'High-performance surface cleaning',
+    description:
+      'Professional pressure washing for driveways, patios, paths, decking and external surfaces. We remove years of dirt, algae, moss and grime — restoring surfaces to their original condition.',
+    features: [
+      'Driveways — block paving, tarmac, concrete, gravel',
+      'Patios & slabs — natural stone, porcelain, flagstone',
+      'Decking — composite and timber',
+      'Paths, steps and walkways',
+      'Walls, fencing and retaining walls',
+      'Re-sanding of block paving joints',
+    ],
+    bestFor: 'Homeowners and businesses wanting surfaces restored to like-new condition.',
+  },
+  {
+    slug: 'commercial-cleaning',
+    name: 'Commercial Cleaning',
+    shortName: 'Commercial',
+    tagline: 'First impressions matter',
+    description:
+      'Professional exterior cleaning for restaurants, hotels, offices, retail units and commercial premises. We keep your business looking sharp and inviting — scheduled around your hours.',
+    features: [
+      'Restaurant & hospitality frontage cleaning',
+      'Shopfront and retail unit washing',
+      'Office building exterior cleaning',
+      'Car park and forecourt pressure washing',
+      'Signage and canopy cleaning',
+      'Scheduled maintenance contracts available',
+    ],
+    bestFor: 'Restaurants, hotels, shops and offices that need to look their best.',
+  },
+  {
+    slug: 'domestic-cleaning',
+    name: 'Domestic Cleaning',
+    shortName: 'Domestic',
+    tagline: 'Your home, spotless outside',
+    description:
+      'Complete exterior cleaning for your home. From render and roughcast washing to driveway and patio cleaning — we handle everything outside so you don\'t have to.',
+    features: [
+      'Render, roughcast and harling cleaning',
+      'UPVC fascia, soffit and cladding washing',
+      'Conservatory roof and panel cleaning',
+      'Driveway and patio pressure washing',
+      'Garden furniture and BBQ cleaning',
+      'Wheelie bin cleaning',
+    ],
+    bestFor: 'Homeowners wanting the full exterior of their property refreshed.',
+  },
+  {
+    slug: 'building-washing',
+    name: 'Building Washing',
+    shortName: 'Building Wash',
+    tagline: 'Facades restored, professionally',
+    description:
+      'Specialist building and facade cleaning for commercial and residential properties. Soft wash and pressure wash techniques tailored to the surface — stonework, render, cladding and more.',
+    features: [
+      'Soft wash for delicate surfaces',
+      'Render and roughcast cleaning',
+      'Stonework and masonry restoration',
+      'Cladding and composite panel washing',
+      'Algae, lichen and biological growth removal',
+      'Multi-storey building access available',
+    ],
+    bestFor: 'Property managers, landlords and businesses maintaining building exteriors.',
+  },
+  {
+    slug: 'roof-cleaning',
+    name: 'Roof Cleaning',
+    shortName: 'Roof Clean',
+    tagline: 'Moss-free, streak-free roofs',
+    description:
+      'Professional roof cleaning and moss removal. Soft wash techniques protect your tiles while removing years of moss, algae and discolouration — extending roof life and improving kerb appeal.',
+    features: [
+      'Moss and algae removal',
+      'Soft wash treatment — safe for all tile types',
+      'Ridge tile repointing where needed',
+      'Biocide treatment to prevent regrowth',
+      'Gutter clearing included',
+      'Before and after photos provided',
+    ],
+    bestFor: 'Homeowners with moss-covered or discoloured roofs wanting to restore kerb appeal.',
+  },
+  {
+    slug: 'gutter-cleaning',
+    name: 'Gutter Cleaning',
+    shortName: 'Gutters',
+    tagline: 'Clear gutters, no blockages',
+    description:
+      'Thorough gutter clearing and downpipe flushing. We remove leaves, moss and debris to prevent water damage, damp and overflow — with before and after images for your records.',
+    features: [
+      'Full gutter clearing and debris removal',
+      'Downpipe flushing to clear blockages',
+      'Fascia and soffit wipe-down',
+      'Before and after photos provided',
+      'Minor repairs flagged and reported',
+      'Scheduled seasonal maintenance available',
+    ],
+    bestFor: 'Any property needing gutters cleared to prevent water damage and damp.',
+  },
+  {
+    slug: 'driveway-cleaning',
+    name: 'Driveway Cleaning',
+    shortName: 'Driveways',
+    tagline: 'Block paving, tarmac, concrete — restored',
+    description:
+      'Specialist driveway cleaning and restoration. Pressure washing tailored to your surface type — with optional re-sanding for block paving and sealant application to protect the finish.',
+    features: [
+      'Block paving deep clean and re-sand',
+      'Tarmac and concrete pressure washing',
+      'Oil and stain removal',
+      'Weed and moss removal from joints',
+      'Optional sealant application',
+      'Edging and kerb cleaning',
+    ],
+    bestFor: 'Homeowners wanting their driveway looking like new again.',
+  },
+  {
+    slug: 'golf-course-cleaning',
+    name: 'Golf Course & Grounds Cleaning',
+    shortName: 'Golf & Grounds',
+    tagline: 'Pristine facilities, always',
+    description:
+      'Professional cleaning for golf courses, sports clubs and leisure facilities. Clubhouse exteriors, paths, car parks, signage and outdoor furniture — keeping your grounds immaculate.',
+    features: [
+      'Clubhouse and pavilion exterior washing',
+      'Path and walkway pressure cleaning',
+      'Car park and entrance forecourt cleaning',
+      'Outdoor furniture and seating areas',
+      'Signage and notice board cleaning',
+      'Scheduled maintenance contracts',
+    ],
+    bestFor: 'Golf courses, sports clubs and leisure facilities maintaining high standards.',
+  },
+];
+
+export const CLEANING_FAQS = [
+  {
+    q: 'What areas do you cover for cleaning?',
+    a: 'We cover Uddingston and everywhere within 15 miles — including Glasgow, Hamilton, Motherwell, East Kilbride, Coatbridge, Airdrie, Rutherglen, Cambuslang and the surrounding areas. Get in touch with your postcode and we\'ll confirm.',
+  },
+  {
+    q: 'What types of properties do you clean?',
+    a: 'We clean everything from domestic driveways and patios to commercial premises, restaurants, offices, golf courses and multi-storey buildings. No job too big or small.',
+  },
+  {
+    q: 'Do you offer regular cleaning contracts?',
+    a: 'Yes — we offer scheduled maintenance contracts for commercial clients. Weekly, fortnightly or monthly visits to keep your premises looking their best, with professional invoices supplied.',
+  },
+  {
+    q: 'Will pressure washing damage my surfaces?',
+    a: 'No. We tailor our approach to the surface — using soft wash for delicate materials like render and stonework, and higher pressure for robust surfaces like concrete and block paving. We always assess before we start.',
+  },
+  {
+    q: 'How long does a driveway clean take?',
+    a: 'A standard domestic driveway takes 2-4 hours depending on size and condition. Larger commercial jobs are quoted individually. We always confirm a timeframe before starting.',
+  },
+  {
+    q: 'Do I need to be home?',
+    a: 'Not necessarily — as long as we have access to the area being cleaned and a water supply. We\'ll arrange everything beforehand so you can carry on with your day.',
+  },
 ];
 
 export type ServiceSlug =
@@ -291,4 +485,8 @@ export const SEO_KEYWORDS = [
   'car interior cleaning Glasgow',
   'best car detailer Glasgow',
   'fleet washing Glasgow',
+  'pressure washing Glasgow',
+  'commercial cleaning Glasgow',
+  'driveway cleaning Glasgow',
+  'patio cleaning Glasgow',
 ];

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Instagram, MessageCircle } from 'lucide-react';
-import { BUSINESS, SERVICE_AREAS, SERVICES } from '@/lib/constants';
+import { BUSINESS, SERVICE_AREAS, SERVICES, CLEANING_SERVICES } from '@/lib/constants';
 import Image from 'next/image';
 import { getAllSettings } from '@/lib/queries';
 
@@ -61,10 +61,10 @@ export default async function Footer() {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Detailing */}
           <div className="md:col-span-2">
             <h4 className="font-display font-semibold text-sm uppercase tracking-[0.18em] text-cream/90 mb-5">
-              Services
+              Detailing
             </h4>
             <ul className="space-y-3 text-sm">
               {SERVICES.map((s) => (
@@ -78,6 +78,21 @@ export default async function Footer() {
                 </li>
               ))}
             </ul>
+            <h4 className="font-display font-semibold text-sm uppercase tracking-[0.18em] text-cream/90 mt-7 mb-5">
+              Cleaning
+            </h4>
+            <ul className="space-y-3 text-sm">
+              {CLEANING_SERVICES.slice(0, 4).map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    href="/cleaning"
+                    className="text-cream/60 hover:text-cyan transition-colors"
+                  >
+                    {s.shortName}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Areas */}
@@ -86,7 +101,7 @@ export default async function Footer() {
               Areas Covered
             </h4>
             <ul className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm text-cream/60">
-              {SERVICE_AREAS.slice(0, 10).map((area) => (
+              {SERVICE_AREAS.slice(0, 12).map((area) => (
                 <li key={area}>{area}</li>
               ))}
             </ul>
