@@ -8,6 +8,7 @@ import {
   getAllCleaningSlugs,
 } from '@/lib/seo-pages';
 import CleaningContactForm from '@/components/CleaningContactForm';
+import FAQ from '@/components/FAQ';
 import type { Metadata } from 'next';
 
 interface Props {
@@ -154,6 +155,23 @@ export default async function CleaningSlugPage({ params }: Props) {
             </div>
           </div>
         </section>
+      )}
+
+      {/* Area-specific FAQ */}
+      {page.faqs && page.faqs.length > 0 && (
+        <FAQ
+          faqs={page.faqs}
+          jsonLdId={`faq-jsonld-cleaning-${page.slug}`}
+          eyebrow={`${page.h1.replace('Pressure Washing & Cleaning in ', '')} FAQs`}
+          title={
+            <>
+              Questions from{' '}
+              <span className="gradient-text italic">
+                {page.h1.replace('Pressure Washing & Cleaning in ', '')} customers.
+              </span>
+            </>
+          }
+        />
       )}
 
       {/* Contact Form */}

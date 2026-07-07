@@ -8,30 +8,39 @@ import { FAQS } from '@/lib/constants';
 import { faqJsonLd } from '@/lib/seo';
 import { SectionHeader } from './Services';
 
-export default function FAQ() {
+interface FAQProps {
+  faqs?: { q: string; a: string }[];
+  jsonLdId?: string;
+  eyebrow?: string;
+  title?: React.ReactNode;
+}
+
+export default function FAQ({
+  faqs = FAQS,
+  jsonLdId = 'faq-jsonld',
+  eyebrow = 'Common questions',
+  title = (
+    <>
+      Everything you might want to{' '}
+      <span className="gradient-text italic">ask first.</span>
+    </>
+  ),
+}: FAQProps) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section className="relative py-24 md:py-32 bg-midnight-900">
       <Script
-        id="faq-jsonld"
+        id={jsonLdId}
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQS)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }}
       />
 
       <div className="mx-auto max-w-4xl px-5 md:px-8">
-        <SectionHeader
-          eyebrow="Common questions"
-          title={
-            <>
-              Everything you might want to{' '}
-              <span className="gradient-text italic">ask first.</span>
-            </>
-          }
-        />
+        <SectionHeader eyebrow={eyebrow} title={title} />
 
         <div className="mt-12 md:mt-16 space-y-3">
-          {FAQS.map((faq, i) => {
+          {faqs.map((faq, i) => {
             const isOpen = open === i;
             return (
               <motion.div

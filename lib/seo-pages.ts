@@ -1,7 +1,8 @@
-import { SERVICE_AREAS } from './constants';
+import { AREA_FACTS, hashIndex, proximityPhrase, type AreaFact } from './area-data';
 
-function slugify(name: string) {
-  return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+export interface SeoFaq {
+  q: string;
+  a: string;
 }
 
 export interface SeoPage {
@@ -11,19 +12,118 @@ export interface SeoPage {
   description: string;
   intro: string;
   type: 'area' | 'service';
+  faqs?: SeoFaq[];
+  character?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Area-page content generation — every area page pulls from real facts about
+// that area (county, proximity to base, local character) through several
+// rotating sentence templates, so no two area pages share the same wording.
+// ---------------------------------------------------------------------------
+
+const VALETING_INTRO_TEMPLATES: ((f: AreaFact, p: string) => string)[] = [
+  (f, p) =>
+    `Looking for professional car valeting in ${f.name}? Spotless Detailing is a fully mobile service covering ${f.name} — ${p} — and the rest of ${f.county}. ${f.name} is ${f.character}, and we bring everything needed for a safe wash, full valet or deep clean straight to your driveway. No dropping the car off, no waiting around — just book a slot that suits you.`,
+  (f, p) =>
+    `${f.name} — ${f.character} — is one of the towns we cover most for mobile car valeting. We're based in Uddingston, ${p}, so getting to you in ${f.name} is never a problem. Whether it's a quick safe wash to keep things fresh or a full deep clean and ceramic coating, our van comes fully stocked so nothing needs to leave your driveway.`,
+  (f, p) =>
+    `If your car's overdue a proper clean and you're based in ${f.name}, we can help. Spotless Detailing covers ${f.name} and the rest of ${f.county} as part of our regular mobile valeting round — ${p}. We bring the water, the products and the equipment, so all you need to do is point us to the car.`,
+  (f, p) =>
+    `From a 90-minute safe wash to a full multi-hour deep clean, Spotless Detailing offers mobile car valeting across ${f.name} and the wider ${f.county} area. ${f.name} is ${f.character}, and it's ${p} from our Uddingston base — so we're regularly on the road there. Book online or give us a call and we'll confirm a slot.`,
+  (f, p) =>
+    `Spotless Detailing is a mobile car valeting service working regularly in ${f.name}. We're based in Uddingston — ${p} — and cover ${f.name}, ${f.character}, along with the rest of ${f.county}. Safe wash, full valet, deep clean, polishing and ceramic coating are all available at your home or workplace, no trip to a car wash required.`,
+];
+
+const VALETING_DESC_TEMPLATES: ((f: AreaFact) => string)[] = [
+  (f) => `Professional mobile car valeting and detailing in ${f.name}. Safe wash from £30, full valet from £60, deep clean from £120. We come to you — book today.`,
+  (f) => `Mobile car valeting and detailing covering ${f.name} and ${f.county}. Safe wash, full valet, deep clean and ceramic coating — all at your door.`,
+  (f) => `Spotless Detailing brings mobile car valeting to ${f.name} — safe wash, full valet, deep clean and paint protection, straight to your driveway.`,
+  (f) => `Car valeting in ${f.name} without the trip to a car wash. Mobile safe wash, valet and deep clean from £30 — fully insured, fully mobile.`,
+];
+
+const CLEANING_INTRO_TEMPLATES: ((f: AreaFact, p: string) => string)[] = [
+  (f, p) =>
+    `Need professional cleaning services in ${f.name}? Spotless Detailing offers commercial and domestic pressure washing across ${f.name} — ${p} — and the rest of ${f.county}. ${f.name} is ${f.character}, and our team handles everything from driveway and patio cleaning to full building washes, with before-and-after photos provided as standard.`,
+  (f, p) =>
+    `${f.name} — ${f.character} — is one of the towns we regularly work in for pressure washing and exterior cleaning. Based in Uddingston, ${p}, we bring commercial-grade equipment to driveways, patios, restaurant frontages and commercial premises across ${f.name} and ${f.county}.`,
+  (f, p) =>
+    `If your driveway, patio or building exterior in ${f.name} needs a proper clean, Spotless Detailing can help. We cover ${f.name} and the wider ${f.county} area as part of our regular pressure washing round — ${p} — and every job is fully insured with before-and-after photos as standard.`,
+  (f, p) =>
+    `From block paving and patios to full building facades, Spotless Detailing provides commercial and domestic cleaning across ${f.name} and ${f.county}. ${f.name} is ${f.character}, and it's ${p} from our Uddingston base, so we're regularly working in the area.`,
+  (f, p) =>
+    `Spotless Detailing is a pressure washing and exterior cleaning service working regularly in ${f.name}. We're based in Uddingston — ${p} — and cover ${f.name}, ${f.character}, along with the rest of ${f.county}. Driveways, patios, commercial premises and building exteriors are all part of what we do, with free quotes and before-and-after photos as standard.`,
+];
+
+const CLEANING_DESC_TEMPLATES: ((f: AreaFact) => string)[] = [
+  (f) => `Professional pressure washing and cleaning services in ${f.name}. Driveways, patios, commercial premises, restaurants, buildings. Free quotes — call today.`,
+  (f) => `Commercial and domestic pressure washing covering ${f.name} and ${f.county}. Driveways, patios, building exteriors — free quotes, fully insured.`,
+  (f) => `Spotless Detailing brings professional exterior cleaning to ${f.name} — driveways, patios, commercial premises and full building washes.`,
+  (f) => `Pressure washing and exterior cleaning in ${f.name}. Before-and-after photos as standard. Free, no-obligation quotes — get in touch today.`,
+];
+
+const VALETING_FAQ_POOL: ((f: AreaFact, p: string) => SeoFaq)[] = [
+  (f, p) => ({ q: `Do you cover ${f.name}?`, a: `Yes — ${f.name} is one of the areas we cover regularly, ${p}. Get in touch with your postcode and we'll confirm your nearest available slot.` }),
+  (f, p) => ({ q: `How quickly can you get to ${f.name}?`, a: `We're based in Uddingston, so ${f.name} is ${p}. Most bookings in ${f.name} can be confirmed within a few days, sooner if we have availability.` }),
+  (f) => ({ q: `Do I need to bring my car anywhere?`, a: `No — we're fully mobile, so we come to you in ${f.name} with everything needed: water, power and all our own equipment. Just point us to a spot on your driveway.` }),
+  (f) => ({ q: `What car valeting services do you offer in ${f.name}?`, a: `The full range — safe wash, full valet, deep clean, polishing and ceramic coating — all available to customers in ${f.name} and the rest of ${f.county}.` }),
+  (f) => ({ q: `Is driveway access needed in ${f.name}?`, a: `Driveway access makes things easiest, but we can also work on-street in ${f.name} if there's a suitable space and water access nearby — just let us know when booking.` }),
+  (f) => ({ q: `How do I book a valet in ${f.name}?`, a: `Use the booking page, WhatsApp or give us a call. We'll confirm a fixed price and an available slot for ${f.name} within the day.` }),
+];
+
+const CLEANING_FAQ_POOL: ((f: AreaFact, p: string) => SeoFaq)[] = [
+  (f, p) => ({ q: `Do you offer cleaning services in ${f.name}?`, a: `Yes — ${f.name} is part of our regular cleaning round, ${p}. Contact us with your postcode and we'll confirm availability.` }),
+  (f) => ({ q: `What can you clean in ${f.name}?`, a: `Driveways, patios, render, building exteriors, commercial premises and more — anything from a single domestic driveway to a full commercial contract in ${f.name} and ${f.county}.` }),
+  (f) => ({ q: `Do you work with commercial premises in ${f.name}?`, a: `Yes — we clean restaurants, offices, retail units and commercial forecourts in ${f.name}, with scheduled maintenance contracts available around your business hours.` }),
+  (f) => ({ q: `Will pressure washing damage older surfaces in ${f.name}?`, a: `No — we assess each surface first and use soft wash techniques for delicate render or stonework, saving higher pressure for robust surfaces like concrete and block paving.` }),
+  (f, p) => ({ q: `How quickly can you get to ${f.name}?`, a: `We're based in Uddingston, so ${f.name} is ${p}. Most jobs are quoted and scheduled within a few days.` }),
+  (f) => ({ q: `Do you provide quotes before starting work in ${f.name}?`, a: `Always — every job in ${f.name} gets a free, no-obligation quote before any work begins, with before-and-after photos provided once complete.` }),
+];
+
+function pickFaqs(
+  pool: ((f: AreaFact, p: string) => SeoFaq)[],
+  fact: AreaFact,
+  proximity: string,
+  salt: string,
+  count = 3
+): SeoFaq[] {
+  const offset = hashIndex(fact.slug + salt, pool.length);
+  return Array.from({ length: count }, (_, i) => pool[(offset + i) % pool.length](fact, proximity));
+}
+
+function buildAreaPage(
+  fact: AreaFact,
+  vertical: 'valeting' | 'cleaning'
+): SeoPage {
+  const p = proximityPhrase(fact);
+  const introTemplates = vertical === 'valeting' ? VALETING_INTRO_TEMPLATES : CLEANING_INTRO_TEMPLATES;
+  const descTemplates = vertical === 'valeting' ? VALETING_DESC_TEMPLATES : CLEANING_DESC_TEMPLATES;
+  const faqPool = vertical === 'valeting' ? VALETING_FAQ_POOL : CLEANING_FAQ_POOL;
+
+  const introIdx = hashIndex(fact.slug + vertical + 'intro', introTemplates.length);
+  const descIdx = hashIndex(fact.slug + vertical + 'desc', descTemplates.length);
+
+  const titlePrefix = vertical === 'valeting' ? 'Car Valeting' : 'Pressure Washing & Cleaning';
+  const h1Prefix = vertical === 'valeting' ? 'Car Valeting & Detailing in' : 'Pressure Washing & Cleaning in';
+
+  return {
+    slug: fact.slug,
+    title: `${titlePrefix} ${fact.name} | Mobile Detailing & Valeting — Spotless Detailing`,
+    h1: `${h1Prefix} ${fact.name}`,
+    description: descTemplates[descIdx](fact),
+    intro: introTemplates[introIdx](fact, p),
+    type: 'area',
+    character: fact.character,
+    faqs: pickFaqs(faqPool, fact, p, vertical + 'faq'),
+  };
 }
 
 // ---------------------------------------------------------------------------
 // Valeting area pages — one per SERVICE_AREAS entry
 // ---------------------------------------------------------------------------
-export const VALETING_AREA_PAGES: SeoPage[] = SERVICE_AREAS.map((area) => ({
-  slug: slugify(area),
-  title: `Car Valeting ${area} | Mobile Detailing & Valeting — Spotless Detailing`,
-  h1: `Car Valeting & Detailing in ${area}`,
-  description: `Professional mobile car valeting and detailing in ${area}. Safe wash from £30, full valet from £60, deep clean from £120. We come to you — book today.`,
-  intro: `Looking for professional car valeting in ${area}? Spotless Detailing offers premium mobile car valeting and detailing services across ${area} and the surrounding areas. From a quick safe wash to a full deep clean, we bring everything to your driveway — no need to drop your car off anywhere. Our services include safe wash, full valet, deep clean, polishing, ceramic coating and bespoke maintenance plans.`,
-  type: 'area',
-}));
+export const VALETING_AREA_PAGES: SeoPage[] = AREA_FACTS.map((fact) =>
+  buildAreaPage(fact, 'valeting')
+);
 
 // ---------------------------------------------------------------------------
 // Valeting service-type pages — generic SEO landing pages
@@ -142,14 +242,9 @@ export const VALETING_SERVICE_PAGES: SeoPage[] = [
 // ---------------------------------------------------------------------------
 // Cleaning area pages — one per SERVICE_AREAS entry
 // ---------------------------------------------------------------------------
-export const CLEANING_AREA_PAGES: SeoPage[] = SERVICE_AREAS.map((area) => ({
-  slug: slugify(area),
-  title: `Pressure Washing & Cleaning ${area} | Commercial & Domestic — Spotless Detailing`,
-  h1: `Pressure Washing & Cleaning in ${area}`,
-  description: `Professional pressure washing and cleaning services in ${area}. Driveways, patios, commercial premises, restaurants, buildings. Free quotes — call today.`,
-  intro: `Need professional cleaning services in ${area}? Spotless Detailing offers commercial and domestic pressure washing and exterior cleaning across ${area} and the surrounding areas. From driveway and patio cleaning to restaurant frontage washing and full building cleans, we have the equipment and expertise to handle any job. All work is fully insured and we provide before-and-after photos as standard.`,
-  type: 'area',
-}));
+export const CLEANING_AREA_PAGES: SeoPage[] = AREA_FACTS.map((fact) =>
+  buildAreaPage(fact, 'cleaning')
+);
 
 // ---------------------------------------------------------------------------
 // Cleaning service-type pages

@@ -8,6 +8,7 @@ import {
   getAllValetingSlugs,
 } from '@/lib/seo-pages';
 import ContactForm from '@/components/ContactForm';
+import FAQ from '@/components/FAQ';
 import type { Metadata } from 'next';
 
 interface Props {
@@ -159,6 +160,23 @@ export default async function ValetingSlugPage({ params }: Props) {
             </div>
           </div>
         </section>
+      )}
+
+      {/* Area-specific FAQ */}
+      {page.faqs && page.faqs.length > 0 && (
+        <FAQ
+          faqs={page.faqs}
+          jsonLdId={`faq-jsonld-valeting-${page.slug}`}
+          eyebrow={`${page.h1.replace('Car Valeting & Detailing in ', '')} FAQs`}
+          title={
+            <>
+              Questions from{' '}
+              <span className="gradient-text italic">
+                {page.h1.replace('Car Valeting & Detailing in ', '')} customers.
+              </span>
+            </>
+          }
+        />
       )}
 
       {/* Contact Form */}
