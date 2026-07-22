@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Trash2, Plus, X, Save } from 'lucide-react';
-import type { Service } from '@/lib/types';
+import type { CleaningService } from '@/lib/types';
 
-interface ServiceFormProps {
-  service?: Service;
+interface CleaningServiceFormProps {
+  service?: CleaningService;
 }
 
-export default function ServiceForm({ service }: ServiceFormProps) {
+export default function CleaningServiceForm({ service }: CleaningServiceFormProps) {
   const router = useRouter();
   const isEdit = !!service;
   const [saving, setSaving] = useState(false);
@@ -22,23 +22,12 @@ export default function ServiceForm({ service }: ServiceFormProps) {
     shortName: service?.shortName || '',
     tagline: service?.tagline || '',
     description: service?.description || '',
-    startingPrice: service?.startingPrice ?? 0,
-    priceLabel: service?.priceLabel || '',
-    duration: service?.duration || '',
-    popular: service?.popular || false,
-    showOnHomepage: service?.showOnHomepage || false,
-    homepageTag: service?.homepageTag || '',
-    isMaintenanceCallout: service?.isMaintenanceCallout || false,
+    bestFor: service?.bestFor || '',
     sortOrder: service?.sortOrder ?? 100,
-    homepageSortOrder: service?.homepageSortOrder ?? 0,
     isActive: service?.isActive ?? true,
   });
 
-  const [interior, setInterior] = useState<string[]>(service?.interior || []);
-  const [exterior, setExterior] = useState<string[]>(service?.exterior || ['']);
-  const [hasInterior, setHasInterior] = useState<boolean>(
-    !!(service?.interior && service.interior.length > 0)
-  );
+  const [features, setFeatures] = useState<string[]>(service?.features || ['']);
 
   function update<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -49,20 +38,16 @@ export default function ServiceForm({ service }: ServiceFormProps) {
     setSaving(true);
     setError('');
 
-    const cleanExterior = exterior.map((i) => i.trim()).filter(Boolean);
-    const cleanInterior = hasInterior
-      ? interior.map((i) => i.trim()).filter(Boolean)
-      : [];
+    const cleanFeatures = features.map((i) => i.trim()).filter(Boolean);
 
     const payload = {
       ...form,
-      priceLabel: form.priceLabel.trim() || null,
-      homepageTag: form.homepageTag.trim() || null,
-      interior: cleanInterior,
-      exterior: cleanExterior,
+      features: cleanFeatures,
     };
 
-    const url = isEdit ? `/api/admin/services/${service!.id}` : '/api/admin/services';
+    const url = isEdit
+      ? `/api/admin/cleaning-services/${service!.id}`
+      : '/api/admin/cleaning-services';
     const method = isEdit ? 'PUT' : 'POST';
 
     const res = await fetch(url, {
@@ -79,7 +64,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
       return;
     }
 
-    router.push('/admin/services');
+    router.push('/admin/cleaning-services');
     router.refresh();
   }
 
@@ -87,7 +72,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
     if (!service) return;
     if (!confirm(`Delete "${service.name}"? This cannot be undone.`)) return;
     setDeleting(true);
-    const res = await fetch(`/api/admin/services/${service.id}`, {
+    const res = await fetch(`/api/admin/cleaning-services/${service.id}`, {
       method: 'DELETE',
     });
     setDeleting(false);
@@ -95,7 +80,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
       setError('Delete failed');
       return;
     }
-    router.push('/admin/services');
+    router.push('/admin/cleaning-services');
     router.refresh();
   }
 
@@ -103,7 +88,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6 pb-24">
       <Card title="Basics">
         <div className="grid md:grid-cols-2 gap-4">
-          <Field label="Service name" hint="e.g. Safe Wash, Full Valet">
+          <Field label="Service name" hint="e.g. Commercial Cleaning">
             <input
               type="text"
               value={form.name}
@@ -112,7 +97,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
               className={inputCls}
             />
           </Field>
-          <Field label="Short name" hint="Used on homepage cards, e.g. Valet">
+          <Field label="Short name" hint="Used in nav/footer links, e.g. Commercial">
             <input
               type="text"
               value={form.shortName}
@@ -123,7 +108,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
           </Field>
         </div>
 
-        <Field label="URL slug" hint="lowercase-with-hyphens, e.g. deep-clean">
+        <Field label="URL slug" hint="lowercase-with-hyphens, e.g. commercial-cleaning">
           <input
             type="text"
             value={form.slug}
@@ -134,18 +119,18 @@ export default function ServiceForm({ service }: ServiceFormProps) {
           />
         </Field>
 
-        <Field label="Tagline" hint="Small uppercase line above name on services page">
+        <Field label="Tagline" hint="Small uppercase line above name on the card">
           <input
             type="text"
             value={form.tagline}
             onChange={(e) => update('tagline', e.target.value)}
             required
             className={inputCls}
-            placeholder="Swirl-free exterior refresh"
+            placeholder="First impressions matter"
           />
         </Field>
 
-        <Field label="Description" hint="Paragraph below the price">
+        <Field label="Description" hint="Paragraph shown on the cleaning services card">
           <textarea
             value={form.description}
             onChange={(e) => update('description', e.target.value)}
@@ -154,134 +139,44 @@ export default function ServiceForm({ service }: ServiceFormProps) {
             className={inputCls}
           />
         </Field>
-      </Card>
 
-      <Card title="Pricing">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Field label="Starting price (£)" hint="0 = show price label instead">
-            <input
-              type="number"
-              min={0}
-              value={form.startingPrice}
-              onChange={(e) => update('startingPrice', Number(e.target.value))}
-              className={inputCls}
-            />
-          </Field>
-          <Field label="Price label" hint="Used when starting price is 0, e.g. POA, Bespoke">
-            <input
-              type="text"
-              value={form.priceLabel}
-              onChange={(e) => update('priceLabel', e.target.value)}
-              className={inputCls}
-              placeholder="POA"
-            />
-          </Field>
-          <Field label="Duration" hint="e.g. 60–90 min, 3–8 hours">
-            <input
-              type="text"
-              value={form.duration}
-              onChange={(e) => update('duration', e.target.value)}
-              className={inputCls}
-              placeholder="60–90 min"
-            />
-          </Field>
-        </div>
-      </Card>
-
-      <Card title="What's included">
-        <div className="flex items-start sm:items-center gap-3 mb-4 flex-col sm:flex-row">
-          <ToggleField
-            checked={hasInterior}
-            onChange={setHasInterior}
-            label="Has interior list"
+        <Field label="Best for" hint="Short line describing who this service suits">
+          <input
+            type="text"
+            value={form.bestFor}
+            onChange={(e) => update('bestFor', e.target.value)}
+            required
+            className={inputCls}
+            placeholder="Restaurants, hotels, shops and offices that need to look their best."
           />
-          <p className="text-xs text-cream/50">
-            Turn on for services with separate interior + exterior lists (Valet, Deep Clean).
-          </p>
-        </div>
+        </Field>
+      </Card>
 
-        {hasInterior && (
-          <Field
-            label="Interior items"
-            hint={
-              <span>
-                One per row. Shows as bulleted list under <strong>Interior</strong>.
-              </span>
-            }
-          >
-            <ItemList items={interior} onChange={setInterior} placeholder="Thoroughly hoovered" />
-          </Field>
-        )}
-
+      <Card title="Features">
         <Field
-          label={hasInterior ? 'Exterior items' : 'Included items'}
-          hint={
-            <span>
-              One per row. Shows as bulleted list under{' '}
-              <strong>{hasInterior ? 'Exterior' : 'What’s included'}</strong>.
-            </span>
-          }
+          label="Feature items"
+          hint="One per row. Shown as a bulleted list on the service card."
         >
-          <ItemList items={exterior} onChange={setExterior} placeholder="Full exterior safe wash" />
+          <ItemList items={features} onChange={setFeatures} placeholder="Shopfront and retail unit washing" />
         </Field>
       </Card>
 
       <Card title="Display">
-        <div className="grid sm:grid-cols-2 gap-4">
-          <Field label="Homepage tag" hint="Short uppercase label for hero row card, e.g. Refresh">
-            <input
-              type="text"
-              value={form.homepageTag}
-              onChange={(e) => update('homepageTag', e.target.value)}
-              className={inputCls}
-              placeholder="Refresh"
-            />
-          </Field>
-          <Field label="Sort order" hint="Lower numbers appear first on services page">
-            <input
-              type="number"
-              value={form.sortOrder}
-              onChange={(e) => update('sortOrder', Number(e.target.value))}
-              className={inputCls}
-            />
-          </Field>
-        </div>
-        <Field label="Homepage sort order" hint="Lower numbers appear first in homepage 4-card row">
+        <Field label="Sort order" hint="Lower numbers appear first on the cleaning page">
           <input
             type="number"
-            value={form.homepageSortOrder}
-            onChange={(e) => update('homepageSortOrder', Number(e.target.value))}
+            value={form.sortOrder}
+            onChange={(e) => update('sortOrder', Number(e.target.value))}
             className={inputCls}
           />
         </Field>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
-          <Checkbox
-            checked={form.showOnHomepage}
-            onChange={(v) => update('showOnHomepage', v)}
-            label="Show on homepage"
-            hint="In the 4-card row under hero"
-          />
-          <Checkbox
-            checked={form.popular}
-            onChange={(v) => update('popular', v)}
-            label="Most popular"
-            hint="Shows the POPULAR pill"
-          />
+        <div className="grid sm:grid-cols-2 gap-3 pt-2">
           <Checkbox
             checked={form.isActive}
             onChange={(v) => update('isActive', v)}
             label="Live on site"
             hint="Uncheck to hide without deleting"
-          />
-        </div>
-
-        <div className="pt-3">
-          <Checkbox
-            checked={form.isMaintenanceCallout}
-            onChange={(v) => update('isMaintenanceCallout', v)}
-            label="Render as Maintenance callout"
-            hint="Use the special full-width callout layout instead of a card. Only one service should have this."
           />
         </div>
       </Card>
@@ -372,28 +267,6 @@ function Checkbox({
         <span className="block text-sm text-cream font-medium">{label}</span>
         {hint && <span className="block text-xs text-cream/50 mt-0.5">{hint}</span>}
       </span>
-    </label>
-  );
-}
-
-function ToggleField({
-  checked,
-  onChange,
-  label,
-}: {
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  label: string;
-}) {
-  return (
-    <label className="inline-flex items-center gap-2 cursor-pointer">
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        className="accent-cyan w-4 h-4"
-      />
-      <span className="text-sm text-cream">{label}</span>
     </label>
   );
 }

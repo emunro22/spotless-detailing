@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { sql } from './db';
-import type { Service, GalleryImage, SiteSettings } from './types';
+import type { Service, CleaningService, GalleryImage, SiteSettings } from './types';
 
 // ---- Service row mapping ----------------------------------------
 
@@ -14,7 +14,7 @@ type ServiceRow = {
   starting_price: number;
   price_label: string | null;
   duration: string;
-  interior: string[] | null;
+  interior: string[];
   exterior: string[];
   popular: boolean;
   show_on_homepage: boolean;
@@ -93,7 +93,7 @@ export async function createService(data: ServiceInput): Promise<Service> {
     ) VALUES (
       ${data.slug}, ${data.name}, ${data.shortName}, ${data.tagline}, ${data.description},
       ${data.startingPrice}, ${data.priceLabel}, ${data.duration},
-      ${data.interior ? JSON.stringify(data.interior) : null}, ${JSON.stringify(data.exterior)},
+      ${JSON.stringify(data.interior)}, ${JSON.stringify(data.exterior)},
       ${data.popular}, ${data.showOnHomepage}, ${data.homepageTag},
       ${data.isMaintenanceCallout}, ${data.sortOrder}, ${data.homepageSortOrder}, ${data.isActive}
     )
@@ -113,7 +113,7 @@ export async function updateService(id: number, data: ServiceInput): Promise<Ser
       starting_price = ${data.startingPrice},
       price_label = ${data.priceLabel},
       duration = ${data.duration},
-      interior = ${data.interior ? JSON.stringify(data.interior) : null},
+      interior = ${JSON.stringify(data.interior)},
       exterior = ${JSON.stringify(data.exterior)},
       popular = ${data.popular},
       show_on_homepage = ${data.showOnHomepage},
@@ -132,6 +132,97 @@ export async function updateService(id: number, data: ServiceInput): Promise<Ser
 
 export async function deleteService(id: number): Promise<void> {
   await sql`DELETE FROM services WHERE id = ${id}`;
+}
+
+// ---- Cleaning services -------------------------------------------
+
+type CleaningServiceRow = {
+  id: number;
+  slug: string;
+  name: string;
+  short_name: string;
+  tagline: string;
+  description: string;
+  features: string[];
+  best_for: string;
+  sort_order: number;
+  is_active: boolean;
+};
+
+function mapCleaningService(row: CleaningServiceRow): CleaningService {
+  return {
+    id: row.id,
+    slug: row.slug,
+    name: row.name,
+    shortName: row.short_name,
+    tagline: row.tagline,
+    description: row.description,
+    features: row.features,
+    bestFor: row.best_for,
+    sortOrder: row.sort_order,
+    isActive: row.is_active,
+  };
+}
+
+export async function getAllCleaningServices(): Promise<CleaningService[]> {
+  const rows = (await sql`
+    SELECT * FROM cleaning_services
+    WHERE is_active = TRUE
+    ORDER BY sort_order ASC
+  `) as CleaningServiceRow[];
+  return rows.map(mapCleaningService);
+}
+
+export async function getAllCleaningServicesAdmin(): Promise<CleaningService[]> {
+  const rows = (await sql`SELECT * FROM cleaning_services ORDER BY sort_order ASC`) as CleaningServiceRow[];
+  return rows.map(mapCleaningService);
+}
+
+export async function getCleaningServiceById(id: number): Promise<CleaningService | null> {
+  const rows = (await sql`SELECT * FROM cleaning_services WHERE id = ${id}`) as CleaningServiceRow[];
+  return rows[0] ? mapCleaningService(rows[0]) : null;
+}
+
+export type CleaningServiceInput = Omit<CleaningService, 'id'>;
+
+export async function createCleaningService(data: CleaningServiceInput): Promise<CleaningService> {
+  const rows = (await sql`
+    INSERT INTO cleaning_services (
+      slug, name, short_name, tagline, description, features, best_for, sort_order, is_active
+    ) VALUES (
+      ${data.slug}, ${data.name}, ${data.shortName}, ${data.tagline}, ${data.description},
+      ${JSON.stringify(data.features)}, ${data.bestFor}, ${data.sortOrder}, ${data.isActive}
+    )
+    RETURNING *
+  `) as CleaningServiceRow[];
+  return mapCleaningService(rows[0]);
+}
+
+export async function updateCleaningService(
+  id: number,
+  data: CleaningServiceInput
+): Promise<CleaningService> {
+  const rows = (await sql`
+    UPDATE cleaning_services SET
+      slug = ${data.slug},
+      name = ${data.name},
+      short_name = ${data.shortName},
+      tagline = ${data.tagline},
+      description = ${data.description},
+      features = ${JSON.stringify(data.features)},
+      best_for = ${data.bestFor},
+      sort_order = ${data.sortOrder},
+      is_active = ${data.isActive},
+      updated_at = NOW()
+    WHERE id = ${id}
+    RETURNING *
+  `) as CleaningServiceRow[];
+  if (!rows[0]) throw new Error('Cleaning service not found');
+  return mapCleaningService(rows[0]);
+}
+
+export async function deleteCleaningService(id: number): Promise<void> {
+  await sql`DELETE FROM cleaning_services WHERE id = ${id}`;
 }
 
 // ---- Gallery ---------------------------------------------------

@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Instagram, MessageCircle } from 'lucide-react';
-import { BUSINESS, SERVICE_AREAS, SERVICES, CLEANING_SERVICES } from '@/lib/constants';
+import { BUSINESS, SERVICE_AREAS, SERVICES } from '@/lib/constants';
 import Image from 'next/image';
-import { getAllSettings } from '@/lib/queries';
+import { getAllSettings, getAllCleaningServices } from '@/lib/queries';
 
 export default async function Footer() {
   let settings: Record<string, string> = {};
+  let cleaningServices: Awaited<ReturnType<typeof getAllCleaningServices>> = [];
   try {
     settings = await getAllSettings();
+  } catch {}
+  try {
+    cleaningServices = await getAllCleaningServices();
   } catch {}
   const phone = settings.business_phone_tel || BUSINESS.phone;
   const phoneDisplay = settings.business_phone || BUSINESS.phoneDisplay;
@@ -82,7 +86,7 @@ export default async function Footer() {
               Cleaning
             </h4>
             <ul className="space-y-3 text-sm">
-              {CLEANING_SERVICES.slice(0, 4).map((s) => (
+              {cleaningServices.slice(0, 4).map((s) => (
                 <li key={s.slug}>
                   <Link
                     href="/cleaning"

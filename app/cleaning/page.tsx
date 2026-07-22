@@ -2,12 +2,10 @@ import Link from 'next/link';
 import { MapPin, Phone, ArrowRight, CheckCircle2 } from 'lucide-react';
 import CleaningContactForm from '@/components/CleaningContactForm';
 import { buildMetadata } from '@/lib/seo';
-import {
-  BUSINESS,
-  SERVICE_AREAS,
-  CLEANING_SERVICES,
-  CLEANING_FAQS,
-} from '@/lib/constants';
+import { BUSINESS, SERVICE_AREAS, CLEANING_FAQS } from '@/lib/constants';
+import { getAllCleaningServices } from '@/lib/queries';
+
+export const revalidate = 60;
 
 export const metadata = buildMetadata({
   title:
@@ -17,7 +15,9 @@ export const metadata = buildMetadata({
   path: '/cleaning',
 });
 
-export default function CleaningPage() {
+export default async function CleaningPage() {
+  const cleaningServices = await getAllCleaningServices();
+
   return (
     <>
       {/* Hero */}
@@ -76,7 +76,7 @@ export default function CleaningPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {CLEANING_SERVICES.map((service) => (
+            {cleaningServices.map((service) => (
               <div
                 key={service.slug}
                 className="rounded-2xl glass border-gradient p-6 md:p-7 hover:border-cyan/30 transition-all"
@@ -227,7 +227,7 @@ export default function CleaningPage() {
             </div>
 
             <div className="lg:col-span-7">
-              <CleaningContactForm />
+              <CleaningContactForm services={cleaningServices} />
             </div>
           </div>
         </div>

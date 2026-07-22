@@ -3,11 +3,15 @@
 import { useState } from 'react';
 import { Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { CLEANING_SERVICES } from '@/lib/constants';
+import type { CleaningService } from '@/lib/types';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
-export default function CleaningContactForm() {
+interface CleaningContactFormProps {
+  services: Pick<CleaningService, 'slug' | 'name'>[];
+}
+
+export default function CleaningContactForm({ services }: CleaningContactFormProps) {
   const [state, setState] = useState<FormState>('idle');
   const [error, setError] = useState('');
 
@@ -107,7 +111,7 @@ export default function CleaningContactForm() {
             <option value="" disabled>
               Pick a service
             </option>
-            {CLEANING_SERVICES.map((s) => (
+            {services.map((s) => (
               <option key={s.slug} value={s.name}>
                 {s.name}
               </option>

@@ -8,7 +8,7 @@ export type Service = {
   startingPrice: number;
   priceLabel: string | null;
   duration: string;
-  interior: string[] | null;
+  interior: string[];
   exterior: string[];
   popular: boolean;
   showOnHomepage: boolean;
@@ -16,6 +16,19 @@ export type Service = {
   isMaintenanceCallout: boolean;
   sortOrder: number;
   homepageSortOrder: number;
+  isActive: boolean;
+};
+
+export type CleaningService = {
+  id: number;
+  slug: string;
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  features: string[];
+  bestFor: string;
+  sortOrder: number;
   isActive: boolean;
 };
 

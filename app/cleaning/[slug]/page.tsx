@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MapPin, Phone, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { buildMetadata } from '@/lib/seo';
-import { BUSINESS, SERVICE_AREAS, CLEANING_SERVICES } from '@/lib/constants';
+import { BUSINESS, SERVICE_AREAS } from '@/lib/constants';
+import { getAllCleaningServices } from '@/lib/queries';
 import {
   findCleaningPage,
   getAllCleaningSlugs,
@@ -14,6 +15,8 @@ import type { Metadata } from 'next';
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   return getAllCleaningSlugs().map((slug) => ({ slug }));
@@ -34,6 +37,7 @@ export default async function CleaningSlugPage({ params }: Props) {
   const { slug } = await params;
   const page = findCleaningPage(slug);
   if (!page) notFound();
+  const cleaningServices = await getAllCleaningServices();
 
   return (
     <>
@@ -97,7 +101,7 @@ export default async function CleaningSlugPage({ params }: Props) {
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {CLEANING_SERVICES.slice(0, 6).map((service) => (
+            {cleaningServices.slice(0, 6).map((service) => (
               <Link
                 key={service.slug}
                 href="/cleaning"
@@ -218,7 +222,7 @@ export default async function CleaningSlugPage({ params }: Props) {
               </div>
             </div>
             <div className="lg:col-span-7">
-              <CleaningContactForm />
+              <CleaningContactForm services={cleaningServices} />
             </div>
           </div>
         </div>

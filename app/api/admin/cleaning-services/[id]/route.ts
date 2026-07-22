@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server';
 import {
-  getServiceById,
-  updateService,
-  deleteService,
-  type ServiceInput,
+  getCleaningServiceById,
+  updateCleaningService,
+  deleteCleaningService,
+  type CleaningServiceInput,
 } from '@/lib/queries';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const service = await getServiceById(Number(id));
+  const service = await getCleaningServiceById(Number(id));
   if (!service) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json(service);
 }
@@ -19,26 +19,18 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const { id } = await params;
   try {
     const body = await req.json();
-    const data: ServiceInput = {
+    const data: CleaningServiceInput = {
       slug: body.slug,
       name: body.name,
       shortName: body.shortName,
       tagline: body.tagline,
       description: body.description,
-      startingPrice: Number(body.startingPrice) || 0,
-      priceLabel: body.priceLabel || null,
-      duration: body.duration || '',
-      interior: Array.isArray(body.interior) ? body.interior : [],
-      exterior: Array.isArray(body.exterior) ? body.exterior : [],
-      popular: !!body.popular,
-      showOnHomepage: !!body.showOnHomepage,
-      homepageTag: body.homepageTag || null,
-      isMaintenanceCallout: !!body.isMaintenanceCallout,
+      features: Array.isArray(body.features) ? body.features : [],
+      bestFor: body.bestFor,
       sortOrder: Number(body.sortOrder) || 0,
-      homepageSortOrder: Number(body.homepageSortOrder) || 0,
       isActive: body.isActive !== false,
     };
-    const updated = await updateService(Number(id), data);
+    const updated = await updateCleaningService(Number(id), data);
     return NextResponse.json(updated);
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Update failed';
@@ -48,6 +40,6 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  await deleteService(Number(id));
+  await deleteCleaningService(Number(id));
   return NextResponse.json({ ok: true });
 }

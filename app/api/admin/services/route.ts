@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       startingPrice: Number(body.startingPrice) || 0,
       priceLabel: body.priceLabel || null,
       duration: body.duration || '',
-      interior: Array.isArray(body.interior) ? body.interior : null,
+      interior: Array.isArray(body.interior) ? body.interior : [],
       exterior: Array.isArray(body.exterior) ? body.exterior : [],
       popular: !!body.popular,
       showOnHomepage: !!body.showOnHomepage,
