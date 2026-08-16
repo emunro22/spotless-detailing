@@ -13,7 +13,12 @@ interface GalleryProps {
 }
 
 export default function Gallery({ images, preview = false }: GalleryProps) {
-  const items = preview ? images.slice(0, 6) : images;
+  // On the homepage preview, trim to a multiple of 4 so the grid always
+  // fills its last row cleanly (2-col mobile and 4-col desktop both divide
+  // evenly into a multiple of 4) instead of leaving a ragged/empty row.
+  const previewCount =
+    images.length >= 4 ? Math.floor(images.length / 4) * 4 : images.length;
+  const items = preview ? images.slice(0, previewCount) : images;
 
   return (
     <section className="relative py-24 md:py-32 bg-midnight-900">
@@ -41,7 +46,7 @@ export default function Gallery({ images, preview = false }: GalleryProps) {
           )}
         </div>
 
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
           {items.map((img, i) => (
             <motion.div
               key={img.id}
@@ -49,9 +54,7 @@ export default function Gallery({ images, preview = false }: GalleryProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: i * 0.06 }}
-              className={`group relative mb-3 md:mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-cream/5 bg-midnight-700 ${
-                img.tall ? 'aspect-[3/4]' : 'aspect-[4/3]'
-              }`}
+              className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-cream/5 bg-midnight-700"
             >
               <Image
                 src={img.url}

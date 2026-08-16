@@ -203,16 +203,6 @@ export default function GalleryManager({
                   <label className="flex items-center gap-1.5 text-cream/70 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={img.tall}
-                      onChange={(e) => updateImage(img.id, { tall: e.target.checked })}
-                      className="accent-cyan w-4 h-4"
-                    />
-                    Tall
-                  </label>
-
-                  <label className="flex items-center gap-1.5 text-cream/70 cursor-pointer">
-                    <input
-                      type="checkbox"
                       checked={img.showInPreview}
                       onChange={(e) =>
                         updateImage(img.id, { showInPreview: e.target.checked })
