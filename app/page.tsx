@@ -3,6 +3,7 @@ import Services from '@/components/Services';
 import Process from '@/components/Process';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import Gallery from '@/components/Gallery';
+import InstagramFeed from '@/components/InstagramFeed';
 import Testimonials from '@/components/Testimonials';
 import ServiceAreas from '@/components/ServiceAreas';
 import FAQ from '@/components/FAQ';
@@ -37,9 +38,10 @@ export default async function HomePage() {
     <>
       <Hero homepageServices={homepageServices} settings={settings} />
       <Services services={services} />
+      <Gallery images={galleryImages} preview />
+      <InstagramFeed />
       <Process />
       <WhyChooseUs />
-      <Gallery images={galleryImages} preview />
       <Testimonials />
       <ServiceAreas />
       <FAQ />

@@ -13,7 +13,7 @@ interface GalleryProps {
 }
 
 export default function Gallery({ images, preview = false }: GalleryProps) {
-  const items = preview ? images.slice(0, 5) : images;
+  const items = preview ? images.slice(0, 6) : images;
 
   return (
     <section className="relative py-24 md:py-32 bg-midnight-900">
@@ -41,7 +41,7 @@ export default function Gallery({ images, preview = false }: GalleryProps) {
           )}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4">
           {items.map((img, i) => (
             <motion.div
               key={img.id}
@@ -49,15 +49,15 @@ export default function Gallery({ images, preview = false }: GalleryProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: i * 0.06 }}
-              className={`group relative overflow-hidden rounded-2xl border border-cream/5 bg-midnight-700 ${
-                img.tall ? 'row-span-2' : ''
-              } ${i === 0 ? 'col-span-2' : ''}`}
+              className={`group relative mb-3 md:mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-cream/5 bg-midnight-700 ${
+                img.tall ? 'aspect-[3/4]' : 'aspect-[4/3]'
+              }`}
             >
               <Image
                 src={img.url}
                 alt={img.alt}
                 fill
-                sizes="(max-width: 768px) 50vw, 25vw"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-midnight-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
