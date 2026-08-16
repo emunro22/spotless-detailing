@@ -13,12 +13,7 @@ interface GalleryProps {
 }
 
 export default function Gallery({ images, preview = false }: GalleryProps) {
-  // On the homepage preview, trim to a multiple of 4 so the grid always
-  // fills its last row cleanly (2-col mobile and 4-col desktop both divide
-  // evenly into a multiple of 4) instead of leaving a ragged/empty row.
-  const previewCount =
-    images.length >= 4 ? Math.floor(images.length / 4) * 4 : images.length;
-  const items = preview ? images.slice(0, previewCount) : images;
+  const items = preview ? images.slice(0, 8) : images;
 
   return (
     <section className="relative py-24 md:py-32 bg-midnight-900">
