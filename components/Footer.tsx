@@ -106,12 +106,25 @@ export default async function Footer() {
             </h4>
             <ul className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm text-cream/60">
               {SERVICE_AREAS.slice(0, 12).map((area) => (
-                <li key={area}>{area}</li>
+                <li key={area}>
+                  <Link
+                    href={`/valeting/${area.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="hover:text-cyan transition-colors"
+                  >
+                    {area}
+                  </Link>
+                </li>
               ))}
             </ul>
             <p className="mt-3 text-xs text-cream/40">
               Plus all of Greater Glasgow & Lanarkshire.
             </p>
+            <Link
+              href="/blog"
+              className="inline-block mt-4 text-sm text-cream/60 hover:text-cyan transition-colors"
+            >
+              Read our blog →
+            </Link>
           </div>
 
           {/* Contact */}

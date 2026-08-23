@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { BUSINESS } from '@/lib/constants';
 import { getAllValetingSlugs, getAllCleaningSlugs } from '@/lib/seo-pages';
+import { getAllBlogSlugs } from '@/lib/blog-posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = BUSINESS.url;
@@ -14,10 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/gallery', priority: 0.7, changeFrequency: 'weekly' as const },
     { path: '/about', priority: 0.6, changeFrequency: 'monthly' as const },
     { path: '/contact', priority: 0.7, changeFrequency: 'monthly' as const },
+    { path: '/blog', priority: 0.7, changeFrequency: 'weekly' as const },
   ];
 
   const valetingSlugs = getAllValetingSlugs();
   const cleaningSlugs = getAllCleaningSlugs();
+  const blogSlugs = getAllBlogSlugs();
 
   const valetingRoutes = valetingSlugs.map((slug) => ({
     path: `/valeting/${slug}`,
@@ -31,7 +34,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
   }));
 
-  const allRoutes = [...staticRoutes, ...valetingRoutes, ...cleaningRoutes];
+  const blogRoutes = blogSlugs.map((slug) => ({
+    path: `/blog/${slug}`,
+    priority: 0.6,
+    changeFrequency: 'monthly' as const,
+  }));
+
+  const allRoutes = [
+    ...staticRoutes,
+    ...valetingRoutes,
+    ...cleaningRoutes,
+    ...blogRoutes,
+  ];
 
   return allRoutes.map((r) => ({
     url: `${base}${r.path}`,

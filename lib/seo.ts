@@ -1,6 +1,6 @@
 // lib/seo.ts
 import type { Metadata } from 'next';
-import { BUSINESS, SEO_KEYWORDS, SERVICES, SERVICE_AREAS } from './constants';
+import { BUSINESS, SEO_KEYWORDS, SERVICES, SERVICE_AREAS, TESTIMONIALS } from './constants';
 
 export function buildMetadata({
   title,
@@ -122,9 +122,21 @@ export function localBusinessJsonLd() {
     },
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: '5.0',
-      reviewCount: '24',
+      ratingValue: (
+        TESTIMONIALS.reduce((sum, t) => sum + t.rating, 0) / TESTIMONIALS.length
+      ).toFixed(1),
+      reviewCount: String(TESTIMONIALS.length),
     },
+    review: TESTIMONIALS.map((t) => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: t.name },
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: String(t.rating),
+        bestRating: '5',
+      },
+      reviewBody: t.quote,
+    })),
   };
 }
 
@@ -137,5 +149,35 @@ export function faqJsonLd(faqs: { q: string; a: string }[]) {
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
+  };
+}
+
+export function blogPostingJsonLd({
+  title,
+  description,
+  slug,
+  date,
+}: {
+  title: string;
+  description: string;
+  slug: string;
+  date: string;
+}) {
+  const url = `${BUSINESS.url}/blog/${slug}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    description,
+    url,
+    datePublished: date,
+    dateModified: date,
+    author: { '@type': 'Organization', name: BUSINESS.name },
+    publisher: {
+      '@type': 'Organization',
+      name: BUSINESS.name,
+      logo: { '@type': 'ImageObject', url: `${BUSINESS.url}/logo.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
   };
 }

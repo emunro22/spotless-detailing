@@ -29,10 +29,14 @@ export default function ServiceAreas() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.3, delay: i * 0.03 }}
-              className="group flex items-center gap-2 glass border-gradient rounded-full px-4 py-2.5 hover:border-cyan/40 transition-all"
             >
-              <MapPin className="w-3.5 h-3.5 text-cyan group-hover:scale-110 transition-transform" />
-              <span className="text-sm text-cream/85 font-medium">{area}</span>
+              <Link
+                href={`/valeting/${area.toLowerCase().replace(/\s+/g, '-')}`}
+                className="group flex items-center gap-2 glass border-gradient rounded-full px-4 py-2.5 hover:border-cyan/40 transition-all"
+              >
+                <MapPin className="w-3.5 h-3.5 text-cyan group-hover:scale-110 transition-transform" />
+                <span className="text-sm text-cream/85 font-medium">{area}</span>
+              </Link>
             </motion.div>
           ))}
         </div>
