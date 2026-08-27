@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { sql } from './db';
+import { sql, sqlLive } from './db';
 import type { Service, CleaningService, GalleryImage, SiteSettings, Booking, BookingStatus, BookingType } from './types';
 
 // ---- Service row mapping ----------------------------------------
@@ -375,7 +375,7 @@ function mapBooking(row: BookingRow): Booking {
 }
 
 export async function getBookingById(id: number): Promise<Booking | null> {
-  const rows = (await sql`
+  const rows = (await sqlLive`
     SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
     FROM bookings b
     LEFT JOIN services s ON s.id = b.service_id
@@ -385,7 +385,7 @@ export async function getBookingById(id: number): Promise<Booking | null> {
 }
 
 export async function getBookingsForDate(date: string): Promise<Booking[]> {
-  const rows = (await sql`
+  const rows = (await sqlLive`
     SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
     FROM bookings b
     LEFT JOIN services s ON s.id = b.service_id
@@ -396,7 +396,7 @@ export async function getBookingsForDate(date: string): Promise<Booking[]> {
 }
 
 export async function getBookingsInRange(from: string, to: string): Promise<Booking[]> {
-  const rows = (await sql`
+  const rows = (await sqlLive`
     SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
     FROM bookings b
     LEFT JOIN services s ON s.id = b.service_id
@@ -407,7 +407,7 @@ export async function getBookingsInRange(from: string, to: string): Promise<Book
 }
 
 export async function getPastBookings(before: string, limit = 200): Promise<Booking[]> {
-  const rows = (await sql`
+  const rows = (await sqlLive`
     SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
     FROM bookings b
     LEFT JOIN services s ON s.id = b.service_id
@@ -432,7 +432,7 @@ export type BookingInput = {
 };
 
 export async function createBooking(data: BookingInput): Promise<Booking> {
-  const rows = (await sql`
+  const rows = (await sqlLive`
     INSERT INTO bookings (
       service_id, customer_name, email, phone, address, vehicle, notes,
       booking_date, start_time, end_time
@@ -468,7 +468,7 @@ export type AdminBookingInput = {
 // catalog service), this covers manually-logged jobs and blocked/personal
 // time, where most fields are legitimately unknown.
 export async function createAdminBooking(data: AdminBookingInput): Promise<Booking> {
-  const rows = (await sql`
+  const rows = (await sqlLive`
     INSERT INTO bookings (
       service_id, service_label, booking_type, customer_name, email, phone, address, vehicle, notes,
       booking_date, start_time, end_time, status
@@ -484,11 +484,11 @@ export async function createAdminBooking(data: AdminBookingInput): Promise<Booki
 }
 
 export async function updateBookingStatus(id: number, status: BookingStatus): Promise<void> {
-  await sql`UPDATE bookings SET status = ${status} WHERE id = ${id}`;
+  await sqlLive`UPDATE bookings SET status = ${status} WHERE id = ${id}`;
 }
 
 export async function deleteBooking(id: number): Promise<void> {
-  await sql`DELETE FROM bookings WHERE id = ${id}`;
+  await sqlLive`DELETE FROM bookings WHERE id = ${id}`;
 }
 
 // ---- Review requests --------------------------------------------
@@ -521,7 +521,7 @@ function mapReviewCandidate(row: {
 // Jobs booked for `date` that haven't had a review request sent — used by
 // the daily 9pm cron.
 export async function getJobsForReviewRequest(date: string): Promise<ReviewCandidate[]> {
-  const rows = (await sql`
+  const rows = (await sqlLive`
     SELECT b.id, b.customer_name, b.email, b.booking_date::text, s.name AS service_name, b.service_label
     FROM bookings b
     LEFT JOIN services s ON s.id = b.service_id
@@ -534,22 +534,6 @@ export async function getJobsForReviewRequest(date: string): Promise<ReviewCandi
   return rows.map(mapReviewCandidate);
 }
 
-// All past completed jobs with an email on file that have never had a
-// review request sent — used for the one-off historical bulk send.
-export async function getPastJobsPendingReviewRequest(): Promise<ReviewCandidate[]> {
-  const rows = (await sql`
-    SELECT b.id, b.customer_name, b.email, b.booking_date::text, s.name AS service_name, b.service_label
-    FROM bookings b
-    LEFT JOIN services s ON s.id = b.service_id
-    WHERE b.booking_type = 'job'
-      AND b.status = 'completed'
-      AND b.email IS NOT NULL
-      AND b.review_requested_at IS NULL
-    ORDER BY b.booking_date DESC
-  `) as Parameters<typeof mapReviewCandidate>[0][];
-  return rows.map(mapReviewCandidate);
-}
-
 export async function markReviewRequested(id: number): Promise<void> {
-  await sql`UPDATE bookings SET review_requested_at = NOW() WHERE id = ${id}`;
+  await sqlLive`UPDATE bookings SET review_requested_at = NOW() WHERE id = ${id}`;
 }

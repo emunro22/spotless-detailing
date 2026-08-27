@@ -1,5 +1,4 @@
 import BookingsCalendar from '@/components/admin/BookingsCalendar';
-import ReviewRequestsPanel from '@/components/admin/ReviewRequestsPanel';
 import { getAllServicesAdmin } from '@/lib/queries';
 
 export const dynamic = 'force-dynamic';
@@ -20,7 +19,6 @@ export default async function AdminBookingsPage() {
           Tap a day to see what's booked. Cyan dots are jobs, amber dots are blocked/personal time.
         </p>
       </div>
-      <ReviewRequestsPanel />
       <BookingsCalendar services={services} />
     </div>
   );
