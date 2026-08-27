@@ -1,11 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Star, Quote } from 'lucide-react';
+import { Star, Quote, ChevronDown } from 'lucide-react';
 import { TESTIMONIALS } from '@/lib/constants';
 import { SectionHeader } from './Services';
 
+const INITIAL_COUNT = 6;
+
 export default function Testimonials() {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? TESTIMONIALS : TESTIMONIALS.slice(0, INITIAL_COUNT);
+
   return (
     <section className="relative py-24 md:py-32">
       <div
@@ -28,7 +34,7 @@ export default function Testimonials() {
         />
 
         <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-          {TESTIMONIALS.map((t, i) => (
+          {visible.map((t, i) => (
             <motion.figure
               key={t.name}
               initial={{ opacity: 0, y: 24 }}
@@ -58,6 +64,20 @@ export default function Testimonials() {
             </motion.figure>
           ))}
         </div>
+
+        {TESTIMONIALS.length > INITIAL_COUNT && (
+          <div className="mt-10 md:mt-12 text-center">
+            <button
+              onClick={() => setExpanded((v) => !v)}
+              className="inline-flex items-center gap-2 glass rounded-full px-6 py-3 text-sm font-medium text-cream hover:border-cyan/40 hover:text-cyan transition-all border-gradient"
+            >
+              {expanded ? 'Show fewer reviews' : `Show all ${TESTIMONIALS.length} reviews`}
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${expanded ? 'rotate-180' : ''}`}
+              />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

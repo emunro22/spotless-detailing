@@ -25,6 +25,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
     startingPrice: service?.startingPrice ?? 0,
     priceLabel: service?.priceLabel || '',
     duration: service?.duration || '',
+    durationMinutes: service?.durationMinutes ?? ('' as number | ''),
     popular: service?.popular || false,
     showOnHomepage: service?.showOnHomepage || false,
     homepageTag: service?.homepageTag || '',
@@ -58,6 +59,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
       ...form,
       priceLabel: form.priceLabel.trim() || null,
       homepageTag: form.homepageTag.trim() || null,
+      durationMinutes: form.durationMinutes === '' ? null : Number(form.durationMinutes),
       interior: cleanInterior,
       exterior: cleanExterior,
     };
@@ -103,7 +105,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6 pb-24">
       <Card title="Basics">
         <div className="grid md:grid-cols-2 gap-4">
-          <Field label="Service name" hint="e.g. Safe Wash, Full Valet">
+          <Field label="Service name" hint="e.g. Safe Wash, Valet">
             <input
               type="text"
               value={form.name}
@@ -176,13 +178,26 @@ export default function ServiceForm({ service }: ServiceFormProps) {
               placeholder="POA"
             />
           </Field>
-          <Field label="Duration" hint="e.g. 60–90 min, 3–8 hours">
+          <Field label="Duration" hint="e.g. 60–90 min, 2 hours, 3 hours">
             <input
               type="text"
               value={form.duration}
               onChange={(e) => update('duration', e.target.value)}
               className={inputCls}
               placeholder="60–90 min"
+            />
+          </Field>
+          <Field
+            label="Booking duration (minutes)"
+            hint="Leave blank if this isn't self-serve bookable online (POA/bespoke services show a 'get in touch' link on /booking instead)"
+          >
+            <input
+              type="number"
+              min={0}
+              value={form.durationMinutes}
+              onChange={(e) => update('durationMinutes', e.target.value === '' ? '' : Number(e.target.value))}
+              className={inputCls}
+              placeholder="e.g. 120"
             />
           </Field>
         </div>

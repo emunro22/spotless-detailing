@@ -8,7 +8,7 @@ import { getAllServices } from '@/lib/queries';
 export const metadata = buildMetadata({
   title: 'Services & Pricing — Mobile Detailing Glasgow',
   description:
-    'Safe wash from £30, full valet from £60, deep clean from £120 and bespoke maintenance plans. Mobile car detailing across Glasgow.',
+    'Safe wash from £30, valet from £60, deep clean from £120 and bespoke maintenance plans. Mobile car detailing across Glasgow.',
   path: '/services',
 });
 

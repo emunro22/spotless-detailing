@@ -24,7 +24,7 @@ export interface SeoPage {
 
 const VALETING_INTRO_TEMPLATES: ((f: AreaFact, p: string) => string)[] = [
   (f, p) =>
-    `Looking for professional car valeting in ${f.name}? Spotless Detailing is a fully mobile service covering ${f.name} — ${p} — and the rest of ${f.county}. ${f.name} is ${f.character}, and we bring everything needed for a safe wash, full valet or deep clean straight to your driveway. No dropping the car off, no waiting around — just book a slot that suits you.`,
+    `Looking for professional car valeting in ${f.name}? Spotless Detailing is a fully mobile service covering ${f.name} — ${p} — and the rest of ${f.county}. ${f.name} is ${f.character}, and we bring everything needed for a safe wash, valet or deep clean straight to your driveway. No dropping the car off, no waiting around — just book a slot that suits you.`,
   (f, p) =>
     `${f.name} — ${f.character} — is one of the towns we cover most for mobile car valeting. We're based in Uddingston, ${p}, so getting to you in ${f.name} is never a problem. Whether it's a quick safe wash to keep things fresh or a full deep clean and ceramic coating, our van comes fully stocked so nothing needs to leave your driveway.`,
   (f, p) =>
@@ -32,13 +32,13 @@ const VALETING_INTRO_TEMPLATES: ((f: AreaFact, p: string) => string)[] = [
   (f, p) =>
     `From a 90-minute safe wash to a full multi-hour deep clean, Spotless Detailing offers mobile car valeting across ${f.name} and the wider ${f.county} area. ${f.name} is ${f.character}, and it's ${p} from our Uddingston base — so we're regularly on the road there. Book online or give us a call and we'll confirm a slot.`,
   (f, p) =>
-    `Spotless Detailing is a mobile car valeting service working regularly in ${f.name}. We're based in Uddingston — ${p} — and cover ${f.name}, ${f.character}, along with the rest of ${f.county}. Safe wash, full valet, deep clean, polishing and ceramic coating are all available at your home or workplace, no trip to a car wash required.`,
+    `Spotless Detailing is a mobile car valeting service working regularly in ${f.name}. We're based in Uddingston — ${p} — and cover ${f.name}, ${f.character}, along with the rest of ${f.county}. Safe wash, valet, deep clean, polishing and ceramic coating are all available at your home or workplace, no trip to a car wash required.`,
 ];
 
 const VALETING_DESC_TEMPLATES: ((f: AreaFact) => string)[] = [
-  (f) => `Professional mobile car valeting and detailing in ${f.name}. Safe wash from £30, full valet from £60, deep clean from £120. We come to you — book today.`,
-  (f) => `Mobile car valeting and detailing covering ${f.name} and ${f.county}. Safe wash, full valet, deep clean and ceramic coating — all at your door.`,
-  (f) => `Spotless Detailing brings mobile car valeting to ${f.name} — safe wash, full valet, deep clean and paint protection, straight to your driveway.`,
+  (f) => `Professional mobile car valeting and detailing in ${f.name}. Safe wash from £30, valet from £60, deep clean from £120. We come to you — book today.`,
+  (f) => `Mobile car valeting and detailing covering ${f.name} and ${f.county}. Safe wash, valet, deep clean and ceramic coating — all at your door.`,
+  (f) => `Spotless Detailing brings mobile car valeting to ${f.name} — safe wash, valet, deep clean and paint protection, straight to your driveway.`,
   (f) => `Car valeting in ${f.name} without the trip to a car wash. Mobile safe wash, valet and deep clean from £30 — fully insured, fully mobile.`,
 ];
 
@@ -66,7 +66,7 @@ const VALETING_FAQ_POOL: ((f: AreaFact, p: string) => SeoFaq)[] = [
   (f, p) => ({ q: `Do you cover ${f.name}?`, a: `Yes — ${f.name} is one of the areas we cover regularly, ${p}. Get in touch with your postcode and we'll confirm your nearest available slot.` }),
   (f, p) => ({ q: `How quickly can you get to ${f.name}?`, a: `We're based in Uddingston, so ${f.name} is ${p}. Most bookings in ${f.name} can be confirmed within a few days, sooner if we have availability.` }),
   (f) => ({ q: `Do I need to bring my car anywhere?`, a: `No — we're fully mobile, so we come to you in ${f.name} with everything needed: water, power and all our own equipment. Just point us to a spot on your driveway.` }),
-  (f) => ({ q: `What car valeting services do you offer in ${f.name}?`, a: `The full range — safe wash, full valet, deep clean, polishing and ceramic coating — all available to customers in ${f.name} and the rest of ${f.county}.` }),
+  (f) => ({ q: `What car valeting services do you offer in ${f.name}?`, a: `The full range — safe wash, valet, deep clean, polishing and ceramic coating — all available to customers in ${f.name} and the rest of ${f.county}.` }),
   (f) => ({ q: `Is driveway access needed in ${f.name}?`, a: `Driveway access makes things easiest, but we can also work on-street in ${f.name} if there's a suitable space and water access nearby — just let us know when booking.` }),
   (f) => ({ q: `How do I book a valet in ${f.name}?`, a: `Use the booking page, WhatsApp or give us a call. We'll confirm a fixed price and an available slot for ${f.name} within the day.` }),
 ];
@@ -167,11 +167,11 @@ export const VALETING_SERVICE_PAGES: SeoPage[] = [
   },
   {
     slug: 'full-valet',
-    title: 'Full Valet Glasgow | Interior & Exterior from £60 — Spotless Detailing',
-    h1: 'Full Car Valet — Inside & Out, Restored',
+    title: 'Valet Glasgow | Interior & Exterior from £60 — Spotless Detailing',
+    h1: 'Car Valet — Inside & Out, Restored',
     description:
-      'Full car valet in Glasgow from £60. Complete interior and exterior clean. Hoovered, wiped, glass polished, safe washed. Mobile to your door.',
-    intro: 'Our Full Valet gives your car a complete refresh inside and out. Interior is thoroughly hoovered, all surfaces cleaned, glass polished and scent sprayed. The exterior gets a full safe wash with dressed tyres. Done in 1.5-2.5 hours at your home or workplace. Ideal for anyone wanting a sharp, fresh-feeling car without going full deep clean.',
+      'Car valet in Glasgow from £60. Complete interior and exterior clean. Hoovered, wiped, glass polished, safe washed. Mobile to your door.',
+    intro: 'Our Valet gives your car a complete refresh inside and out. Interior is thoroughly hoovered, all surfaces cleaned, glass polished and scent sprayed. The exterior gets a full safe wash with dressed tyres. Done in 2 hours at your home or workplace. Ideal for anyone wanting a sharp, fresh-feeling car without going full deep clean.',
     type: 'service',
   },
   {
@@ -180,7 +180,7 @@ export const VALETING_SERVICE_PAGES: SeoPage[] = [
     h1: 'Deep Clean Valet — New-Car Feeling, Restored',
     description:
       'Deep clean car valet in Glasgow from £120. Steam cleaned interior, shampooed seats, decontaminated paint. Our flagship mobile detail.',
-    intro: 'The Deep Clean is our flagship detail. Steam-cleaned interior, shampooed seats and carpets, decontaminated paint — finished to showroom standard. This is the service for neglected cars, pre-sale prep or anyone wanting that proper new-car feeling. Typically 3-8 hours depending on vehicle size and condition. We bring everything to your driveway.',
+    intro: 'The Deep Clean is our flagship detail. Steam-cleaned interior, shampooed seats and carpets, decontaminated paint — finished to showroom standard. This is the service for neglected cars, pre-sale prep or anyone wanting that proper new-car feeling. Typically around 4 hours depending on vehicle size and condition. We bring everything to your driveway.',
     type: 'service',
   },
   {

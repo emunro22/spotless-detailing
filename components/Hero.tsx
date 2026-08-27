@@ -2,16 +2,18 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Star, MapPin, Sparkles } from 'lucide-react';
-import type { Service, SiteSettings } from '@/lib/types';
+import type { GalleryImage, Service, SiteSettings } from '@/lib/types';
 
 interface HeroProps {
   homepageServices: Service[];
   settings: SiteSettings;
+  galleryImages: GalleryImage[];
 }
 
-export default function Hero({ homepageServices, settings }: HeroProps) {
+export default function Hero({ homepageServices, settings, galleryImages }: HeroProps) {
   return (
     <section className="relative min-h-[100svh] pt-28 pb-20 md:pt-32 md:pb-24 flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-midnight-900" />
@@ -32,9 +34,9 @@ export default function Hero({ homepageServices, settings }: HeroProps) {
         <div className="grid lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7">
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
               className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-7 border-gradient"
             >
               <span className="relative flex w-2 h-2">
@@ -47,9 +49,9 @@ export default function Hero({ homepageServices, settings }: HeroProps) {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.05 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
               className="font-display font-bold tracking-tight text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.95]"
             >
               That{' '}
@@ -138,11 +140,7 @@ export default function Hero({ homepageServices, settings }: HeroProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5 relative"
           >
-            <HeroVisual
-              src={settings.hero_cover_url || '/images/gallery-1.jpg'}
-              label={settings.hero_cover_label || 'Recent detail'}
-              title={settings.hero_cover_title || 'Range Rover Sport SVR'}
-            />
+            <HeroSlideshow images={galleryImages} />
           </motion.div>
         </div>
 
@@ -236,17 +234,45 @@ function PriceTag({
   );
 }
 
-function HeroVisual({ src, label, title }: { src: string; label: string; title: string }) {
+function HeroSlideshow({ images }: { images: GalleryImage[] }) {
+  const slides = images.length > 0 ? images : null;
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!slides || slides.length < 2) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [slides]);
+
+  const current = slides?.[index];
+
   return (
     <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-gradient">
-      <Image
-        src={src}
-        alt={title}
-        fill
-        priority
-        sizes="(max-width: 1024px) 100vw, 40vw"
-        className="object-cover"
-      />
+      {current ? (
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={current.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={current.url}
+              alt={current.alt}
+              fill
+              priority={index === 0}
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover"
+            />
+          </motion.div>
+        </AnimatePresence>
+      ) : (
+        <div className="absolute inset-0 bg-midnight-700" />
+      )}
 
       <div
         className="absolute inset-0"
@@ -271,21 +297,25 @@ function HeroVisual({ src, label, title }: { src: string; label: string; title: 
             <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
           </span>
           <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-cream/90">
-            {label}
+            Recent work
           </span>
         </div>
       </div>
 
       <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
-        <div>
-          <div className="text-[11px] uppercase tracking-[0.18em] text-cyan-glow/80 mb-1.5">
-            Featured detail
+        {slides && slides.length > 1 && (
+          <div className="flex items-center gap-1.5">
+            {slides.map((s, i) => (
+              <span
+                key={s.id}
+                className={`h-1 rounded-full transition-all ${
+                  i === index ? 'w-5 bg-cyan' : 'w-1.5 bg-cream/30'
+                }`}
+              />
+            ))}
           </div>
-          <div className="font-display text-xl md:text-2xl font-semibold text-cream tracking-tight">
-            {title}
-          </div>
-        </div>
-        <div className="glass rounded-full p-2.5 border-gradient">
+        )}
+        <div className="glass rounded-full p-2.5 border-gradient ml-auto">
           <MapPin className="w-4 h-4 text-cyan" />
         </div>
       </div>

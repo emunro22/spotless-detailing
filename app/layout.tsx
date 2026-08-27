@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: BUSINESS.name,
     title: `${BUSINESS.name} | Mobile Detailing & Valeting Glasgow`,
     description:
-      'Premium mobile car detailing in Glasgow. Safe wash, full valet, deep clean and ceramic protection — we come to you.',
+      'Premium mobile car detailing in Glasgow. Safe wash, valet, deep clean and ceramic protection — we come to you.',
     images: [
       {
         url: '/og-image.jpg',

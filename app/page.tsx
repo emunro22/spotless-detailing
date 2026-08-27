@@ -18,7 +18,7 @@ import {
 export const metadata = buildMetadata({
   title: 'Spotless Detailing | Mobile Car Detailing & Valeting Glasgow',
   description:
-    'Premium mobile car detailing in Glasgow. Safe wash from £30, full valet from £60, deep clean from £120. Ceramic protection, two-bucket safe wash, mobile to your driveway.',
+    'Premium mobile car detailing in Glasgow. Safe wash from £30, valet from £60, deep clean from £120. Ceramic protection, two-bucket safe wash, mobile to your driveway.',
   path: '/',
 });
 
@@ -35,7 +35,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero homepageServices={homepageServices} settings={settings} />
+      <Hero homepageServices={homepageServices} settings={settings} galleryImages={galleryImages} />
       <Services services={services} />
       <Gallery images={galleryImages} preview />
       <Process />

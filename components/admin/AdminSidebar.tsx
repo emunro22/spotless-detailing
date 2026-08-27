@@ -14,10 +14,12 @@ import {
   Menu,
   X,
   SprayCan,
+  CalendarDays,
 } from 'lucide-react';
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { href: '/admin/bookings', label: 'Bookings', icon: CalendarDays },
   { href: '/admin/services', label: 'Services', icon: Wrench },
   { href: '/admin/cleaning-services', label: 'Cleaning', icon: SprayCan },
   { href: '/admin/gallery', label: 'Gallery', icon: Images },

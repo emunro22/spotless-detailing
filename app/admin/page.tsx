@@ -1,21 +1,31 @@
 import Link from 'next/link';
-import { Wrench, Images, Settings, Plus } from 'lucide-react';
+import { Wrench, Images, Settings, Plus, CalendarDays } from 'lucide-react';
 import {
   getAllServicesAdmin,
   getAllGalleryImages,
   getAllSettings,
+  getBookingsForDate,
 } from '@/lib/queries';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboard() {
-  const [services, gallery, settings] = await Promise.all([
+  const today = new Date().toISOString().slice(0, 10);
+  const [services, gallery, settings, todaysBookings] = await Promise.all([
     getAllServicesAdmin(),
     getAllGalleryImages(),
     getAllSettings(),
+    getBookingsForDate(today),
   ]);
 
   const stats = [
+    {
+      label: 'Jobs today',
+      value: todaysBookings.length,
+      sub: todaysBookings.length ? `next at ${todaysBookings[0].startTime}` : 'nothing booked',
+      href: '/admin/bookings',
+      icon: CalendarDays,
+    },
     {
       label: 'Total services',
       value: services.length,
@@ -69,7 +79,7 @@ export default async function AdminDashboard() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
         {stats.map((s) => {
           const Icon = s.icon;
           return (

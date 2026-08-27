@@ -78,13 +78,13 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'Daily commuters, parked outside',
         paragraphs: [
-          'A car parked outside and driven daily picks up road grime, bird droppings and UV exposure constantly. A Safe Wash every 2–4 weeks keeps the paint protected between bigger cleans, with a full Valet or Deep Clean every 3–4 months to keep the interior fresh.',
+          'A car parked outside and driven daily picks up road grime, bird droppings and UV exposure constantly. A Safe Wash every 2–4 weeks keeps the paint protected between bigger cleans, with a Valet or Deep Clean every 3–4 months to keep the interior fresh.',
         ],
       },
       {
         heading: 'Family cars, kids and pets',
         paragraphs: [
-          'Interiors take the real punishment here — crumbs, mud, pet hair and spilled drinks. A Full Valet every 6–8 weeks stops things building up, with an occasional Deep Clean (steam-cleaned interior, shampooed seats and carpets) once or twice a year to properly reset the cabin.',
+          'Interiors take the real punishment here — crumbs, mud, pet hair and spilled drinks. A Valet every 6–8 weeks stops things building up, with an occasional Deep Clean (steam-cleaned interior, shampooed seats and carpets) once or twice a year to properly reset the cabin.',
         ],
       },
       {
@@ -103,9 +103,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'full-valet-vs-deep-clean',
-    title: "Full Valet vs Deep Clean: What's Actually Included",
+    title: "Valet vs Deep Clean: What's Actually Included",
     description:
-      "What's the real difference between a Full Valet and a Deep Clean? A breakdown of what each service includes so you know exactly what you're booking.",
+      "What's the real difference between a Valet and a Deep Clean? A breakdown of what each service includes so you know exactly what you're booking.",
     category: 'Services',
     date: '2026-06-15',
     readTime: '4 min read',
@@ -114,27 +114,27 @@ export const BLOG_POSTS: BlogPost[] = [
     sections: [
       {
         paragraphs: [
-          'Full Valet and Deep Clean are the two services people mix up most when booking. Both cover the interior and exterior, but the level of work — and what problems each one actually solves — is quite different.',
+          'Valet and Deep Clean are the two services people mix up most when booking. Both cover the interior and exterior, but the level of work — and what problems each one actually solves — is quite different.',
         ],
       },
       {
-        heading: 'Full Valet',
+        heading: 'Valet',
         paragraphs: [
-          'A Full Valet (from £60, 1.5–2.5 hours) is a complete inside-and-out clean for a car that\'s generally in good shape but needs freshening up. Inside, that\'s a thorough hoover, all surfaces cleaned, glass polished and a scent finish. Outside, it\'s a full safe wash with wheels and tyres cleaned, paint dried and tyres dressed.',
+          'A Valet (from £60, 2 hours) is a complete inside-and-out clean for a car that\'s generally in good shape but needs freshening up. Inside, that\'s a thorough hoover, all surfaces cleaned, glass polished and a scent finish. Outside, it\'s a full safe wash with wheels and tyres cleaned, paint dried and tyres dressed.',
           'It\'s the right call for regular upkeep — a car that gets washed and valeted every couple of months and just needs to look sharp again, not restored.',
         ],
       },
       {
         heading: 'Deep Clean',
         paragraphs: [
-          'A Deep Clean (from £120, 3–8 hours) is our flagship service, built for a car that\'s been neglected, is being prepped for sale, or just needs that "new car" feeling back. Interior work steps up to steam cleaning, shampooed seats and carpets, deeply cleaned door shuts, stripped carpets and a luxury scent finish. Exterior includes full decontamination of the wheels and paint alongside the safe wash and hydrophobic sealant.',
-          'It takes considerably longer because it\'s solving problems a Full Valet isn\'t designed to touch — embedded dirt in carpets, contamination on the paint, grime built up in door shuts over months or years.',
+          'A Deep Clean (from £120, 4 hours) is our flagship service, built for a car that\'s been neglected, is being prepped for sale, or just needs that "new car" feeling back. Interior work steps up to steam cleaning, shampooed seats and carpets, deeply cleaned door shuts, stripped carpets and a luxury scent finish. Exterior includes full decontamination of the wheels and paint alongside the safe wash and hydrophobic sealant.',
+          'It takes considerably longer because it\'s solving problems a Valet isn\'t designed to touch — embedded dirt in carpets, contamination on the paint, grime built up in door shuts over months or years.',
         ],
       },
       {
         heading: 'Which one do you need?',
         paragraphs: [
-          "If your car has been valeted reasonably recently and just needs a refresh, book a Full Valet. If it's been a while — six months, a year, longer — or you're prepping it for sale or just bought it secondhand, a Deep Clean is worth the extra time and cost.",
+          "If your car has been valeted reasonably recently and just needs a refresh, book a Valet. If it's been a while — six months, a year, longer — or you're prepping it for sale or just bought it secondhand, a Deep Clean is worth the extra time and cost.",
           'Still not sure? Message us with a few photos and we\'ll recommend the right service before you book — see the full breakdown on our services page.',
         ],
       },

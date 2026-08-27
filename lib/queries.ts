@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { sql } from './db';
-import type { Service, CleaningService, GalleryImage, SiteSettings } from './types';
+import type { Service, CleaningService, GalleryImage, SiteSettings, Booking, BookingStatus } from './types';
 
 // ---- Service row mapping ----------------------------------------
 
@@ -14,6 +14,7 @@ type ServiceRow = {
   starting_price: number;
   price_label: string | null;
   duration: string;
+  duration_minutes: number | null;
   interior: string[];
   exterior: string[];
   popular: boolean;
@@ -36,6 +37,7 @@ function mapService(row: ServiceRow): Service {
     startingPrice: row.starting_price,
     priceLabel: row.price_label,
     duration: row.duration,
+    durationMinutes: row.duration_minutes,
     interior: row.interior,
     exterior: row.exterior,
     popular: row.popular,
@@ -68,6 +70,15 @@ export async function getHomepageServices(): Promise<Service[]> {
   return rows.map(mapService);
 }
 
+export async function getBookableServices(): Promise<Service[]> {
+  const rows = (await sql`
+    SELECT * FROM services
+    WHERE is_active = TRUE AND duration_minutes IS NOT NULL
+    ORDER BY sort_order ASC
+  `) as ServiceRow[];
+  return rows.map(mapService);
+}
+
 // ---- Services: admin reads + writes ---------------------------
 
 export async function getAllServicesAdmin(): Promise<Service[]> {
@@ -86,13 +97,13 @@ export async function createService(data: ServiceInput): Promise<Service> {
   const rows = (await sql`
     INSERT INTO services (
       slug, name, short_name, tagline, description,
-      starting_price, price_label, duration,
+      starting_price, price_label, duration, duration_minutes,
       interior, exterior,
       popular, show_on_homepage, homepage_tag,
       is_maintenance_callout, sort_order, homepage_sort_order, is_active
     ) VALUES (
       ${data.slug}, ${data.name}, ${data.shortName}, ${data.tagline}, ${data.description},
-      ${data.startingPrice}, ${data.priceLabel}, ${data.duration},
+      ${data.startingPrice}, ${data.priceLabel}, ${data.duration}, ${data.durationMinutes},
       ${JSON.stringify(data.interior)}, ${JSON.stringify(data.exterior)},
       ${data.popular}, ${data.showOnHomepage}, ${data.homepageTag},
       ${data.isMaintenanceCallout}, ${data.sortOrder}, ${data.homepageSortOrder}, ${data.isActive}
@@ -113,6 +124,7 @@ export async function updateService(id: number, data: ServiceInput): Promise<Ser
       starting_price = ${data.startingPrice},
       price_label = ${data.priceLabel},
       duration = ${data.duration},
+      duration_minutes = ${data.durationMinutes},
       interior = ${JSON.stringify(data.interior)},
       exterior = ${JSON.stringify(data.exterior)},
       popular = ${data.popular},
@@ -312,4 +324,111 @@ export async function updateSettings(settings: Record<string, string>): Promise<
       ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()
     `;
   }
+}
+
+// ---- Bookings ----------------------------------------------------
+
+type BookingRow = {
+  id: number;
+  service_id: number;
+  service_name: string;
+  customer_name: string;
+  email: string;
+  phone: string;
+  address: string;
+  vehicle: string;
+  notes: string | null;
+  booking_date: string;
+  start_time: string;
+  end_time: string;
+  status: BookingStatus;
+  created_at: string;
+};
+
+function mapBooking(row: BookingRow): Booking {
+  return {
+    id: row.id,
+    serviceId: row.service_id,
+    serviceName: row.service_name,
+    customerName: row.customer_name,
+    email: row.email,
+    phone: row.phone,
+    address: row.address,
+    vehicle: row.vehicle,
+    notes: row.notes,
+    bookingDate: typeof row.booking_date === 'string' ? row.booking_date : new Date(row.booking_date).toISOString().slice(0, 10),
+    startTime: row.start_time.slice(0, 5),
+    endTime: row.end_time.slice(0, 5),
+    status: row.status,
+    createdAt: row.created_at,
+  };
+}
+
+export async function getBookingById(id: number): Promise<Booking | null> {
+  const rows = (await sql`
+    SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
+    FROM bookings b
+    JOIN services s ON s.id = b.service_id
+    WHERE b.id = ${id}
+  `) as BookingRow[];
+  return rows[0] ? mapBooking(rows[0]) : null;
+}
+
+export async function getBookingsForDate(date: string): Promise<Booking[]> {
+  const rows = (await sql`
+    SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
+    FROM bookings b
+    JOIN services s ON s.id = b.service_id
+    WHERE b.booking_date = ${date} AND b.status != 'cancelled'
+    ORDER BY b.start_time ASC
+  `) as BookingRow[];
+  return rows.map(mapBooking);
+}
+
+export async function getBookingsInRange(from: string, to: string): Promise<Booking[]> {
+  const rows = (await sql`
+    SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
+    FROM bookings b
+    JOIN services s ON s.id = b.service_id
+    WHERE b.booking_date >= ${from} AND b.booking_date <= ${to}
+    ORDER BY b.booking_date ASC, b.start_time ASC
+  `) as BookingRow[];
+  return rows.map(mapBooking);
+}
+
+export type BookingInput = {
+  serviceId: number;
+  customerName: string;
+  email: string;
+  phone: string;
+  address: string;
+  vehicle: string;
+  notes: string | null;
+  bookingDate: string;
+  startTime: string;
+  endTime: string;
+};
+
+export async function createBooking(data: BookingInput): Promise<Booking> {
+  const rows = (await sql`
+    INSERT INTO bookings (
+      service_id, customer_name, email, phone, address, vehicle, notes,
+      booking_date, start_time, end_time
+    ) VALUES (
+      ${data.serviceId}, ${data.customerName}, ${data.email}, ${data.phone}, ${data.address}, ${data.vehicle}, ${data.notes},
+      ${data.bookingDate}, ${data.startTime}, ${data.endTime}
+    )
+    RETURNING id
+  `) as { id: number }[];
+  const booking = await getBookingById(rows[0].id);
+  if (!booking) throw new Error('Failed to load created booking');
+  return booking;
+}
+
+export async function updateBookingStatus(id: number, status: BookingStatus): Promise<void> {
+  await sql`UPDATE bookings SET status = ${status} WHERE id = ${id}`;
+}
+
+export async function deleteBooking(id: number): Promise<void> {
+  await sql`DELETE FROM bookings WHERE id = ${id}`;
 }

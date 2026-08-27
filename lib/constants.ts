@@ -130,12 +130,12 @@ export const SERVICES: Service[] = [
   },
   {
     slug: 'valet',
-    name: 'Full Valet',
+    name: 'Valet',
     shortName: 'Valet',
     tagline: 'Inside and out, restored',
     startingPrice: 60,
     priceLabel: 'from £60',
-    duration: '1.5–2.5 hours',
+    duration: '2 hours',
     description:
       'A complete inside-and-out clean. Interior hoover, surfaces wiped, glass polished, scent sprayed — exterior safe-washed and dressed.',
     interior: [
@@ -159,7 +159,7 @@ export const SERVICES: Service[] = [
     tagline: 'New-car feeling. Restored.',
     startingPrice: 120,
     priceLabel: 'from £120',
-    duration: '3–8 hours',
+    duration: '4 hours',
     description:
       'Our flagship detail. Steam-cleaned interior, shampooed seats and carpets, decontaminated paint — finished to showroom standard.',
     interior: [
@@ -257,7 +257,7 @@ export const FAQS = [
   },
   {
     q: 'How long does a deep clean take?',
-    a: 'A full Deep Clean is typically 3–8 hours depending on vehicle size and condition. Valets are 1.5–2.5 hours and a Safe Wash is 60–90 minutes. Polishing and Protection packages are job-dependent.',
+    a: 'A full Deep Clean takes around 4 hours depending on vehicle size and condition. A Valet is 2 hours and a Safe Wash is 60–90 minutes. Polishing and Protection packages are job-dependent.',
   },
   {
     q: 'How is the price calculated?',
@@ -319,6 +319,150 @@ export const TESTIMONIALS = [
     date: 'a year ago',
     quote:
       'What an amazing job, my car is like new and that\u2019s not easy on a 7 year old car! Delighted with the job and you\u2019re a pleasure to deal with Nathan! See you next time!',
+    rating: 5,
+  },
+  {
+    name: 'Rosie McInulty',
+    date: 'Recently',
+    quote:
+      'Fantastic service from Spotless Detailing! The attention to detail was brilliant, and everything was done to such a high standard. Really friendly, professional service and you can tell they take pride in their work. I couldn\u2019t be happier with the result and would 100% recommend Spotless Detailing to anyone! \ud83d\ude97\u2728',
+    rating: 5,
+  },
+  {
+    name: 'Sophie MacPhail',
+    date: '3 days ago',
+    quote:
+      'We\u2019ve been using Spotless Detailing for a number of years and can never fault them! Nathan always makes an exceptional job of our cars. They look like they have just came out the showroom each time. Cannot thank him enough and wouldn\u2019t go anywhere else!',
+    rating: 5,
+  },
+  {
+    name: 'Gary Maxwell',
+    date: '4 days ago',
+    quote: 'Turned up bang on time and done a fantastic job. Highly recommend',
+    rating: 5,
+  },
+  {
+    name: 'Leeanne Henderson',
+    date: '5 days ago',
+    quote:
+      'Just had my first valet done by Nathan at Spotless Detailing after being recommended by a friend and what a job \u2014 outstanding service from start to finish. Excellent communication, turned up when he said he would and carried out the job to\u2026',
+    rating: 5,
+  },
+  {
+    name: 'Shannon Purdie',
+    date: 'a week ago',
+    quote:
+      'I\u2019ve been booking Nathan for around a year now, and he\u2019s always excellent. Reliable, thorough, and my car always looks spotless afterwards. Highly recommend',
+    rating: 5,
+  },
+  {
+    name: 'Ben Fitzgerald',
+    date: 'a month ago',
+    quote:
+      'My business has been using Nathan and the team at Spotless Detailing coming up to a year now. Booked every 3 weeks. On time, every time. They are reliable, trustworthy and very professional. Spotless Detailing achieve the same brilliant\u2026',
+    rating: 5,
+  },
+  {
+    name: 'Fr. Sean Wyllie',
+    date: 'a month ago',
+    quote: 'Top quality every time.',
+    rating: 5,
+  },
+  {
+    name: 'Matthew McCulloch',
+    date: 'a month ago',
+    quote:
+      'Can\u2019t recommend these lads enough! Service is incredible and the cars are left spotless every time',
+    rating: 5,
+  },
+  {
+    name: 'poulty7',
+    date: 'a month ago',
+    quote:
+      'Really happy with the service from Spotless Detailing. Our car came back looking brand new inside and out, and you can tell they took their time with the details\u2026',
+    rating: 5,
+  },
+  {
+    name: 'Envirocycle Glasgow',
+    date: '2 months ago',
+    quote:
+      'Nathan and his team have looked after our work and personal fleet for over 4 years now on a weekly basis and his workmanship is nothing short of outstanding\u2026',
+    rating: 5,
+  },
+  {
+    name: 'kyle scott',
+    date: '2 months ago',
+    quote: 'Reliable with no fuss. Leaves an excellent job with attention to detail.',
+    rating: 5,
+  },
+  {
+    name: 'Emma Smith',
+    date: '2 months ago',
+    quote:
+      'We have been using Spotless Detailing for sometime now and have never had a single issue. From SUVs and Vans, to Supercars the work is always carried out to an extremely\u2026',
+    rating: 5,
+  },
+  {
+    name: 'Ross Kirkland',
+    date: '2 months ago',
+    quote:
+      'I\u2019ve been using Nathan for a while now and have always been extremely impressed with him and his workmanship. He is always on time and never stops until the job is done. I have passed him on to friends and family and they have all\u2026',
+    rating: 5,
+  },
+  {
+    name: 'Craig Matthews',
+    date: '3 months ago',
+    quote: 'Great job carried out by Nathan would 100% recommend.',
+    rating: 5,
+  },
+  {
+    name: 'Liam Mccormick',
+    date: '3 months ago',
+    quote:
+      'Nathan at Spotless Detailing has been second to none, I\u2019m booked onto the 4 week maintenance package and every visit the service is flawless. From the customer service to the attention to detail, Nathan always goes above and beyond. My car\u2026',
+    rating: 5,
+  },
+  {
+    name: 'Jill McInulty',
+    date: '5 months ago',
+    quote: 'Great effort, thorough attention to detail & value for money.',
+    rating: 5,
+  },
+  {
+    name: 'stephen given',
+    date: 'a year ago',
+    quote: 'Absolutely delighted with job done on my car by Nathan. Great service and cracking lad. Highly recommended.',
+    rating: 5,
+  },
+  {
+    name: 'Sarah Orr',
+    date: '2 years ago',
+    quote: 'Very pleased with the results of my car. Would highly recommend',
+    rating: 5,
+  },
+  {
+    name: 'Sinnead Connelly',
+    date: '2 years ago',
+    quote: 'Would deffos recommend! My car was looking amazing!',
+    rating: 5,
+  },
+  {
+    name: 'Kian Gallagher',
+    date: '2 years ago',
+    quote: 'Done a great job of my car, would recommend \ud83d\udc4d\ud83c\udffb',
+    rating: 5,
+  },
+  {
+    name: 'AnneMarie Clelland',
+    date: '2 years ago',
+    quote: 'Top class job by Nathan. Thank you',
+    rating: 5,
+  },
+  {
+    name: 'Paul Buggy',
+    date: '2 years ago',
+    quote:
+      'Absolutely top class job & very friendly young man who certainly put in a shift for very decent prices. Would highly recommend anyone using these services & I certainly will use them again.',
     rating: 5,
   },
 ];
