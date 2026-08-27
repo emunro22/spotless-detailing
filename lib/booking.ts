@@ -25,16 +25,19 @@ export function isClosedDay(dateStr: string): boolean {
   return day === 0; // Sunday
 }
 
+export type SlotInfo = { time: string; available: boolean };
+
 /**
- * Available start times (HH:MM, 30-min grid) for a service of `durationMinutes`
- * on `dateStr`, given the day's existing (non-cancelled) bookings.
+ * Every start time (HH:MM, 30-min grid) for a service of `durationMinutes`
+ * on `dateStr`, each flagged available/unavailable against the day's
+ * existing (non-cancelled) bookings — no customer details, just the grid.
  */
-export function getAvailableSlots(
+export function getDaySlots(
   dateStr: string,
   durationMinutes: number,
   existingBookings: Pick<Booking, 'startTime' | 'endTime'>[],
   now: Date = new Date()
-): string[] {
+): SlotInfo[] {
   if (isClosedDay(dateStr)) return [];
 
   const openMinutes = OPEN_HOUR * 60;
@@ -50,14 +53,29 @@ export function getAvailableSlots(
   const isToday = dateStr === now.toISOString().slice(0, 10);
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
 
-  const slots: string[] = [];
+  const slots: SlotInfo[] = [];
   for (let start = openMinutes; start <= latestStart; start += SLOT_INTERVAL_MINUTES) {
     if (isToday && start <= nowMinutes) continue;
     const end = start + durationMinutes;
     const overlaps = busy.some((b) => start < b.end && end > b.start);
-    if (!overlaps) slots.push(toTimeString(start));
+    slots.push({ time: toTimeString(start), available: !overlaps });
   }
   return slots;
+}
+
+/**
+ * Available start times (HH:MM, 30-min grid) for a service of `durationMinutes`
+ * on `dateStr`, given the day's existing (non-cancelled) bookings.
+ */
+export function getAvailableSlots(
+  dateStr: string,
+  durationMinutes: number,
+  existingBookings: Pick<Booking, 'startTime' | 'endTime'>[],
+  now: Date = new Date()
+): string[] {
+  return getDaySlots(dateStr, durationMinutes, existingBookings, now)
+    .filter((s) => s.available)
+    .map((s) => s.time);
 }
 
 export function addMinutes(time: string, minutes: number): string {

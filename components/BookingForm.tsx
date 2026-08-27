@@ -11,6 +11,7 @@ interface BookingFormProps {
 }
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
+type SlotInfo = { time: string; available: boolean };
 
 function todayStr() {
   return new Date().toISOString().slice(0, 10);
@@ -19,7 +20,7 @@ function todayStr() {
 export default function BookingForm({ services }: BookingFormProps) {
   const [serviceId, setServiceId] = useState<number | ''>(services[0]?.id ?? '');
   const [date, setDate] = useState('');
-  const [slots, setSlots] = useState<string[]>([]);
+  const [slots, setSlots] = useState<SlotInfo[]>([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [slotsError, setSlotsError] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -45,9 +46,12 @@ export default function BookingForm({ services }: BookingFormProps) {
           setSlotsError(data.error);
           return;
         }
-        setSlots(data.slots || []);
-        if ((data.slots || []).length === 0) {
-          setSlotsError('No slots available that day — try another date.');
+        const daySlots: SlotInfo[] = data.slots || [];
+        setSlots(daySlots);
+        if (daySlots.length === 0) {
+          setSlotsError('Closed that day — try another date.');
+        } else if (!daySlots.some((s) => s.available)) {
+          setSlotsError('Fully booked that day — try another date.');
         }
       })
       .catch(() => {
@@ -198,28 +202,37 @@ export default function BookingForm({ services }: BookingFormProps) {
                 <Loader2 className="w-4 h-4 animate-spin" />
                 Checking availability…
               </div>
-            ) : slotsError ? (
+            ) : slots.length === 0 ? (
               <div className="flex items-center gap-2 text-cream/50 text-sm py-3">
                 <Clock className="w-4 h-4" />
                 {slotsError}
               </div>
             ) : (
-              <div className="flex flex-wrap gap-2">
-                {slots.map((slot) => (
-                  <button
-                    key={slot}
-                    type="button"
-                    onClick={() => setStartTime(slot)}
-                    className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-all ${
-                      startTime === slot
-                        ? 'bg-cyan text-midnight-900 border-cyan'
-                        : 'bg-midnight-700 border-cream/10 text-cream hover:border-cyan/40'
-                    }`}
-                  >
-                    {slot}
-                  </button>
-                ))}
-              </div>
+              <>
+                <div className="flex flex-wrap gap-2">
+                  {slots.map((slot) => (
+                    <button
+                      key={slot.time}
+                      type="button"
+                      disabled={!slot.available}
+                      onClick={() => setStartTime(slot.time)}
+                      title={slot.available ? undefined : 'Already booked'}
+                      className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-all ${
+                        !slot.available
+                          ? 'bg-transparent border-cream/5 text-cream/25 line-through cursor-not-allowed'
+                          : startTime === slot.time
+                            ? 'bg-cyan text-midnight-900 border-cyan'
+                            : 'bg-midnight-700 border-cream/10 text-cream hover:border-cyan/40'
+                      }`}
+                    >
+                      {slot.time}
+                    </button>
+                  ))}
+                </div>
+                {slotsError && (
+                  <p className="mt-2 text-xs text-cream/40">{slotsError}</p>
+                )}
+              </>
             )}
           </div>
         )}

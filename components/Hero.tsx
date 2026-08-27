@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Star, MapPin, Sparkles } from 'lucide-react';
+import { ArrowRight, Star, Sparkles } from 'lucide-react';
 import type { GalleryImage, Service, SiteSettings } from '@/lib/types';
 
 interface HeroProps {
@@ -17,16 +17,8 @@ export default function Hero({ homepageServices, settings, galleryImages }: Hero
   return (
     <section className="relative min-h-[100svh] pt-28 pb-20 md:pt-32 md:pb-24 flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-midnight-900" />
-      <div className="absolute inset-0 hex-overlay opacity-60" />
-      <div className="absolute inset-0 bg-radial-glow" />
-
-      <div
-        className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-30 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(closest-side, rgba(56,189,248,0.55), transparent 70%)',
-        }}
-      />
+      <HeroSlideshow images={galleryImages} />
+      <div className="absolute inset-0 hex-overlay opacity-20 mix-blend-overlay pointer-events-none" />
 
       <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-midnight-900 to-transparent pointer-events-none" />
 
@@ -133,15 +125,6 @@ export default function Hero({ homepageServices, settings, galleryImages }: Hero
               <Stat value={settings.stats_mobile || '100%'} label="Mobile service" />
             </motion.div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-5 relative"
-          >
-            <HeroSlideshow images={galleryImages} />
-          </motion.div>
         </div>
 
         <motion.div
@@ -234,6 +217,9 @@ function PriceTag({
   );
 }
 
+// Full-bleed background slideshow — sits behind the entire hero, with the
+// text sitting on top of a dark scrim (strongest on the left, where the
+// copy lives, fading out toward the right so the photos still read).
 function HeroSlideshow({ images }: { images: GalleryImage[] }) {
   const slides = images.length > 0 ? images : null;
   const [index, setIndex] = useState(0);
@@ -242,22 +228,22 @@ function HeroSlideshow({ images }: { images: GalleryImage[] }) {
     if (!slides || slides.length < 2) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % slides.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(id);
   }, [slides]);
 
   const current = slides?.[index];
 
   return (
-    <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-gradient">
-      {current ? (
+    <div className="absolute inset-0 overflow-hidden">
+      {current && (
         <AnimatePresence mode="popLayout">
           <motion.div
             key={current.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
             className="absolute inset-0"
           >
             <Image
@@ -265,60 +251,55 @@ function HeroSlideshow({ images }: { images: GalleryImage[] }) {
               alt={current.alt}
               fill
               priority={index === 0}
-              sizes="(max-width: 1024px) 100vw, 40vw"
+              sizes="100vw"
               className="object-cover"
             />
           </motion.div>
         </AnimatePresence>
-      ) : (
-        <div className="absolute inset-0 bg-midnight-700" />
       )}
 
+      {/* Left-to-right scrim for text contrast */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(180deg, rgba(4,16,31,0.45) 0%, rgba(4,16,31,0.05) 35%, rgba(4,16,31,0.05) 60%, rgba(4,16,31,0.85) 100%)',
+            'linear-gradient(100deg, rgba(4,16,31,0.97) 0%, rgba(4,16,31,0.88) 30%, rgba(4,16,31,0.55) 55%, rgba(4,16,31,0.25) 75%, rgba(4,16,31,0.15) 100%)',
         }}
       />
-
+      {/* Top/bottom scrim for navbar and price-row legibility */}
       <div
-        className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-2/3 h-32 opacity-50 pointer-events-none"
+        className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse at 50% 100%, rgba(56,189,248,0.55), transparent 70%)',
+            'linear-gradient(180deg, rgba(4,16,31,0.55) 0%, rgba(4,16,31,0.05) 18%, rgba(4,16,31,0.05) 55%, rgba(4,16,31,0.9) 100%)',
         }}
       />
 
-      <div className="absolute top-5 left-5 glass rounded-2xl px-3.5 py-2.5 border-gradient">
-        <div className="flex items-center gap-2">
-          <span className="relative flex w-2 h-2">
-            <span className="absolute inline-flex w-full h-full rounded-full bg-cyan opacity-75 animate-ping" />
-            <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
-          </span>
-          <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-cream/90">
-            Recent work
-          </span>
-        </div>
-      </div>
-
-      <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
-        {slides && slides.length > 1 && (
-          <div className="flex items-center gap-1.5">
-            {slides.map((s, i) => (
-              <span
-                key={s.id}
-                className={`h-1 rounded-full transition-all ${
-                  i === index ? 'w-5 bg-cyan' : 'w-1.5 bg-cream/30'
-                }`}
-              />
-            ))}
+      {slides && (
+        <div className="absolute top-24 right-5 md:top-28 md:right-8 flex items-center gap-2.5">
+          <div className="glass rounded-full px-3.5 py-2 border-gradient flex items-center gap-2">
+            <span className="relative flex w-2 h-2">
+              <span className="absolute inline-flex w-full h-full rounded-full bg-cyan opacity-75 animate-ping" />
+              <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
+            </span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-cream/90">
+              Recent work
+            </span>
           </div>
-        )}
-        <div className="glass rounded-full p-2.5 border-gradient ml-auto">
-          <MapPin className="w-4 h-4 text-cyan" />
+          {slides.length > 1 && (
+            <div className="hidden sm:flex items-center gap-1.5">
+              {slides.map((s, i) => (
+                <span
+                  key={s.id}
+                  className={`h-1 rounded-full transition-all ${
+                    i === index ? 'w-5 bg-cyan' : 'w-1.5 bg-cream/30'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

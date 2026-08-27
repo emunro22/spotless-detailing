@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getBookableServices, getBookingsForDate } from '@/lib/queries';
-import { getAvailableSlots } from '@/lib/booking';
+import { getDaySlots } from '@/lib/booking';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,8 +19,10 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'Service is not available for online booking' }, { status: 400 });
   }
 
+  // Existing bookings (jobs and blocked/personal time) determine what's taken —
+  // only start/end times are used here, no customer details are exposed.
   const existing = await getBookingsForDate(date);
-  const slots = getAvailableSlots(date, service.durationMinutes, existing);
+  const slots = getDaySlots(date, service.durationMinutes, existing);
 
   return NextResponse.json({ slots, durationMinutes: service.durationMinutes });
 }
