@@ -116,33 +116,33 @@ export default function Hero({ homepageServices, settings, galleryImages }: Hero
                 <ArrowRight className="w-4 h-4 text-cyan/60 group-hover:text-cyan group-hover:translate-x-1 transition-all ml-2" />
               </Link>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-10 grid grid-cols-3 gap-4 max-w-md"
-            >
-              <Stat
-                value={settings.stats_rating || '5.0'}
-                label="Avg. rating"
-                prefix={<Star className="w-3.5 h-3.5 fill-cyan text-cyan" />}
-              />
-              <Stat value={settings.stats_vehicles || '1000s'} label="Vehicles detailed" />
-              <Stat value={settings.stats_mobile || '100%'} label="Mobile service" />
-                </motion.div>
               </div>
             </div>
           </div>
         </div>
-        {/* image wrapper ends here — everything below sits on the plain dark base */}
+        {/* image wrapper ends here — stats and price row sit on the plain dark base */}
 
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-10 grid grid-cols-3 gap-4 max-w-md"
+          >
+            <Stat
+              value={settings.stats_rating || '5.0'}
+              label="Avg. rating"
+              prefix={<Star className="w-3.5 h-3.5 fill-cyan text-cyan" />}
+            />
+            <Stat value={settings.stats_vehicles || '1000s'} label="Vehicles detailed" />
+            <Stat value={settings.stats_mobile || '100%'} label="Mobile service" />
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55 }}
-            className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
+            className="mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
           >
             {homepageServices.map((service) => (
               <PriceTag
@@ -267,6 +267,7 @@ function HeroSlideshow({ images }: { images: GalleryImage[] }) {
               priority={index === 0}
               sizes="100vw"
               className="object-cover"
+              style={{ objectPosition: `${current.focalX}% ${current.focalY}%` }}
             />
           </motion.div>
         </AnimatePresence>

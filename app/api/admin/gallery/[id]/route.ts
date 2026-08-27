@@ -14,6 +14,8 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     if (body.tall !== undefined) patch.tall = !!body.tall;
     if (body.sortOrder !== undefined) patch.sortOrder = Number(body.sortOrder);
     if (body.showInPreview !== undefined) patch.showInPreview = !!body.showInPreview;
+    if (body.focalX !== undefined) patch.focalX = Number(body.focalX);
+    if (body.focalY !== undefined) patch.focalY = Number(body.focalY);
     const updated = await updateGalleryImage(Number(id), patch);
     return NextResponse.json(updated);
   } catch (e: unknown) {

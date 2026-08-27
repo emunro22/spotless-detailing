@@ -246,6 +246,8 @@ type GalleryRow = {
   tall: boolean;
   sort_order: number;
   show_in_preview: boolean;
+  focal_x: number;
+  focal_y: number;
 };
 
 function mapGallery(row: GalleryRow): GalleryImage {
@@ -256,6 +258,8 @@ function mapGallery(row: GalleryRow): GalleryImage {
     tall: row.tall,
     sortOrder: row.sort_order,
     showInPreview: row.show_in_preview,
+    focalX: row.focal_x,
+    focalY: row.focal_y,
   };
 }
 
@@ -277,8 +281,8 @@ export type GalleryInput = Omit<GalleryImage, 'id'>;
 
 export async function addGalleryImage(data: GalleryInput): Promise<GalleryImage> {
   const rows = (await sql`
-    INSERT INTO gallery_images (url, alt, tall, sort_order, show_in_preview)
-    VALUES (${data.url}, ${data.alt}, ${data.tall}, ${data.sortOrder}, ${data.showInPreview})
+    INSERT INTO gallery_images (url, alt, tall, sort_order, show_in_preview, focal_x, focal_y)
+    VALUES (${data.url}, ${data.alt}, ${data.tall}, ${data.sortOrder}, ${data.showInPreview}, ${data.focalX ?? 50}, ${data.focalY ?? 50})
     RETURNING *
   `) as GalleryRow[];
   return mapGallery(rows[0]);
@@ -297,7 +301,9 @@ export async function updateGalleryImage(
       alt = ${merged.alt},
       tall = ${merged.tall},
       sort_order = ${merged.sortOrder},
-      show_in_preview = ${merged.showInPreview}
+      show_in_preview = ${merged.showInPreview},
+      focal_x = ${merged.focalX},
+      focal_y = ${merged.focalY}
     WHERE id = ${id}
     RETURNING *
   `) as GalleryRow[];
@@ -483,4 +489,67 @@ export async function updateBookingStatus(id: number, status: BookingStatus): Pr
 
 export async function deleteBooking(id: number): Promise<void> {
   await sql`DELETE FROM bookings WHERE id = ${id}`;
+}
+
+// ---- Review requests --------------------------------------------
+
+export type ReviewCandidate = {
+  id: number;
+  customerName: string;
+  email: string;
+  serviceName: string;
+  bookingDate: string;
+};
+
+function mapReviewCandidate(row: {
+  id: number;
+  customer_name: string;
+  email: string;
+  service_name: string | null;
+  service_label: string | null;
+  booking_date: string;
+}): ReviewCandidate {
+  return {
+    id: row.id,
+    customerName: row.customer_name,
+    email: row.email,
+    serviceName: row.service_name ?? row.service_label ?? 'your detail',
+    bookingDate: row.booking_date,
+  };
+}
+
+// Jobs booked for `date` that haven't had a review request sent — used by
+// the daily 9pm cron.
+export async function getJobsForReviewRequest(date: string): Promise<ReviewCandidate[]> {
+  const rows = (await sql`
+    SELECT b.id, b.customer_name, b.email, b.booking_date::text, s.name AS service_name, b.service_label
+    FROM bookings b
+    LEFT JOIN services s ON s.id = b.service_id
+    WHERE b.booking_type = 'job'
+      AND b.status IN ('confirmed', 'completed')
+      AND b.booking_date = ${date}
+      AND b.email IS NOT NULL
+      AND b.review_requested_at IS NULL
+  `) as Parameters<typeof mapReviewCandidate>[0][];
+  return rows.map(mapReviewCandidate);
+}
+
+// All past completed jobs with an email on file that have never had a
+// review request sent — used for the one-off historical bulk send.
+export async function getPastJobsPendingReviewRequest(): Promise<ReviewCandidate[]> {
+  const rows = (await sql`
+    SELECT b.id, b.customer_name, b.email, b.booking_date::text, s.name AS service_name, b.service_label
+    FROM bookings b
+    LEFT JOIN services s ON s.id = b.service_id
+    WHERE b.booking_type = 'job'
+      AND b.status = 'completed'
+      AND b.email IS NOT NULL
+      AND b.review_requested_at IS NULL
+    ORDER BY b.booking_date DESC
+  `) as Parameters<typeof mapReviewCandidate>[0][];
+  return rows.map(mapReviewCandidate);
+}
+
+export async function markReviewRequested(id: number): Promise<void> {
+  await sql`UPDATE bookings SET review_requested_at = NOW() WHERE id = ${id}`;
 }

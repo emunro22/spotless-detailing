@@ -21,6 +21,8 @@ export const BUSINESS = {
   founded: '2024',
 } as const;
 
+export const GOOGLE_REVIEW_URL = 'https://g.page/r/CWfwxrdKm-4AECE/review';
+
 export const SERVICE_AREAS = [
   'Uddingston',
   'Bothwell',
@@ -280,48 +282,6 @@ export const FAQS = [
 // Real Google reviews — preserved verbatim with original phrasing
 export const TESTIMONIALS = [
   {
-    name: 'Aidan Healy',
-    date: '5 months ago',
-    quote:
-      'Done a brilliant job with my car. Looks brand new. The attention to detail & value for money is outstanding. Nathan is friendly, professional, and works hard. Can\u2019t recommend him highly enough and will certainly be using his services again.',
-    rating: 5,
-  },
-  {
-    name: 'Cerys Hanlon',
-    date: '5 months ago',
-    quote:
-      'Excellent service and easy to book. Amazing attention to detail and value for money. Highly recommend!',
-    rating: 5,
-  },
-  {
-    name: 'Aidan Craig',
-    date: 'a year ago',
-    quote:
-      'Nathan did an excellent job detailing my car! He was meticulous and thorough, leaving my vehicle looking brand new inside and out. His attention to detail and professionalism really stood out. I highly recommend Nathan to anyone looking for top-notch car detailing services.',
-    rating: 5,
-  },
-  {
-    name: 'Craig Lannigan',
-    date: 'a year ago',
-    quote:
-      'Highly recommend for anyone looking for valet or detailing work on their car. I got my mrs this as her car was badly needing it and the results were insane both inside and outside the car. Great mobile service provided by a top guy!',
-    rating: 5,
-  },
-  {
-    name: 'Amanda Gilfedder',
-    date: '2 years ago',
-    quote:
-      'I am absolutely delighted with my car. My husband has the monthly maintenance plan and is always delighted with the results. This was my first time having my car cleaned with Spotless Detailing and it literally looks brand new. Nathan\u2019s attention to detail is second to none.',
-    rating: 5,
-  },
-  {
-    name: 'Yvonne Hughes',
-    date: 'a year ago',
-    quote:
-      'What an amazing job, my car is like new and that\u2019s not easy on a 7 year old car! Delighted with the job and you\u2019re a pleasure to deal with Nathan! See you next time!',
-    rating: 5,
-  },
-  {
     name: 'Rosie McInulty',
     date: 'Recently',
     quote:
@@ -423,15 +383,57 @@ export const TESTIMONIALS = [
     rating: 5,
   },
   {
+    name: 'Aidan Healy',
+    date: '5 months ago',
+    quote:
+      'Done a brilliant job with my car. Looks brand new. The attention to detail & value for money is outstanding. Nathan is friendly, professional, and works hard. Can\u2019t recommend him highly enough and will certainly be using his services again.',
+    rating: 5,
+  },
+  {
+    name: 'Cerys Hanlon',
+    date: '5 months ago',
+    quote:
+      'Excellent service and easy to book. Amazing attention to detail and value for money. Highly recommend!',
+    rating: 5,
+  },
+  {
     name: 'Jill McInulty',
     date: '5 months ago',
     quote: 'Great effort, thorough attention to detail & value for money.',
     rating: 5,
   },
   {
+    name: 'Aidan Craig',
+    date: 'a year ago',
+    quote:
+      'Nathan did an excellent job detailing my car! He was meticulous and thorough, leaving my vehicle looking brand new inside and out. His attention to detail and professionalism really stood out. I highly recommend Nathan to anyone looking for top-notch car detailing services.',
+    rating: 5,
+  },
+  {
+    name: 'Craig Lannigan',
+    date: 'a year ago',
+    quote:
+      'Highly recommend for anyone looking for valet or detailing work on their car. I got my mrs this as her car was badly needing it and the results were insane both inside and outside the car. Great mobile service provided by a top guy!',
+    rating: 5,
+  },
+  {
+    name: 'Yvonne Hughes',
+    date: 'a year ago',
+    quote:
+      'What an amazing job, my car is like new and that\u2019s not easy on a 7 year old car! Delighted with the job and you\u2019re a pleasure to deal with Nathan! See you next time!',
+    rating: 5,
+  },
+  {
     name: 'stephen given',
     date: 'a year ago',
     quote: 'Absolutely delighted with job done on my car by Nathan. Great service and cracking lad. Highly recommended.',
+    rating: 5,
+  },
+  {
+    name: 'Amanda Gilfedder',
+    date: '2 years ago',
+    quote:
+      'I am absolutely delighted with my car. My husband has the monthly maintenance plan and is always delighted with the results. This was my first time having my car cleaned with Spotless Detailing and it literally looks brand new. Nathan\u2019s attention to detail is second to none.',
     rating: 5,
   },
   {

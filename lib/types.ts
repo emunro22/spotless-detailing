@@ -61,6 +61,8 @@ export type GalleryImage = {
   tall: boolean;
   sortOrder: number;
   showInPreview: boolean;
+  focalX: number; // 0-100, object-position percentage
+  focalY: number; // 0-100, object-position percentage
 };
 
 export type SiteSettings = Record<string, string>;

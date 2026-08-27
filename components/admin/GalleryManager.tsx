@@ -153,16 +153,33 @@ export default function GalleryManager({
               key={img.id}
               className="glass border-gradient rounded-2xl overflow-hidden"
             >
-              <div className="relative aspect-[4/3] bg-midnight-700">
+              <div
+                className="relative aspect-[4/3] bg-midnight-700 cursor-crosshair"
+                title="Click to set the focus point used by the homepage slideshow"
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const focalX = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+                  const focalY = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+                  updateImage(img.id, { focalX, focalY });
+                }}
+              >
                 <Image
                   src={img.url}
                   alt={img.alt}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
+                  className="object-cover pointer-events-none"
+                  style={{ objectPosition: `${img.focalX}% ${img.focalY}%` }}
+                />
+                <div
+                  className="absolute w-5 h-5 rounded-full border-2 border-cyan shadow-glow-cyan pointer-events-none -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${img.focalX}%`, top: `${img.focalY}%` }}
                 />
               </div>
-              <div className="p-4 space-y-3">
+              <div className="px-4 pt-2 text-[10px] text-cream/40">
+                Click the photo above to set what stays centred when it's cropped
+              </div>
+              <div className="p-4 pt-2 space-y-3">
                 <label className="block">
                   <span className="block text-[10px] uppercase tracking-[0.16em] text-cream/50 mb-1">
                     Alt text

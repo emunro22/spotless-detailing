@@ -1,4 +1,4 @@
-import { BUSINESS } from './constants';
+import { BUSINESS, GOOGLE_REVIEW_URL } from './constants';
 
 export const EMAIL_COLORS = {
   bg: '#04101F',
@@ -86,4 +86,24 @@ export function emailTemplate(title: string, subtitle: string, content: string) 
 </body>
 </html>
 `;
+}
+
+// "How did we do?" review-request email — sent after a job, links straight
+// to the Google review page. First name only, kept short and low-pressure.
+export function reviewRequestEmailHtml(customerName: string): string {
+  const firstName = customerName.trim().split(/\s+/)[0] || 'there';
+  const content = `
+    <tr>
+      <td style="padding: 10px 0 30px 0; text-align: center;">
+        <a href="${GOOGLE_REVIEW_URL}" style="display:inline-block; background-color:${EMAIL_COLORS.accent}; color:${EMAIL_COLORS.bg}; font-weight:700; font-size:15px; text-decoration:none; padding:16px 32px; border-radius:999px;">
+          Leave a quick review
+        </a>
+      </td>
+    </tr>
+  `;
+  return emailTemplate(
+    'How did we do?',
+    `Hi ${escapeHtml(firstName)}, thanks again for booking with ${BUSINESS.name}! If you've got 30 seconds, a quick review really helps us out.`,
+    content
+  );
 }

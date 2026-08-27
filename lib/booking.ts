@@ -4,7 +4,7 @@ import type { Booking } from './types';
 export const OPEN_HOUR = 8;
 export const CLOSE_HOUR = 18;
 export const SLOT_INTERVAL_MINUTES = 30;
-export const BOOKING_BUFFER_MINUTES = 30; // gap between jobs for pack-up/travel
+export const BOOKING_BUFFER_MINUTES = 0; // back-to-back — next slot opens exactly when a job's duration ends
 
 function toMinutes(time: string): number {
   const [h, m] = time.split(':').map(Number);

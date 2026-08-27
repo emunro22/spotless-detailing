@@ -19,6 +19,8 @@ export async function POST(req: Request) {
       tall: !!body.tall,
       sortOrder: Number(body.sortOrder) || 0,
       showInPreview: body.showInPreview !== false,
+      focalX: body.focalX !== undefined ? Number(body.focalX) : 50,
+      focalY: body.focalY !== undefined ? Number(body.focalY) : 50,
     });
     return NextResponse.json(created, { status: 201 });
   } catch (e: unknown) {

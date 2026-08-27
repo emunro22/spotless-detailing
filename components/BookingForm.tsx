@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Loader2, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
 import type { Service } from '@/lib/types';
+import PublicMonthCalendar from './PublicMonthCalendar';
 
 interface BookingFormProps {
   services: Service[];
@@ -12,10 +13,6 @@ interface BookingFormProps {
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 type SlotInfo = { time: string; available: boolean };
-
-function todayStr() {
-  return new Date().toISOString().slice(0, 10);
-}
 
 export default function BookingForm({ services }: BookingFormProps) {
   const [serviceId, setServiceId] = useState<number | ''>(services[0]?.id ?? '');
@@ -183,15 +180,7 @@ export default function BookingForm({ services }: BookingFormProps) {
 
         <div className="sm:col-span-2">
           <Label htmlFor="date">Date</Label>
-          <input
-            id="date"
-            type="date"
-            required
-            min={todayStr()}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className={inputCls}
-          />
+          <PublicMonthCalendar serviceId={serviceId} selected={date} onSelect={setDate} />
         </div>
 
         {date && (
