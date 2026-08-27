@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useMemo, useState, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Phone, MapPin, Car, Loader2, Check, X as XIcon } from 'lucide-react';
-import type { Booking } from '@/lib/types';
+import { ChevronLeft, ChevronRight, Phone, MapPin, Car, Loader2, Check, X as XIcon, Plus } from 'lucide-react';
+import type { Booking, Service } from '@/lib/types';
+import AddBookingModal from './AddBookingModal';
 
 const WEEKDAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -55,7 +56,7 @@ function buildGrid(year: number, month: number) {
 
 const MONTH_LABEL = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' });
 
-export default function BookingsCalendar() {
+export default function BookingsCalendar({ services }: { services: Service[] }) {
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth());
@@ -63,6 +64,7 @@ export default function BookingsCalendar() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<number | null>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const grid = useMemo(() => buildGrid(year, month), [year, month]);
 
@@ -133,6 +135,13 @@ export default function BookingsCalendar() {
           {MONTH_LABEL.format(new Date(Date.UTC(year, month, 1)))}
         </h2>
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-cyan text-midnight-900 hover:bg-cyan-glow shadow-glow-cyan transition-all"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Add
+          </button>
           <button
             onClick={goToday}
             className="px-3 py-1.5 rounded-full text-xs font-medium border border-cream/15 text-cream/70 hover:border-cyan/30 hover:text-cyan transition-colors"
@@ -271,6 +280,18 @@ export default function BookingsCalendar() {
           </div>
         )}
       </div>
+
+      {showAddModal && (
+        <AddBookingModal
+          defaultDate={selected}
+          services={services}
+          onClose={() => setShowAddModal(false)}
+          onCreated={() => {
+            setShowAddModal(false);
+            load();
+          }}
+        />
+      )}
     </div>
   );
 }

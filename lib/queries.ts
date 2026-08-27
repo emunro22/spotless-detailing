@@ -441,6 +441,42 @@ export async function createBooking(data: BookingInput): Promise<Booking> {
   return booking;
 }
 
+export type AdminBookingInput = {
+  bookingType: BookingType;
+  serviceId: number | null;
+  serviceLabel: string | null;
+  customerName: string;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
+  vehicle: string | null;
+  notes: string | null;
+  bookingDate: string;
+  startTime: string;
+  endTime: string;
+  status: BookingStatus;
+};
+
+// Used by the admin calendar's "Add booking" form — unlike createBooking()
+// (the public self-serve flow, which always has full contact details and a
+// catalog service), this covers manually-logged jobs and blocked/personal
+// time, where most fields are legitimately unknown.
+export async function createAdminBooking(data: AdminBookingInput): Promise<Booking> {
+  const rows = (await sql`
+    INSERT INTO bookings (
+      service_id, service_label, booking_type, customer_name, email, phone, address, vehicle, notes,
+      booking_date, start_time, end_time, status
+    ) VALUES (
+      ${data.serviceId}, ${data.serviceLabel}, ${data.bookingType}, ${data.customerName}, ${data.email}, ${data.phone}, ${data.address}, ${data.vehicle}, ${data.notes},
+      ${data.bookingDate}, ${data.startTime}, ${data.endTime}, ${data.status}
+    )
+    RETURNING id
+  `) as { id: number }[];
+  const booking = await getBookingById(rows[0].id);
+  if (!booking) throw new Error('Failed to load created booking');
+  return booking;
+}
+
 export async function updateBookingStatus(id: number, status: BookingStatus): Promise<void> {
   await sql`UPDATE bookings SET status = ${status} WHERE id = ${id}`;
 }

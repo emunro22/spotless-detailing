@@ -1,8 +1,11 @@
 import BookingsCalendar from '@/components/admin/BookingsCalendar';
+import { getAllServicesAdmin } from '@/lib/queries';
 
 export const dynamic = 'force-dynamic';
 
-export default function AdminBookingsPage() {
+export default async function AdminBookingsPage() {
+  const services = await getAllServicesAdmin();
+
   return (
     <div className="max-w-4xl">
       <div className="mb-6 md:mb-8">
@@ -16,7 +19,7 @@ export default function AdminBookingsPage() {
           Tap a day to see what's booked. Cyan dots are jobs, amber dots are blocked/personal time.
         </p>
       </div>
-      <BookingsCalendar />
+      <BookingsCalendar services={services} />
     </div>
   );
 }
