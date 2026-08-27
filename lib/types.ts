@@ -21,11 +21,13 @@ export type Service = {
 };
 
 export type BookingStatus = 'confirmed' | 'completed' | 'cancelled';
+export type BookingType = 'job' | 'personal';
 
 export type Booking = {
   id: number;
   serviceId: number | null;
   serviceName: string;
+  bookingType: BookingType;
   customerName: string;
   email: string | null;
   phone: string | null;

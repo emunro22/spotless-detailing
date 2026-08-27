@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { sql } from './db';
-import type { Service, CleaningService, GalleryImage, SiteSettings, Booking, BookingStatus } from './types';
+import type { Service, CleaningService, GalleryImage, SiteSettings, Booking, BookingStatus, BookingType } from './types';
 
 // ---- Service row mapping ----------------------------------------
 
@@ -333,6 +333,7 @@ type BookingRow = {
   service_id: number | null;
   service_name: string | null;
   service_label: string | null;
+  booking_type: BookingType;
   customer_name: string;
   email: string | null;
   phone: string | null;
@@ -350,7 +351,9 @@ function mapBooking(row: BookingRow): Booking {
   return {
     id: row.id,
     serviceId: row.service_id,
-    serviceName: row.service_name ?? row.service_label ?? 'Detailing job',
+    serviceName:
+      row.booking_type === 'personal' ? 'Blocked time' : row.service_name ?? row.service_label ?? 'Detailing job',
+    bookingType: row.booking_type,
     customerName: row.customer_name,
     email: row.email,
     phone: row.phone,

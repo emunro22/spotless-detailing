@@ -15,6 +15,14 @@ function addDaysStr(days: number): string {
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
+  const explicitFrom = searchParams.get('from');
+  const explicitTo = searchParams.get('to');
+
+  if (explicitFrom && explicitTo) {
+    const bookings = await getBookingsInRange(explicitFrom, explicitTo);
+    return NextResponse.json(bookings);
+  }
+
   const range = searchParams.get('range') || 'today';
 
   if (range === 'past') {

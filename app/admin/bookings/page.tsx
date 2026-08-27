@@ -1,4 +1,4 @@
-import BookingsList from '@/components/admin/BookingsList';
+import BookingsCalendar from '@/components/admin/BookingsCalendar';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,10 +13,10 @@ export default function AdminBookingsPage() {
           Jobs
         </h1>
         <p className="mt-2 md:mt-3 text-sm md:text-base text-cream/60">
-          Everything booked through the site, filtered by date range.
+          Tap a day to see what's booked. Cyan dots are jobs, amber dots are blocked/personal time.
         </p>
       </div>
-      <BookingsList />
+      <BookingsCalendar />
     </div>
   );
 }
