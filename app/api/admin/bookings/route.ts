@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getBookingsInRange } from '@/lib/queries';
+import { getBookingsInRange, getPastBookings } from '@/lib/queries';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +16,11 @@ function addDaysStr(days: number): string {
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const range = searchParams.get('range') || 'today';
+
+  if (range === 'past') {
+    const bookings = await getPastBookings(todayStr());
+    return NextResponse.json(bookings);
+  }
 
   const from = todayStr();
   const to = range === '7' ? addDaysStr(7) : range === '30' ? addDaysStr(30) : todayStr();

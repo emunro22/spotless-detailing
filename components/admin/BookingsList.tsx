@@ -8,6 +8,7 @@ const TABS = [
   { key: 'today', label: 'Today' },
   { key: '7', label: 'Next 7 days' },
   { key: '30', label: 'Next 30 days' },
+  { key: 'past', label: 'Past' },
 ] as const;
 
 type TabKey = (typeof TABS)[number]['key'];
@@ -123,23 +124,29 @@ function BookingCard({
       <div className="mt-3 space-y-1.5">
         <div className="text-sm font-medium text-cream">{booking.customerName}</div>
         <div className="text-sm text-cyan">{booking.serviceName}</div>
-        <div className="flex items-center gap-1.5 text-xs text-cream/60">
-          <Car className="w-3.5 h-3.5 flex-shrink-0" />
-          {booking.vehicle}
-        </div>
-        <div className="flex items-center gap-1.5 text-xs text-cream/60">
-          <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-          {booking.address}
-        </div>
-        <a
-          href={`tel:${booking.phone}`}
-          className="flex items-center gap-1.5 text-xs text-cream/60 hover:text-cyan transition-colors w-fit"
-        >
-          <Phone className="w-3.5 h-3.5 flex-shrink-0" />
-          {booking.phone}
-        </a>
+        {booking.vehicle && (
+          <div className="flex items-center gap-1.5 text-xs text-cream/60">
+            <Car className="w-3.5 h-3.5 flex-shrink-0" />
+            {booking.vehicle}
+          </div>
+        )}
+        {booking.address && (
+          <div className="flex items-center gap-1.5 text-xs text-cream/60">
+            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+            {booking.address}
+          </div>
+        )}
+        {booking.phone && (
+          <a
+            href={`tel:${booking.phone}`}
+            className="flex items-center gap-1.5 text-xs text-cream/60 hover:text-cyan transition-colors w-fit"
+          >
+            <Phone className="w-3.5 h-3.5 flex-shrink-0" />
+            {booking.phone}
+          </a>
+        )}
         {booking.notes && (
-          <div className="text-xs text-cream/50 pt-1 border-t border-cream/5 mt-2">
+          <div className="text-xs text-cream/50 pt-1 border-t border-cream/5 mt-2 whitespace-pre-line">
             {booking.notes}
           </div>
         )}

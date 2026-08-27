@@ -330,13 +330,14 @@ export async function updateSettings(settings: Record<string, string>): Promise<
 
 type BookingRow = {
   id: number;
-  service_id: number;
-  service_name: string;
+  service_id: number | null;
+  service_name: string | null;
+  service_label: string | null;
   customer_name: string;
-  email: string;
-  phone: string;
-  address: string;
-  vehicle: string;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
+  vehicle: string | null;
   notes: string | null;
   booking_date: string;
   start_time: string;
@@ -349,7 +350,7 @@ function mapBooking(row: BookingRow): Booking {
   return {
     id: row.id,
     serviceId: row.service_id,
-    serviceName: row.service_name,
+    serviceName: row.service_name ?? row.service_label ?? 'Detailing job',
     customerName: row.customer_name,
     email: row.email,
     phone: row.phone,
@@ -368,7 +369,7 @@ export async function getBookingById(id: number): Promise<Booking | null> {
   const rows = (await sql`
     SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
     FROM bookings b
-    JOIN services s ON s.id = b.service_id
+    LEFT JOIN services s ON s.id = b.service_id
     WHERE b.id = ${id}
   `) as BookingRow[];
   return rows[0] ? mapBooking(rows[0]) : null;
@@ -378,7 +379,7 @@ export async function getBookingsForDate(date: string): Promise<Booking[]> {
   const rows = (await sql`
     SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
     FROM bookings b
-    JOIN services s ON s.id = b.service_id
+    LEFT JOIN services s ON s.id = b.service_id
     WHERE b.booking_date = ${date} AND b.status != 'cancelled'
     ORDER BY b.start_time ASC
   `) as BookingRow[];
@@ -389,9 +390,21 @@ export async function getBookingsInRange(from: string, to: string): Promise<Book
   const rows = (await sql`
     SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
     FROM bookings b
-    JOIN services s ON s.id = b.service_id
+    LEFT JOIN services s ON s.id = b.service_id
     WHERE b.booking_date >= ${from} AND b.booking_date <= ${to}
     ORDER BY b.booking_date ASC, b.start_time ASC
+  `) as BookingRow[];
+  return rows.map(mapBooking);
+}
+
+export async function getPastBookings(before: string, limit = 200): Promise<Booking[]> {
+  const rows = (await sql`
+    SELECT b.*, b.booking_date::text AS booking_date, s.name AS service_name
+    FROM bookings b
+    LEFT JOIN services s ON s.id = b.service_id
+    WHERE b.booking_date < ${before}
+    ORDER BY b.booking_date DESC, b.start_time DESC
+    LIMIT ${limit}
   `) as BookingRow[];
   return rows.map(mapBooking);
 }

@@ -84,8 +84,8 @@ export async function POST(req: Request) {
         ${row('Service', escapeHtml(service.name))}
         ${row('Date', escapeHtml(dateLabel))}
         ${row('Time', escapeHtml(timeLabel))}
-        ${row('Vehicle', escapeHtml(booking.vehicle))}
-        ${row('Address', escapeHtml(booking.address))}
+        ${row('Vehicle', escapeHtml(booking.vehicle || ''))}
+        ${row('Address', escapeHtml(booking.address || ''))}
         ${booking.notes ? row('Notes', escapeHtml(booking.notes).replace(/\n/g, '<br/>')) : ''}
       `;
 
@@ -104,7 +104,7 @@ export async function POST(req: Request) {
       await Promise.all([
         resend.emails.send({
           from: `${BUSINESS.name} <${fromAddress}>`,
-          to: [booking.email],
+          to: [booking.email!],
           subject: `Booking confirmed — ${service.name} on ${dateLabel}`,
           html: emailTemplate(
             'Booking Confirmed',
@@ -115,7 +115,7 @@ export async function POST(req: Request) {
         resend.emails.send({
           from: `${BUSINESS.name} <${fromAddress}>`,
           to: [toAddress],
-          replyTo: booking.email,
+          replyTo: booking.email!,
           subject: `New booking: ${booking.customerName} — ${service.name} on ${dateLabel}`,
           html: emailTemplate('New Booking', `A new job has been booked through the website.`, adminContent),
         }),

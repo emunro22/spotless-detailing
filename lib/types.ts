@@ -24,13 +24,13 @@ export type BookingStatus = 'confirmed' | 'completed' | 'cancelled';
 
 export type Booking = {
   id: number;
-  serviceId: number;
+  serviceId: number | null;
   serviceName: string;
   customerName: string;
-  email: string;
-  phone: string;
-  address: string;
-  vehicle: string;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
+  vehicle: string | null;
   notes: string | null;
   bookingDate: string; // YYYY-MM-DD
   startTime: string; // HH:MM
