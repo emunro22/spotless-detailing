@@ -16,16 +16,23 @@ interface HeroProps {
 export default function Hero({ homepageServices, settings, galleryImages }: HeroProps) {
   return (
     <section className="relative min-h-[100svh] pt-28 pb-20 md:pt-32 md:pb-24 flex items-center overflow-hidden">
+      {/* Plain dark base — this is what shows behind the fixed navbar at the
+          top and behind the price row at the bottom, since the slideshow
+          below only covers the content block in between. */}
       <div className="absolute inset-0 bg-midnight-900" />
-      <HeroSlideshow images={galleryImages} />
-      <div className="absolute inset-0 hex-overlay opacity-20 mix-blend-overlay pointer-events-none" />
+      <div className="absolute inset-0 hex-overlay opacity-30 pointer-events-none" />
 
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-midnight-900 to-transparent pointer-events-none" />
+      <div className="relative w-full">
+        {/* Slideshow block: starts right where this content begins (i.e.
+            below the navbar) and ends with it (i.e. after the stats row) —
+            its height is driven purely by the text content, not the section. */}
+        <div className="relative overflow-hidden">
+          <HeroSlideshow images={galleryImages} />
 
-      <div className="relative mx-auto max-w-7xl px-5 md:px-8 w-full">
-        <div className="grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7">
-            <motion.div
+          <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 w-full">
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-7">
+                <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
@@ -123,31 +130,38 @@ export default function Hero({ homepageServices, settings, galleryImages }: Hero
               />
               <Stat value={settings.stats_vehicles || '1000s'} label="Vehicles detailed" />
               <Stat value={settings.stats_mobile || '100%'} label="Mobile service" />
-            </motion.div>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </div>
+        {/* image wrapper ends here — everything below sits on the plain dark base */}
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
-        >
-          {homepageServices.map((service) => (
-            <PriceTag
-              key={service.id}
-              service={service.shortName}
-              price={
-                service.startingPrice > 0
-                  ? `£${service.startingPrice}`
-                  : service.priceLabel || 'POA'
-              }
-              tag={service.homepageTag || service.tagline}
-              highlight={service.popular}
-            />
-          ))}
-        </motion.div>
+        <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.55 }}
+            className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
+          >
+            {homepageServices.map((service) => (
+              <PriceTag
+                key={service.id}
+                service={service.shortName}
+                price={
+                  service.startingPrice > 0
+                    ? `£${service.startingPrice}`
+                    : service.priceLabel || 'POA'
+                }
+                tag={service.homepageTag || service.tagline}
+                highlight={service.popular}
+              />
+            ))}
+          </motion.div>
+        </div>
       </div>
+
+      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-midnight-900 to-transparent pointer-events-none" />
     </section>
   );
 }
@@ -276,7 +290,7 @@ function HeroSlideshow({ images }: { images: GalleryImage[] }) {
       />
 
       {slides && (
-        <div className="absolute top-24 right-5 md:top-28 md:right-8 flex items-center gap-2.5">
+        <div className="hidden lg:flex absolute top-0 right-5 md:right-8 items-center gap-2.5">
           <div className="glass rounded-full px-3.5 py-2 border-gradient flex items-center gap-2">
             <span className="relative flex w-2 h-2">
               <span className="absolute inline-flex w-full h-full rounded-full bg-cyan opacity-75 animate-ping" />
