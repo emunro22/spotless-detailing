@@ -27,7 +27,10 @@ function loadGoogleAnalytics() {
 }
 
 export default function CookieConsent() {
-  const [visible, setVisible] = useState(false);
+  // Renders visible by default (server-rendered, so structured-data/technical
+  // scanners and no-JS crawlers see the real banner markup) and hides itself
+  // once mounted if a prior choice is already stored.
+  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     let stored: string | null = null;
@@ -37,8 +40,9 @@ export default function CookieConsent() {
 
     if (stored === 'accepted') {
       loadGoogleAnalytics();
-    } else if (stored !== 'declined') {
-      setVisible(true);
+      setDismissed(true);
+    } else if (stored === 'declined') {
+      setDismissed(true);
     }
   }, []);
 
@@ -47,20 +51,23 @@ export default function CookieConsent() {
       localStorage.setItem(CONSENT_KEY, 'accepted');
     } catch {}
     loadGoogleAnalytics();
-    setVisible(false);
+    setDismissed(true);
   }
 
   function decline() {
     try {
       localStorage.setItem(CONSENT_KEY, 'declined');
     } catch {}
-    setVisible(false);
+    setDismissed(true);
   }
 
-  if (!visible) return null;
-
   return (
-    <div className="fixed bottom-4 inset-x-4 md:inset-x-auto md:right-6 md:bottom-6 md:max-w-sm z-50 rounded-2xl glass-strong border-gradient p-5 shadow-glow-cyan">
+    <div
+      role="region"
+      aria-label="Cookie consent"
+      hidden={dismissed}
+      className="fixed bottom-4 inset-x-4 md:inset-x-auto md:right-6 md:bottom-6 md:max-w-sm z-50 rounded-2xl glass-strong border-gradient p-5 shadow-glow-cyan"
+    >
       <p className="text-sm text-cream/80 leading-relaxed">
         We use cookies to run this site and, with your permission, to
         understand site traffic. See our{' '}

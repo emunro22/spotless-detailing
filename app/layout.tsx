@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque, DM_Sans } from 'next/font/google';
-import Script from 'next/script';
 import './globals.css';
 
 import NavbarServer from '@/components/NavbarServer';
@@ -100,10 +99,13 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable}`}>
       <head>
-        <Script
+        {/* Plain <script>, not next/script — even "beforeInteractive" wraps the
+            JSON-LD in a self.__next_s.push(...) call rather than a real
+            <script type="application/ld+json"> element, so structured-data
+            scanners that query for that tag directly never see it. */}
+        <script
           id="ld-json-business"
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(localBusinessJsonLd()),
           }}
