@@ -63,7 +63,8 @@ export function buildMetadata({
 export function localBusinessJsonLd() {
   return {
     '@context': 'https://schema.org',
-    '@type': ['LocalBusiness', 'AutomotiveBusiness'],
+    '@type': 'LocalBusiness',
+    additionalType: 'https://schema.org/AutomotiveBusiness',
     '@id': `${BUSINESS.url}/#business`,
     name: BUSINESS.name,
     legalName: BUSINESS.legalName,

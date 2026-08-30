@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import CookieConsent from './CookieConsent';
 
 export default function LayoutShell({
   navbar,
@@ -23,6 +24,7 @@ export default function LayoutShell({
       {navbar}
       <main className="min-h-screen">{children}</main>
       {footer}
+      <CookieConsent />
     </>
   );
 }

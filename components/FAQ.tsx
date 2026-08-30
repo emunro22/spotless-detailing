@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
-import Script from 'next/script';
 import { FAQS } from '@/lib/constants';
 import { faqJsonLd } from '@/lib/seo';
 import { SectionHeader } from './Services';
@@ -30,7 +29,10 @@ export default function FAQ({
 
   return (
     <section className="relative py-24 md:py-32 bg-midnight-900">
-      <Script
+      {/* Plain <script>, not next/script — next/script defers non-"beforeInteractive"
+          strategies to a client-side effect, so it never appears in the HTML crawlers
+          and AI answer engines actually fetch. */}
+      <script
         id={jsonLdId}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }}

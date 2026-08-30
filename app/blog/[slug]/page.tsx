@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Script from 'next/script';
 import { notFound } from 'next/navigation';
 import { ArrowRight, Calendar, Clock, Phone } from 'lucide-react';
 import { buildMetadata, blogPostingJsonLd } from '@/lib/seo';
@@ -41,7 +40,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id={`blogposting-jsonld-${post.slug}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{

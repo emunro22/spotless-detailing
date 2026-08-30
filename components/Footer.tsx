@@ -164,9 +164,25 @@ export default async function Footer() {
         </div>
 
         <div className="mt-14 pt-8 border-t border-cream/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <p className="text-xs text-cream/40">
-            © {new Date().getFullYear()} {BUSINESS.legalName}. All rights reserved.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-5">
+            <p className="text-xs text-cream/40">
+              © {new Date().getFullYear()} {BUSINESS.legalName}. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/privacy-policy"
+                className="text-xs text-cream/40 hover:text-cyan transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-xs text-cream/40 hover:text-cyan transition-colors"
+              >
+                Terms &amp; Conditions
+              </Link>
+            </div>
+          </div>
           <p className="text-xs text-cream/40">
             Crafted by{' '}
             <a
