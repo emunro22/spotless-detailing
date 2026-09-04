@@ -1,4 +1,4 @@
-# Spotless Detailing — Glasgow
+# Spotless Detailing Glasgow
 
 Mobile car detailing & valeting site. Next.js 14 (App Router) + TypeScript + Tailwind + Framer Motion + Resend, deployed on Vercel.
 
@@ -19,7 +19,7 @@ Site lives on `http://localhost:3000`.
 - **Tailwind CSS** with brand tokens defined in `tailwind.config.ts`.
 - **Framer Motion** for entrance animations and the mobile menu drawer.
 - **Resend** for the contact form (table-based HTML email for cross-client compatibility).
-- **next/font** with Bricolage Grotesque (display) + DM Sans (body) — both self-hosted via Google Fonts proxy, no FOUT.
+- **next/font** with Bricolage Grotesque (display) + DM Sans (body), both self-hosted via Google Fonts proxy, no FOUT.
 - **lucide-react** for icons.
 
 ## Project structure
@@ -67,7 +67,7 @@ Search for `TODO` comments. You need to set:
 - `BUSINESS.email`
 - `BUSINESS.whatsapp` (full URL like `https://wa.me/447XXXXXXXXX`)
 - `BUSINESS.instagram`
-- `BUSINESS.url` (your production domain — defaults assume `spotlessdetailing.co.uk`)
+- `BUSINESS.url` (your production domain, defaults assume `spotlessdetailing.co.uk`)
 
 ### 2. Add brand assets to `/public`
 
@@ -93,7 +93,7 @@ The gallery component currently expects 5 images named `gallery-1.jpg` through `
 The booking page (`app/booking/page.tsx`) currently shows a "connecting next" placeholder. To go live:
 
 1. In your Google Calendar, create an **Appointment Schedule** (Settings → Appointment schedules) with the services as offerings.
-2. Copy the public booking URL — looks like `https://calendar.google.com/calendar/appointments/schedules/AcZssZ...`.
+2. Copy the public booking URL, looks like `https://calendar.google.com/calendar/appointments/schedules/AcZssZ...`.
 3. In `app/booking/page.tsx`, find the comment block marked `TODO: Replace this whole placeholder block` and swap it for:
 
 ```tsx
@@ -107,7 +107,7 @@ The booking page (`app/booking/page.tsx`) currently shows a "connecting next" pl
 />
 ```
 
-If you want a more bespoke setup (writing into the calendar from a custom form using the Google Calendar API), let me know — that's a separate route handler and OAuth setup.
+If you want a more bespoke setup (writing into the calendar from a custom form using the Google Calendar API), let me know. That's a separate route handler and OAuth setup.
 
 ### 5. Deploy to Vercel
 
@@ -135,6 +135,6 @@ After first deploy, point your custom domain at the Vercel project and check:
 ## Notes for future me
 
 - `border-gradient` utility in `globals.css` does the subtle cyan border-glow on cards. Apply by adding the class.
-- Hero uses the hexagon LED motif from the actual brand studio photos as inline SVG — no asset needed.
+- Hero uses the hexagon LED motif from the actual brand studio photos as inline SVG. No asset needed.
 - Mobile menu locks body scroll when open (`useEffect` in `Navbar.tsx`).
 - Honeypot field in contact form (`name="website"`).

@@ -27,7 +27,7 @@ export default function Gallery({ images, preview = false }: GalleryProps) {
                 <span className="gradient-text italic">for itself.</span>
               </>
             }
-            subtitle="A selection of recent details — from daily-drivers to high-end SUVs, hot hatches to fleet vehicles. Every vehicle gets the same standard."
+            subtitle="A selection of recent details, from daily-drivers to high-end SUVs, hot hatches to fleet vehicles. Every vehicle gets the same standard."
             align="left"
           />
           {preview && (

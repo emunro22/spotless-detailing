@@ -78,7 +78,7 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
 
       <Card title="Business contact">
         <div className="grid md:grid-cols-2 gap-4">
-          <Field label="Phone (display)" hint="e.g. 07955 733053 — shown to visitors">
+          <Field label="Phone (display)" hint="e.g. 07955 733053, shown to visitors">
             <input
               type="text"
               value={settings.business_phone}
@@ -112,7 +112,7 @@ export default function SettingsForm({ initial }: { initial: Record<string, stri
           </Field>
           <Field
             label="WhatsApp link"
-            hint="Full URL — e.g. https://wa.me/447955733053"
+            hint="Full URL, e.g. https://wa.me/447955733053"
           >
             <input
               type="text"

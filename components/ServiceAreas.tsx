@@ -18,7 +18,7 @@ export default function ServiceAreas() {
               <span className="gradient-text italic">Greater Glasgow.</span>
             </>
           }
-          subtitle="We cover Uddingston and everywhere within 15 miles — for both car detailing and commercial & domestic cleaning. If your postcode isn't listed, message us."
+          subtitle="We cover Uddingston and everywhere within 15 miles, for both car detailing and commercial & domestic cleaning. If your postcode isn't listed, message us."
         />
 
         <div className="mt-12 md:mt-16 flex flex-wrap justify-center gap-2.5 md:gap-3 max-w-4xl mx-auto">

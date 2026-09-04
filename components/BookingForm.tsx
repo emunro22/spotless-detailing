@@ -46,9 +46,9 @@ export default function BookingForm({ services }: BookingFormProps) {
         const daySlots: SlotInfo[] = data.slots || [];
         setSlots(daySlots);
         if (daySlots.length === 0) {
-          setSlotsError('Closed that day — try another date.');
+          setSlotsError('Closed that day, try another date.');
         } else if (!daySlots.some((s) => s.available)) {
-          setSlotsError('Fully booked that day — try another date.');
+          setSlotsError('Fully booked that day, try another date.');
         }
       })
       .catch(() => {
@@ -138,7 +138,7 @@ export default function BookingForm({ services }: BookingFormProps) {
     return (
       <div className="rounded-3xl glass-strong border-gradient p-10 md:p-12 text-center">
         <p className="text-cream/70">
-          Online booking is temporarily unavailable — please{' '}
+          Online booking is temporarily unavailable, please{' '}
           <Link href="/contact" className="text-cyan hover:text-cyan-glow underline">
             get in touch
           </Link>{' '}
@@ -170,7 +170,7 @@ export default function BookingForm({ services }: BookingFormProps) {
             ))}
           </select>
           <p className="mt-2 text-xs text-cream/40">
-            Need Polishing, Protection or a Maintenance Plan? Those are bespoke —{' '}
+            Need Polishing, Protection or a Maintenance Plan? Those are bespoke, so{' '}
             <Link href="/contact" className="text-cyan hover:text-cyan-glow underline">
               get in touch
             </Link>{' '}
@@ -259,12 +259,12 @@ export default function BookingForm({ services }: BookingFormProps) {
                 id="notes"
                 name="notes"
                 rows={3}
-                placeholder="Anything we should know — parking, access, specific concerns…"
+                placeholder="Anything we should know? Parking, access, specific concerns…"
                 className={inputCls + ' resize-none'}
               />
             </div>
 
-            {/* Honeypot — bots fill this, humans don't see it */}
+            {/* Honeypot, bots fill this, humans don't see it */}
             <input
               type="text"
               name="website"

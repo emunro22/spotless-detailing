@@ -6,7 +6,7 @@ import { buildMetadata } from '@/lib/seo';
 import { getAllServices } from '@/lib/queries';
 
 export const metadata = buildMetadata({
-  title: 'Services & Pricing — Mobile Detailing Glasgow',
+  title: 'Services & Pricing | Mobile Detailing Glasgow',
   description:
     'Safe wash from £30, valet from £60, deep clean from £120 and bespoke maintenance plans. Mobile car detailing across Glasgow.',
   path: '/services',
@@ -27,7 +27,7 @@ export default async function ServicesPage() {
             <span className="gradient-text italic">transparent.</span>
           </>
         }
-        description="Pick the level of detail you need. Pricing is from-rates, with a fixed quote confirmed before any work — based on vehicle size and condition."
+        description="Pick the level of detail you need. Pricing is from-rates, with a fixed quote confirmed before any work, based on vehicle size and condition."
       />
       <Services services={services} />
       <Process />

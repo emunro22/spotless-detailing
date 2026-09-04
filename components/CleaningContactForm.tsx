@@ -116,7 +116,7 @@ export default function CleaningContactForm({ services }: CleaningContactFormPro
                 {s.name}
               </option>
             ))}
-            <option value="Not sure">Not sure — tell me what you need</option>
+            <option value="Not sure">Not sure, tell me what you need</option>
           </select>
         </div>
 
@@ -126,7 +126,7 @@ export default function CleaningContactForm({ services }: CleaningContactFormPro
             id="message"
             name="message"
             rows={5}
-            placeholder="Describe the area to be cleaned, approximate size, any specific concerns — algae, oil stains, moss, etc."
+            placeholder="Describe the area to be cleaned, approximate size, and any specific concerns: algae, oil stains, moss, etc."
             className="w-full bg-midnight-700 border border-cream/10 rounded-xl px-4 py-3.5 text-cream placeholder-cream/30 focus:outline-none focus:border-cyan/40 focus:ring-2 focus:ring-cyan/15 transition-all resize-none"
           />
         </div>

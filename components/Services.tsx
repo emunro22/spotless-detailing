@@ -24,7 +24,7 @@ export default function Services({ services }: ServicesProps) {
               you want.
             </>
           }
-          subtitle="Every service is fully mobile — professional car care solutions delivered on a schedule that suits you, at your work place at your convenience."
+          subtitle="Every service is fully mobile: professional car care delivered on a schedule that suits you, at your workplace, at your convenience."
         />
 
         <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">

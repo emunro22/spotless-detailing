@@ -1,5 +1,5 @@
 // lib/area-data.ts
-// Real, defensible facts about each service area — used to give every
+// Real, defensible facts about each service area, used to give every
 // /cleaning/[area] and /valeting/[area] page genuinely distinct content
 // instead of one template with the town name swapped in.
 
@@ -30,7 +30,7 @@ export const AREA_FACTS: AreaFact[] = [
   { name: 'Motherwell', slug: 'motherwell', county: 'North Lanarkshire', proximity: 'near', character: 'a town built on its steelmaking heritage, now a mix of town-centre flats and suburban housing' },
   { name: 'Wishaw', slug: 'wishaw', county: 'North Lanarkshire', proximity: 'far', character: 'a town neighbouring Motherwell with traditional streets and newer housing estates' },
   { name: 'East Kilbride', slug: 'east-kilbride', county: 'South Lanarkshire', proximity: 'far', character: 'one of Scotland\'s post-war New Towns, laid out in distinct neighbourhoods with driveways and garden space' },
-  { name: 'Coatbridge', slug: 'coatbridge', county: 'North Lanarkshire', proximity: 'near', character: 'a town built on its ironworking history — once known as the "Iron Burgh" — now largely residential' },
+  { name: 'Coatbridge', slug: 'coatbridge', county: 'North Lanarkshire', proximity: 'near', character: 'a town built on its ironworking history, once known as the "Iron Burgh", now largely residential' },
   { name: 'Airdrie', slug: 'airdrie', county: 'North Lanarkshire', proximity: 'far', character: 'a town with a compact centre and residential streets stretching out on all sides' },
   { name: 'Glasgow', slug: 'glasgow', county: 'Glasgow', proximity: 'near', character: 'Scotland\'s largest city, everything from West End tenements to suburban semis and new-build flats' },
   { name: 'Chapelhall', slug: 'chapelhall', county: 'North Lanarkshire', proximity: 'far', character: 'a small village near Airdrie, mostly residential' },
@@ -55,7 +55,7 @@ export function findAreaFact(slug: string): AreaFact | undefined {
   return AREA_FACTS.find((a) => a.slug === slug);
 }
 
-/** Deterministic small integer from a string — same input always maps to the same output, no Math.random(). */
+/** Deterministic small integer from a string, same input always maps to the same output, no Math.random(). */
 export function hashIndex(input: string, mod: number): number {
   let hash = 0;
   for (let i = 0; i < input.length; i++) {

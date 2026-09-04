@@ -5,9 +5,9 @@ import CTAWrapper from '@/components/CTAWrapper';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata = buildMetadata({
-  title: 'About — Spotless Detailing Glasgow',
+  title: 'About | Spotless Detailing Glasgow',
   description:
-    'Meet Spotless Detailing — Glasgow\'s mobile car detailing specialists. A passion for cars and the craft of making them look their absolute best.',
+    'Meet Spotless Detailing, Glasgow\'s mobile car detailing specialists. A passion for cars and the craft of making them look their absolute best.',
   path: '/about',
 });
 
@@ -54,14 +54,14 @@ export default function AboutPage() {
                   and the relationships we build along the way. Every vehicle
                   is treated as if it were our own and every customer is
                   valued. We don&apos;t just aim to deliver outstanding
-                  results — we aim to create an experience that keeps you
+                  results. We aim to create an experience that keeps you
                   coming back.
                 </p>
                 <p>
                   We enjoy every detail of the process and every service we
                   provide, constantly pushing ourselves to improve, grow and
                   make a name in the detailing industry. This isn&apos;t just
-                  a job — it&apos;s a passion turned into a profession.
+                  a job, it&apos;s a passion turned into a profession.
                 </p>
               </div>
             </div>

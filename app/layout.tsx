@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     template: `%s | ${BUSINESS.name} Glasgow`,
   },
   description:
-    'Premium mobile car detailing across Glasgow. Specialising in deep cleans and paint protection. Safe wash from £30, valet from £60, deep clean from £120 — we come to you.',
+    'Premium mobile car detailing across Glasgow. Specialising in deep cleans and paint protection. Safe wash from £30, valet from £60, deep clean from £120. We come to you.',
   keywords: [...SEO_KEYWORDS],
   applicationName: BUSINESS.name,
   authors: [{ name: BUSINESS.name }],
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     siteName: BUSINESS.name,
     title: `${BUSINESS.name} | Mobile Detailing & Valeting Glasgow`,
     description:
-      'Premium mobile car detailing in Glasgow. Safe wash, valet, deep clean and ceramic protection — we come to you.',
+      'Premium mobile car detailing in Glasgow. Safe wash, valet, deep clean and ceramic protection. We come to you.',
     images: [
       {
         url: '/og-image.jpg',
@@ -99,7 +99,7 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable}`}>
       <head>
-        {/* Plain <script>, not next/script — even "beforeInteractive" wraps the
+        {/* Plain <script>, not next/script: even "beforeInteractive" wraps the
             JSON-LD in a self.__next_s.push(...) call rather than a real
             <script type="application/ld+json"> element, so structured-data
             scanners that query for that tag directly never see it. */}

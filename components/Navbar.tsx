@@ -43,10 +43,8 @@ export default function Navbar({
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled || open
-          ? 'glass-strong border-b border-cyan/10'
-          : 'bg-transparent border-b border-transparent'
+      className={`fixed top-0 inset-x-0 z-50 bg-midnight-900 transition-shadow duration-300 border-b ${
+        scrolled || open ? 'border-cyan/15 shadow-lg shadow-black/40' : 'border-cream/5'
       }`}
     >
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-4 flex items-center justify-between">
@@ -113,7 +111,7 @@ export default function Navbar({
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
-            className="w-11 h-11 rounded-full glass flex items-center justify-center text-cream/80 hover:text-cyan transition-colors"
+            className="w-11 h-11 rounded-full bg-midnight-800 border border-cream/10 flex items-center justify-center text-cream/80 hover:text-cyan hover:border-cyan/30 transition-colors"
           >
             <Instagram className="w-5 h-5" />
           </a>
@@ -121,7 +119,7 @@ export default function Navbar({
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
-            className="relative w-11 h-11 rounded-full glass flex items-center justify-center text-cream"
+            className="relative w-11 h-11 rounded-full bg-midnight-800 border border-cream/10 flex items-center justify-center text-cream"
           >
             <AnimatePresence mode="wait" initial={false}>
               {open ? (
@@ -158,7 +156,7 @@ export default function Navbar({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="lg:hidden absolute top-full inset-x-0 glass-strong border-b border-cyan/10"
+            className="lg:hidden absolute top-full inset-x-0 bg-midnight-900 border-b border-cyan/15"
           >
             <nav className="px-5 py-6 flex flex-col gap-1">
               {NAV_LINKS.map((link, i) => (

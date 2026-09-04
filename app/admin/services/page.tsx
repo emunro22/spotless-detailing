@@ -68,7 +68,7 @@ export default async function ServicesAdminPage() {
                       Yes
                     </span>
                   ) : (
-                    <span className="text-cream/30 text-xs">—</span>
+                    <span className="text-cream/30 text-xs">No</span>
                   )}
                 </td>
                 <td className="px-5 py-4">
@@ -77,7 +77,7 @@ export default async function ServicesAdminPage() {
                       Popular
                     </span>
                   ) : (
-                    <span className="text-cream/30 text-xs">—</span>
+                    <span className="text-cream/30 text-xs">No</span>
                   )}
                 </td>
                 <td className="px-5 py-4">

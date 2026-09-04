@@ -6,8 +6,7 @@ import { LogIn } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +18,7 @@ export default function LoginPage() {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ code }),
     });
 
     setLoading(false);
@@ -27,6 +26,7 @@ export default function LoginPage() {
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
       setError(data.error || 'Login failed');
+      setCode('');
       return;
     }
 
@@ -56,33 +56,24 @@ export default function LoginPage() {
           Admin sign in
         </h1>
         <p className="text-sm text-cream/60 mb-8">
-          Manage services, gallery and site content.
+          Enter your access code to manage bookings, services and site content.
         </p>
 
-        <label className="block mb-4">
-          <span className="block text-xs uppercase tracking-[0.16em] text-cream/60 mb-1.5">
-            Email
-          </span>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoFocus
-            className="w-full bg-midnight-900 border border-cream/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan/40 transition-colors"
-          />
-        </label>
-
+        {/* text-base (16px) on the input keeps iOS Safari from zooming the page on focus */}
         <label className="block mb-6">
           <span className="block text-xs uppercase tracking-[0.16em] text-cream/60 mb-1.5">
-            Password
+            Access code
           </span>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
             required
-            className="w-full bg-midnight-900 border border-cream/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan/40 transition-colors"
+            autoFocus
+            placeholder="••••"
+            className="w-full bg-midnight-900 border border-cream/10 rounded-xl px-4 py-4 text-base text-center tracking-[0.5em] font-display focus:outline-none focus:border-cyan/40 transition-colors"
           />
         </label>
 
@@ -98,7 +89,7 @@ export default function LoginPage() {
           className="w-full inline-flex items-center justify-center gap-2 bg-cyan hover:bg-cyan-glow disabled:opacity-50 disabled:cursor-not-allowed text-midnight-900 font-semibold rounded-full py-3.5 transition-all shadow-glow-cyan"
         >
           {loading ? (
-            'Signing in…'
+            'Signing in...'
           ) : (
             <>
               <LogIn className="w-4 h-4" />

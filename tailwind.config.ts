@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette — deep automotive navy with crystalline cyan accent
+        // Brand palette, deep automotive navy with crystalline cyan accent
         midnight: {
           DEFAULT: '#04101F',
           50: '#E6EAF0',

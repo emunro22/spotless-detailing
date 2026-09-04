@@ -125,7 +125,7 @@ export default async function BlogPostPage({ params }: Props) {
             <span className="gradient-text italic">your detail?</span>
           </h2>
           <p className="mt-4 text-cream/60 leading-relaxed max-w-xl mx-auto">
-            Tell us about your car — we&apos;ll come back with a fixed quote
+            Tell us about your car, we&apos;ll come back with a fixed quote
             and available slots, no obligation.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">

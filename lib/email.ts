@@ -31,7 +31,7 @@ export function emailRow(label: string, value: string) {
   `;
 }
 
-// Shared HTML email chrome — logo header, body slot, footer. Used by both the
+// Shared HTML email chrome, logo header, body slot, footer. Used by both the
 // contact form and booking confirmation emails so there's one template.
 export function emailTemplate(title: string, subtitle: string, content: string) {
   const logoUrl = `${BUSINESS.url}/logo.png`;
@@ -88,7 +88,7 @@ export function emailTemplate(title: string, subtitle: string, content: string) 
 `;
 }
 
-// "How did we do?" review-request email — sent after a job, links straight
+// "How did we do?" review-request email, sent after a job, links straight
 // to the Google review page. First name only, kept short and low-pressure.
 export function reviewRequestEmailHtml(customerName: string): string {
   const firstName = customerName.trim().split(/\s+/)[0] || 'there';

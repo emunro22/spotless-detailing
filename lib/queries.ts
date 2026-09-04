@@ -463,7 +463,7 @@ export type AdminBookingInput = {
   status: BookingStatus;
 };
 
-// Used by the admin calendar's "Add booking" form — unlike createBooking()
+// Used by the admin calendar's "Add booking" form, unlike createBooking()
 // (the public self-serve flow, which always has full contact details and a
 // catalog service), this covers manually-logged jobs and blocked/personal
 // time, where most fields are legitimately unknown.
@@ -518,7 +518,7 @@ function mapReviewCandidate(row: {
   };
 }
 
-// Jobs booked for `date` that haven't had a review request sent — used by
+// Jobs booked for `date` that haven't had a review request sent, used by
 // the daily 9pm cron.
 export async function getJobsForReviewRequest(date: string): Promise<ReviewCandidate[]> {
   const rows = (await sqlLive`

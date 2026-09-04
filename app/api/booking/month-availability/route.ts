@@ -9,7 +9,7 @@ function pad(n: number) {
   return String(n).padStart(2, '0');
 }
 
-// Per-day availability for a whole month — 'available' | 'full' | 'closed' | 'past'.
+// Per-day availability for a whole month, 'available' | 'full' | 'closed' | 'past'.
 // No customer details, just a status per date, so this is safe to expose publicly.
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

@@ -19,8 +19,8 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'Service is not available for online booking' }, { status: 400 });
   }
 
-  // Existing bookings (jobs and blocked/personal time) determine what's taken —
-  // only start/end times are used here, no customer details are exposed.
+  // Existing bookings (jobs and blocked/personal time) determine what's taken.
+  // Only start/end times are used here, no customer details are exposed.
   const existing = await getBookingsForDate(date);
   const slots = getDaySlots(date, service.durationMinutes, existing);
 

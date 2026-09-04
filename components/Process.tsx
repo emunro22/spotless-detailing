@@ -9,19 +9,19 @@ const STEPS = [
     icon: CalendarCheck,
     n: '01',
     title: 'Book your slot',
-    body: 'Pick a service and a time that suits you. We confirm a fixed quote — no surprises on the day.',
+    body: 'Pick a service and a time that suits you. We confirm a fixed quote. No surprises on the day.',
   },
   {
     icon: MapPin,
     n: '02',
     title: 'We come to you',
-    body: 'Fully mobile, on a schedule that suits — at your home, at your workplace, at your convenience.',
+    body: 'Fully mobile, on a schedule that suits, at your home, at your workplace, at your convenience.',
   },
   {
     icon: Sparkles,
     n: '03',
     title: 'Spotless treatment',
-    body: 'Safe wash, deep interior steam clean, paint decontamination, professional-grade finish — to a standard you\'ll feel as soon as you step in.',
+    body: 'Safe wash, deep interior steam clean, paint decontamination and a professional-grade finish, to a standard you\'ll feel as soon as you step in.',
   },
 ];
 

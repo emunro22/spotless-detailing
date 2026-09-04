@@ -29,7 +29,7 @@ export default function FAQ({
 
   return (
     <section className="relative py-24 md:py-32 bg-midnight-900">
-      {/* Plain <script>, not next/script — next/script defers non-"beforeInteractive"
+      {/* Plain <script>, not next/script: next/script defers non-"beforeInteractive"
           strategies to a client-side effect, so it never appears in the HTML crawlers
           and AI answer engines actually fetch. */}
       <script

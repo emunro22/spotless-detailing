@@ -22,7 +22,7 @@ export const metadata = buildMetadata({
   path: '/',
 });
 
-// Revalidate every 60s — admin edits show up shortly after saving.
+// Revalidate every 60s, admin edits show up shortly after saving.
 export const revalidate = 60;
 
 export default async function HomePage() {

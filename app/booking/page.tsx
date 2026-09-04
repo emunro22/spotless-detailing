@@ -3,7 +3,7 @@ import { getBookableServices } from '@/lib/queries';
 import BookingForm from '@/components/BookingForm';
 
 export const metadata = buildMetadata({
-  title: 'Book Your Detail — Spotless Detailing Glasgow',
+  title: 'Book Your Detail | Spotless Detailing Glasgow',
   description:
     'Book your mobile car detailing slot in Glasgow. See live availability, pick a time, we\'ll come to you.',
   path: '/booking',
@@ -35,7 +35,7 @@ export default async function BookingPage() {
             <span className="gradient-text italic">Done.</span>
           </h1>
           <p className="mt-6 text-base md:text-lg text-cream/65 max-w-xl mx-auto leading-relaxed">
-            Live availability — pick a service, a date and a time that suits, and
+            Live availability. Pick a service, a date and a time that suits, and
             you're booked in instantly with an email confirmation.
           </p>
         </div>

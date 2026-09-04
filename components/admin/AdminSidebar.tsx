@@ -26,7 +26,7 @@ const NAV = [
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
-export default function AdminSidebar({ email }: { email: string }) {
+export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -121,7 +121,7 @@ export default function AdminSidebar({ email }: { email: string }) {
                 <ExternalLink className="w-3.5 h-3.5" />
                 View live site
               </Link>
-              <div className="text-xs text-cream/40 mb-2 truncate">{email}</div>
+              <div className="text-xs text-cream/40 mb-2">Signed in</div>
               <button
                 onClick={logout}
                 className="flex items-center gap-2 text-xs text-cream/60 hover:text-cream transition-colors"
@@ -155,7 +155,7 @@ export default function AdminSidebar({ email }: { email: string }) {
             <ExternalLink className="w-3.5 h-3.5" />
             View live site
           </Link>
-          <div className="text-xs text-cream/40 mb-2 truncate">{email}</div>
+          <div className="text-xs text-cream/40 mb-2">Signed in</div>
           <button
             onClick={logout}
             className="flex items-center gap-2 text-xs text-cream/60 hover:text-cream transition-colors"

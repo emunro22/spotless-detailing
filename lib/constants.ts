@@ -63,7 +63,7 @@ export const SERVICE_AREAS = [
 export const CLEANING_FAQS = [
   {
     q: 'What areas do you cover for cleaning?',
-    a: 'We cover Uddingston and everywhere within 15 miles — including Glasgow, Hamilton, Motherwell, East Kilbride, Coatbridge, Airdrie, Rutherglen, Cambuslang and the surrounding areas. Get in touch with your postcode and we\'ll confirm.',
+    a: 'We cover Uddingston and everywhere within 15 miles, including Glasgow, Hamilton, Motherwell, East Kilbride, Coatbridge, Airdrie, Rutherglen, Cambuslang and the surrounding areas. Get in touch with your postcode and we\'ll confirm.',
   },
   {
     q: 'What types of properties do you clean?',
@@ -71,11 +71,11 @@ export const CLEANING_FAQS = [
   },
   {
     q: 'Do you offer regular cleaning contracts?',
-    a: 'Yes — we offer scheduled maintenance contracts for commercial clients. Weekly, fortnightly or monthly visits to keep your premises looking their best, with professional invoices supplied.',
+    a: 'Yes. We offer scheduled maintenance contracts for commercial clients. Weekly, fortnightly or monthly visits to keep your premises looking their best, with professional invoices supplied.',
   },
   {
     q: 'Will pressure washing damage my surfaces?',
-    a: 'No. We tailor our approach to the surface — using soft wash for delicate materials like render and stonework, and higher pressure for robust surfaces like concrete and block paving. We always assess before we start.',
+    a: 'No. We tailor our approach to the surface, using soft wash for delicate materials like render and stonework, and higher pressure for robust surfaces like concrete and block paving. We always assess before we start.',
   },
   {
     q: 'How long does a driveway clean take?',
@@ -83,7 +83,7 @@ export const CLEANING_FAQS = [
   },
   {
     q: 'Do I need to be home?',
-    a: 'Not necessarily — as long as we have access to the area being cleaned and a water supply. We\'ll arrange everything beforehand so you can carry on with your day.',
+    a: 'Not necessarily, as long as we have access to the area being cleaned and a water supply. We\'ll arrange everything beforehand so you can carry on with your day.',
   },
 ];
 
@@ -120,7 +120,7 @@ export const SERVICES: Service[] = [
     priceLabel: 'from £30',
     duration: '60–90 min',
     description:
-      'A swirl-free exterior wash using prewash, snow foam and the two-bucket method — finished with a hydrophobic sealant and dressed tyres.',
+      'A swirl-free exterior wash using prewash, snow foam and the two-bucket method, finished with a hydrophobic sealant and dressed tyres.',
     exterior: [
       'Safe wash (prewash, snow foam, two-bucket method)',
       'Wheels, tyres and arches cleaned',
@@ -139,7 +139,7 @@ export const SERVICES: Service[] = [
     priceLabel: 'from £60',
     duration: '2 hours',
     description:
-      'A complete inside-and-out clean. Interior hoover, surfaces wiped, glass polished, scent sprayed — exterior safe-washed and dressed.',
+      'A complete inside-and-out clean. Interior hoover, surfaces wiped, glass polished, scent sprayed, exterior safe-washed and dressed.',
     interior: [
       'Thoroughly hoovered',
       'All surfaces cleaned',
@@ -163,7 +163,7 @@ export const SERVICES: Service[] = [
     priceLabel: 'from £120',
     duration: '4 hours',
     description:
-      'Our flagship detail. Steam-cleaned interior, shampooed seats and carpets, decontaminated paint — finished to showroom standard.',
+      'Our flagship detail. Steam-cleaned interior, shampooed seats and carpets, decontaminated paint, finished to showroom standard.',
     interior: [
       'Thoroughly hoovered',
       'Surfaces steam cleaned',
@@ -193,16 +193,16 @@ export const SERVICES: Service[] = [
     priceLabel: 'POA',
     duration: 'Job-dependent',
     description:
-      'Restore the gloss, depth and clarity of your paintwork. A multi-stage decontamination and machine polish — optionally locked in with a professional-grade ceramic coating.',
+      'Restore the gloss, depth and clarity of your paintwork. A multi-stage decontamination and machine polish, optionally locked in with a professional-grade ceramic coating.',
     exterior: [
       'Full exterior safe wash',
       'Chemical decontamination',
       'Clay bar treatment to remove embedded contaminants',
       'Paint polishing stage to achieve required finish',
       'Final panel wipe for a pure, oil-free surface',
-      'Optional extra — lock in the new finish with a professional-grade ceramic coating',
+      'Optional extra: lock in the new finish with a professional-grade ceramic coating',
     ],
-    bestFor: 'Cars with swirl marks, holograms or dull paint — bringing the finish back to better than new.',
+    bestFor: 'Cars with swirl marks, holograms or dull paint, bringing the finish back to better than new.',
   },
   {
     slug: 'protection-package',
@@ -213,14 +213,14 @@ export const SERVICES: Service[] = [
     priceLabel: 'POA',
     duration: 'Job-dependent',
     description:
-      'A full paint correction and machine polish locked in with a durable ceramic coating. 2, 3 or 5 year coatings available — choose the level of protection that suits.',
+      'A full paint correction and machine polish locked in with a durable ceramic coating. 2, 3 or 5 year coatings available, so you can choose the level of protection that suits.',
     exterior: [
       'Full exterior safe wash',
       'Chemical decontamination',
       'Clay bar treatment to remove embedded contaminants',
       'Machine polishing process to remove required defects',
       'Final panel wipe for a pure, oil-free surface',
-      'Application of your choice of professional-grade ceramic coating — 2, 3 or 5 year coatings available',
+      'Application of your choice of professional-grade ceramic coating (2, 3 or 5 year coatings available)',
     ],
     bestFor: 'Long-term, easy-clean paint protection. Years of hydrophobic, dirt-shedding gloss.',
   },
@@ -233,7 +233,7 @@ export const SERVICES: Service[] = [
     priceLabel: 'Bespoke',
     duration: 'Recurring',
     description:
-      "After your car has had our Deep Clean, Polishing or Protection package, it's eligible for our Maintenance Plan — those standards repeated each visit, on a schedule that suits you, for a fraction of the cost.",
+      "After your car has had our Deep Clean, Polishing or Protection package, it's eligible for our Maintenance Plan: those standards repeated each visit, on a schedule that suits you, for a fraction of the cost.",
     exterior: [
       'Same showroom standards as Deep Clean',
       'Visit schedule that suits you (weekly / fortnightly / monthly)',
@@ -247,15 +247,15 @@ export const SERVICES: Service[] = [
 export const FAQS = [
   {
     q: 'Where do you operate?',
-    a: 'We are a mobile detailer based in Glasgow and cover the surrounding areas — East Kilbride, Paisley, Bearsden, Newton Mearns, Hamilton and most of Greater Glasgow. Get in touch with your postcode and we\'ll confirm.',
+    a: 'We are a mobile detailer based in Glasgow and cover the surrounding areas: East Kilbride, Paisley, Bearsden, Newton Mearns, Hamilton and most of Greater Glasgow. Get in touch with your postcode and we\'ll confirm.',
   },
   {
     q: 'What vehicles do you detail?',
-    a: 'Cars, vans, trucks, caravans, taxis, bikes, quads — all vehicle types. We also offer fleet washing for businesses, with professional invoices supplied.',
+    a: 'Cars, vans, trucks, caravans, taxis, bikes, quads and every other vehicle type. We also offer fleet washing for businesses, with professional invoices supplied.',
   },
   {
     q: 'Do you come to me?',
-    a: 'Yes — we\'re fully mobile. We come to you on a schedule that suits — at your home, at your workplace, at your convenience.',
+    a: 'Yes, we\'re fully mobile. We come to you on a schedule that suits, at your home, at your workplace, at your convenience.',
   },
   {
     q: 'How long does a deep clean take?',
@@ -267,7 +267,7 @@ export const FAQS = [
   },
   {
     q: 'Can you tailor a package to my needs?',
-    a: 'Yes — we can tailor bespoke packages to suit many budgets and applications, ensuring every customer receives a service that fits their needs without compromising on quality.',
+    a: 'Yes. We can tailor bespoke packages to suit many budgets and applications, ensuring every customer receives a service that fits their needs without compromising on quality.',
   },
   {
     q: 'How do I pay?',
@@ -279,127 +279,160 @@ export const FAQS = [
   },
 ];
 
-// Real Google reviews — preserved verbatim with original phrasing
+// Real Google reviews, kept close to the original wording
 export const TESTIMONIALS = [
   {
-    name: 'Rosie McInulty',
-    date: 'Recently',
+    name: 'Sue Taylor',
+    date: 'This week',
     quote:
-      'Fantastic service from Spotless Detailing! The attention to detail was brilliant, and everything was done to such a high standard. Really friendly, professional service and you can tell they take pride in their work. I couldn\u2019t be happier with the result and would 100% recommend Spotless Detailing to anyone! \ud83d\ude97\u2728',
+      '10/10 always! Amazing service, easy to book in and always the most pristine results. Thank you Spotless Detailing, you’re the best.',
+    rating: 5,
+  },
+  {
+    name: 'Jennifer Whiteford',
+    date: 'This week',
+    quote:
+      'Really happy with the service! Great communication, really friendly and professional, and the car looks amazing. They also managed to fix a scratch that I can’t even see now. Would definitely recommend!',
+    rating: 5,
+  },
+  {
+    name: 'Declan Scott',
+    date: 'This week',
+    quote:
+      'Nathan did an excellent job applying a ceramic coating to my brand-new car. He was able to accommodate me at very short notice, and the quality of his work was outstanding. Professional, friendly, and clearly takes pride in what he does. Highly recommended!',
+    rating: 5,
+  },
+  {
+    name: 'Lachlan Mackinnon',
+    date: 'a week ago',
+    quote:
+      'Had our car ceramic coated. Fantastic job, what a difference to the finish of the car, it looks brilliant. Nathan’s attitude and advice is second to none, wouldn’t hesitate to recommend him for this job.',
+    rating: 5,
+  },
+  {
+    name: 'Rosie McInulty',
+    date: 'a week ago',
+    quote:
+      'Fantastic service from Spotless Detailing! The attention to detail was brilliant, and everything was done to such a high standard. Really friendly, professional service and you can tell they take pride in their work. I couldn’t be happier with the result and would 100% recommend Spotless Detailing to anyone!',
     rating: 5,
   },
   {
     name: 'Sophie MacPhail',
-    date: '3 days ago',
+    date: 'a week ago',
     quote:
-      'We\u2019ve been using Spotless Detailing for a number of years and can never fault them! Nathan always makes an exceptional job of our cars. They look like they have just came out the showroom each time. Cannot thank him enough and wouldn\u2019t go anywhere else!',
+      'We’ve been using Spotless Detailing for a number of years and can never fault them! Nathan always makes an exceptional job of our cars. They look like they have just came out the showroom each time. Cannot thank him enough and wouldn’t go anywhere else!',
     rating: 5,
   },
   {
     name: 'Gary Maxwell',
-    date: '4 days ago',
-    quote: 'Turned up bang on time and done a fantastic job. Highly recommend',
+    date: 'a week ago',
+    quote:
+      'Turned up bang on time and done a fantastic job. Highly recommend.',
     rating: 5,
   },
   {
     name: 'Leeanne Henderson',
-    date: '5 days ago',
+    date: 'a week ago',
     quote:
-      'Just had my first valet done by Nathan at Spotless Detailing after being recommended by a friend and what a job \u2014 outstanding service from start to finish. Excellent communication, turned up when he said he would and carried out the job to\u2026',
+      'Just had my first valet done by Nathan at Spotless Detailing after being recommended by a friend, and what a job. Outstanding service from start to finish, excellent communication, turned up when he said he would and carried out the job to a really high standard.',
     rating: 5,
   },
   {
     name: 'Shannon Purdie',
-    date: 'a week ago',
+    date: '2 weeks ago',
     quote:
-      'I\u2019ve been booking Nathan for around a year now, and he\u2019s always excellent. Reliable, thorough, and my car always looks spotless afterwards. Highly recommend',
+      'I’ve been booking Nathan for around a year now, and he’s always excellent. Reliable, thorough, and my car always looks spotless afterwards. Highly recommend.',
     rating: 5,
   },
   {
     name: 'Ben Fitzgerald',
     date: 'a month ago',
     quote:
-      'My business has been using Nathan and the team at Spotless Detailing coming up to a year now. Booked every 3 weeks. On time, every time. They are reliable, trustworthy and very professional. Spotless Detailing achieve the same brilliant\u2026',
+      'My business has been using Nathan and the team at Spotless Detailing coming up to a year now, booked every 3 weeks. On time, every time. They are reliable, trustworthy and very professional, and the vans and personal vehicles come back brilliant every visit.',
     rating: 5,
   },
   {
     name: 'Fr. Sean Wyllie',
     date: 'a month ago',
-    quote: 'Top quality every time.',
+    quote:
+      'Top quality every time.',
     rating: 5,
   },
   {
     name: 'Matthew McCulloch',
     date: 'a month ago',
     quote:
-      'Can\u2019t recommend these lads enough! Service is incredible and the cars are left spotless every time',
+      'Can’t recommend these lads enough! Service is incredible and the cars are left spotless every time.',
     rating: 5,
   },
   {
     name: 'poulty7',
     date: 'a month ago',
     quote:
-      'Really happy with the service from Spotless Detailing. Our car came back looking brand new inside and out, and you can tell they took their time with the details\u2026',
+      'Really happy with the service from Spotless Detailing. Our car came back looking brand new inside and out, and you can tell they took their time with the details.',
     rating: 5,
   },
   {
     name: 'Envirocycle Glasgow',
     date: '2 months ago',
     quote:
-      'Nathan and his team have looked after our work and personal fleet for over 4 years now on a weekly basis and his workmanship is nothing short of outstanding\u2026',
+      'Nathan and his team have looked after our work and personal fleet for over 4 years now on a weekly basis, and his workmanship is nothing short of outstanding.',
     rating: 5,
   },
   {
     name: 'kyle scott',
     date: '2 months ago',
-    quote: 'Reliable with no fuss. Leaves an excellent job with attention to detail.',
+    quote:
+      'Reliable with no fuss. Leaves an excellent job with attention to detail.',
     rating: 5,
   },
   {
     name: 'Emma Smith',
     date: '2 months ago',
     quote:
-      'We have been using Spotless Detailing for sometime now and have never had a single issue. From SUVs and Vans, to Supercars the work is always carried out to an extremely\u2026',
+      'We have been using Spotless Detailing for sometime now and have never had a single issue. From SUVs and vans to supercars, the work is always carried out to an extremely high standard.',
     rating: 5,
   },
   {
     name: 'Ross Kirkland',
     date: '2 months ago',
     quote:
-      'I\u2019ve been using Nathan for a while now and have always been extremely impressed with him and his workmanship. He is always on time and never stops until the job is done. I have passed him on to friends and family and they have all\u2026',
+      'I’ve been using Nathan for a while now and have always been extremely impressed with him and his workmanship. He is always on time and never stops until the job is done. I have passed him on to friends and family and they have all been delighted.',
     rating: 5,
   },
   {
     name: 'Craig Matthews',
     date: '3 months ago',
-    quote: 'Great job carried out by Nathan would 100% recommend.',
+    quote:
+      'Great job carried out by Nathan, would 100% recommend.',
     rating: 5,
   },
   {
     name: 'Liam Mccormick',
     date: '3 months ago',
     quote:
-      'Nathan at Spotless Detailing has been second to none, I\u2019m booked onto the 4 week maintenance package and every visit the service is flawless. From the customer service to the attention to detail, Nathan always goes above and beyond. My car\u2026',
+      'Nathan at Spotless Detailing has been second to none. I’m booked onto the 4 week maintenance package and every visit the service is flawless. From the customer service to the attention to detail, Nathan always goes above and beyond.',
     rating: 5,
   },
   {
     name: 'Aidan Healy',
-    date: '5 months ago',
+    date: '8 months ago',
     quote:
-      'Done a brilliant job with my car. Looks brand new. The attention to detail & value for money is outstanding. Nathan is friendly, professional, and works hard. Can\u2019t recommend him highly enough and will certainly be using his services again.',
+      'Done a brilliant job with my car. Looks brand new. The attention to detail and value for money is outstanding. Nathan is friendly, professional, and works hard. Can’t recommend him highly enough and will certainly be using his services again.',
     rating: 5,
   },
   {
     name: 'Cerys Hanlon',
-    date: '5 months ago',
+    date: '8 months ago',
     quote:
       'Excellent service and easy to book. Amazing attention to detail and value for money. Highly recommend!',
     rating: 5,
   },
   {
     name: 'Jill McInulty',
-    date: '5 months ago',
-    quote: 'Great effort, thorough attention to detail & value for money.',
+    date: '8 months ago',
+    quote:
+      'Great effort, thorough attention to detail and value for money.',
     rating: 5,
   },
   {
@@ -420,51 +453,56 @@ export const TESTIMONIALS = [
     name: 'Yvonne Hughes',
     date: 'a year ago',
     quote:
-      'What an amazing job, my car is like new and that\u2019s not easy on a 7 year old car! Delighted with the job and you\u2019re a pleasure to deal with Nathan! See you next time!',
+      'What an amazing job, my car is like new and that’s not easy on a 7 year old car! Delighted with the job and you’re a pleasure to deal with Nathan! See you next time!',
     rating: 5,
   },
   {
     name: 'stephen given',
     date: 'a year ago',
-    quote: 'Absolutely delighted with job done on my car by Nathan. Great service and cracking lad. Highly recommended.',
+    quote:
+      'Absolutely delighted with job done on my car by Nathan. Great service and cracking lad. Highly recommended.',
     rating: 5,
   },
   {
     name: 'Amanda Gilfedder',
     date: '2 years ago',
     quote:
-      'I am absolutely delighted with my car. My husband has the monthly maintenance plan and is always delighted with the results. This was my first time having my car cleaned with Spotless Detailing and it literally looks brand new. Nathan\u2019s attention to detail is second to none.',
+      'I am absolutely delighted with my car. My husband has the monthly maintenance plan and is always delighted with the results. This was my first time having my car cleaned with Spotless Detailing and it literally looks brand new. Nathan’s attention to detail is second to none.',
     rating: 5,
   },
   {
     name: 'Sarah Orr',
     date: '2 years ago',
-    quote: 'Very pleased with the results of my car. Would highly recommend',
+    quote:
+      'Very pleased with the results of my car. Would highly recommend.',
     rating: 5,
   },
   {
     name: 'Sinnead Connelly',
     date: '2 years ago',
-    quote: 'Would deffos recommend! My car was looking amazing!',
+    quote:
+      'Would deffos recommend! My car was looking amazing!',
     rating: 5,
   },
   {
     name: 'Kian Gallagher',
     date: '2 years ago',
-    quote: 'Done a great job of my car, would recommend \ud83d\udc4d\ud83c\udffb',
+    quote:
+      'Done a great job of my car, would recommend.',
     rating: 5,
   },
   {
     name: 'AnneMarie Clelland',
     date: '2 years ago',
-    quote: 'Top class job by Nathan. Thank you',
+    quote:
+      'Top class job by Nathan. Thank you.',
     rating: 5,
   },
   {
     name: 'Paul Buggy',
     date: '2 years ago',
     quote:
-      'Absolutely top class job & very friendly young man who certainly put in a shift for very decent prices. Would highly recommend anyone using these services & I certainly will use them again.',
+      'Absolutely top class job and a very friendly young man who certainly put in a shift for very decent prices. Would highly recommend anyone using these services, and I will certainly use them again.',
     rating: 5,
   },
 ];

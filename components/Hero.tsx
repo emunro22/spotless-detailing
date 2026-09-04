@@ -15,153 +15,139 @@ interface HeroProps {
 
 export default function Hero({ homepageServices, settings, galleryImages }: HeroProps) {
   return (
-    <section className="relative min-h-[100svh] pt-28 pb-20 md:pt-32 md:pb-24 flex items-center overflow-hidden">
-      {/* Plain dark base — this is what shows behind the fixed navbar at the
-          top and behind the price row at the bottom, since the slideshow
-          below only covers the content block in between. */}
+    <section className="relative pb-20 md:pb-24 overflow-hidden">
       <div className="absolute inset-0 bg-midnight-900" />
       <div className="absolute inset-0 hex-overlay opacity-30 pointer-events-none" />
 
-      <div className="relative w-full">
-        {/* Slideshow block: starts right where this content begins (i.e.
-            below the navbar) and ends with it (i.e. after the stats row) —
-            its height is driven purely by the text content, not the section. */}
-        <div className="relative overflow-hidden">
-          <HeroSlideshow images={galleryImages} />
+      {/* Slideshow sits directly beneath the fixed navbar, full bleed, with the
+          copy stacked underneath it rather than sitting on top of the photos. */}
+      <div className="relative pt-[72px] md:pt-[80px]">
+        <HeroSlideshow images={galleryImages} />
+      </div>
 
-          <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 w-full">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7">
-                <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-7 border-gradient"
-            >
-              <span className="relative flex w-2 h-2">
-                <span className="absolute inline-flex w-full h-full rounded-full bg-cyan opacity-75 animate-ping" />
-                <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
-              </span>
-              <span className="text-xs uppercase tracking-[0.2em] text-cream/80">
-                Mobile · Glasgow & Surrounds
-              </span>
-            </motion.div>
+      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 w-full">
+        <div className="pt-8 md:pt-12 max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6 border-gradient"
+          >
+            <span className="relative flex w-2 h-2">
+              <span className="absolute inline-flex w-full h-full rounded-full bg-cyan opacity-75 animate-ping" />
+              <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
+            </span>
+            <span className="text-xs uppercase tracking-[0.2em] text-cream/80">
+              Mobile · Glasgow &amp; Surrounds
+            </span>
+          </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="font-display font-bold tracking-tight text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.95]"
-            >
-              That{' '}
-              <span className="gradient-text italic">new&nbsp;car</span>
-              <br />
-              feeling.{' '}
-              <span className="text-cream/40">On your driveway.</span>
-            </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="font-display font-bold tracking-tight text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.95]"
+          >
+            That{' '}
+            <span className="gradient-text italic">new&nbsp;car</span>
+            <br />
+            feeling. <span className="text-cream/40">On your driveway.</span>
+          </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-7 max-w-xl text-base md:text-lg text-cream/70 leading-relaxed"
-            >
-              Premium mobile car detailing across Glasgow. Specialising in deep
-              cleans and paint protection — we come to you on a schedule that
-              suits.
-            </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 max-w-xl text-base md:text-lg text-cream/70 leading-relaxed"
+          >
+            Premium mobile car detailing across Glasgow. Specialising in deep
+            cleans and paint protection, and we come to you on a schedule that
+            suits.
+          </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-10 flex flex-col sm:flex-row gap-3"
-            >
-              <Link
-                href="/booking"
-                className="group inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-cyan text-midnight-900 font-semibold shadow-glow-cyan hover:shadow-glow-cyan-lg hover:bg-cyan-glow transition-all"
-              >
-                Book Your Detail
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/services"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full glass text-cream font-medium hover:border-cyan/40 hover:text-cyan transition-all border-gradient"
-              >
-                See Pricing
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-8"
-            >
-              <Link
-                href="/cleaning"
-                className="group inline-flex items-center gap-3 glass rounded-2xl px-5 py-3.5 border-gradient hover:border-cyan/40 transition-all"
-              >
-                <div className="w-8 h-8 rounded-lg bg-cyan/15 border border-cyan/25 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-cyan" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-cream">
-                    Commercial & Domestic Cleaning
-                  </div>
-                  <div className="text-xs text-cream/50">
-                    Pressure washing · Buildings · Driveways · Restaurants
-                  </div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-cyan/60 group-hover:text-cyan group-hover:translate-x-1 transition-all ml-2" />
-              </Link>
-            </motion.div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* image wrapper ends here — stats and price row sit on the plain dark base */}
-
-        <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 w-full">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-10 grid grid-cols-3 gap-4 max-w-md"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-8 flex flex-col sm:flex-row gap-3"
           >
-            <Stat
-              value={settings.stats_rating || '5.0'}
-              label="Avg. rating"
-              prefix={<Star className="w-3.5 h-3.5 fill-cyan text-cyan" />}
-            />
-            <Stat value={settings.stats_vehicles || '1000s'} label="Vehicles detailed" />
-            <Stat value={settings.stats_mobile || '100%'} label="Mobile service" />
+            <Link
+              href="/booking"
+              className="group inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-cyan text-midnight-900 font-semibold shadow-glow-cyan hover:shadow-glow-cyan-lg hover:bg-cyan-glow transition-all"
+            >
+              Book Your Detail
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full glass text-cream font-medium hover:border-cyan/40 hover:text-cyan transition-all border-gradient"
+            >
+              See Pricing
+            </Link>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
-            className="mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-8"
           >
-            {homepageServices.map((service) => (
-              <PriceTag
-                key={service.id}
-                service={service.shortName}
-                price={
-                  service.startingPrice > 0
-                    ? `£${service.startingPrice}`
-                    : service.priceLabel || 'POA'
-                }
-                tag={service.homepageTag || service.tagline}
-                highlight={service.popular}
-              />
-            ))}
+            <Link
+              href="/cleaning"
+              className="group inline-flex items-center gap-3 glass rounded-2xl px-5 py-3.5 border-gradient hover:border-cyan/40 transition-all"
+            >
+              <div className="w-8 h-8 rounded-lg bg-cyan/15 border border-cyan/25 flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-4 h-4 text-cyan" />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-cream">
+                  Commercial &amp; Domestic Cleaning
+                </div>
+                <div className="text-xs text-cream/50">
+                  Pressure washing · Buildings · Driveways · Restaurants
+                </div>
+              </div>
+              <ArrowRight className="w-4 h-4 text-cyan/60 group-hover:text-cyan group-hover:translate-x-1 transition-all ml-2" />
+            </Link>
           </motion.div>
         </div>
-      </div>
 
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-midnight-900 to-transparent pointer-events-none" />
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-10 grid grid-cols-3 gap-4 max-w-md"
+        >
+          <Stat
+            value={settings.stats_rating || '5.0'}
+            label="Avg. rating"
+            prefix={<Star className="w-3.5 h-3.5 fill-cyan text-cyan" />}
+          />
+          <Stat value={settings.stats_vehicles || '1000s'} label="Vehicles detailed" />
+          <Stat value={settings.stats_mobile || '100%'} label="Mobile service" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.55 }}
+          className="mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
+        >
+          {homepageServices.map((service) => (
+            <PriceTag
+              key={service.id}
+              service={service.shortName}
+              price={
+                service.startingPrice > 0
+                  ? `£${service.startingPrice}`
+                  : service.priceLabel || 'POA'
+              }
+              tag={service.homepageTag || service.tagline}
+              highlight={service.popular}
+            />
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }
@@ -231,9 +217,8 @@ function PriceTag({
   );
 }
 
-// Full-bleed background slideshow — sits behind the entire hero, with the
-// text sitting on top of a dark scrim (strongest on the left, where the
-// copy lives, fading out toward the right so the photos still read).
+// Full-bleed band of recent work. Fixed height so the page never jumps while
+// images load, with the bottom edge fading into the dark page behind it.
 function HeroSlideshow({ images }: { images: GalleryImage[] }) {
   const slides = images.length > 0 ? images : null;
   const [index, setIndex] = useState(0);
@@ -246,75 +231,68 @@ function HeroSlideshow({ images }: { images: GalleryImage[] }) {
     return () => clearInterval(id);
   }, [slides]);
 
-  const current = slides?.[index];
+  if (!slides) return null;
+
+  const current = slides[index];
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      {current && (
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={current.url}
-              alt={current.alt}
-              fill
-              priority={index === 0}
-              sizes="100vw"
-              className="object-cover"
-              style={{ objectPosition: `${current.focalX}% ${current.focalY}%` }}
-            />
-          </motion.div>
-        </AnimatePresence>
-      )}
+    <div className="relative w-full h-[38svh] min-h-[240px] max-h-[420px] sm:h-[46vh] sm:max-h-none lg:h-[56vh] overflow-hidden bg-midnight-800">
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={current.id}
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={current.url}
+            alt={current.alt}
+            fill
+            priority={index === 0}
+            sizes="100vw"
+            className="object-cover"
+            style={{ objectPosition: `${current.focalX}% ${current.focalY}%` }}
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Left-to-right scrim for text contrast */}
+      {/* Bottom fade so the band melts into the copy below it */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
         style={{
           background:
-            'linear-gradient(100deg, rgba(4,16,31,0.97) 0%, rgba(4,16,31,0.88) 30%, rgba(4,16,31,0.55) 55%, rgba(4,16,31,0.25) 75%, rgba(4,16,31,0.15) 100%)',
-        }}
-      />
-      {/* Top/bottom scrim for navbar and price-row legibility */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(180deg, rgba(4,16,31,0.55) 0%, rgba(4,16,31,0.05) 18%, rgba(4,16,31,0.05) 55%, rgba(4,16,31,0.9) 100%)',
+            'linear-gradient(180deg, rgba(4,16,31,0) 0%, rgba(4,16,31,0.75) 55%, #04101F 100%)',
         }}
       />
 
-      {slides && (
-        <div className="hidden lg:flex absolute top-0 right-5 md:right-8 items-center gap-2.5">
-          <div className="glass rounded-full px-3.5 py-2 border-gradient flex items-center gap-2">
+      <div className="absolute inset-x-0 bottom-4 md:bottom-5">
+        <div className="mx-auto max-w-7xl px-5 md:px-8 flex items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-2 rounded-full bg-midnight-900/80 border border-cyan/20 px-3.5 py-2">
             <span className="relative flex w-2 h-2">
               <span className="absolute inline-flex w-full h-full rounded-full bg-cyan opacity-75 animate-ping" />
               <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan" />
             </span>
-            <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-cream/90">
+            <span className="text-[10px] md:text-[11px] font-medium uppercase tracking-[0.16em] text-cream/90">
               Recent work
             </span>
           </div>
+
           {slides.length > 1 && (
-            <div className="hidden sm:flex items-center gap-1.5">
-              {slides.map((s, i) => (
+            <div className="flex items-center gap-1.5">
+              {slides.slice(0, 8).map((s, i) => (
                 <span
                   key={s.id}
                   className={`h-1 rounded-full transition-all ${
-                    i === index ? 'w-5 bg-cyan' : 'w-1.5 bg-cream/30'
+                    i === index ? 'w-5 bg-cyan' : 'w-1.5 bg-cream/35'
                   }`}
                 />
               ))}
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

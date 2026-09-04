@@ -1,33 +1,24 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
 import { createSession, setSessionCookie } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 
+// Single access code, no email. Override with ADMIN_CODE in the environment
+// if it ever needs changing without a deploy.
+const ADMIN_CODE = process.env.ADMIN_CODE || '2003';
+
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
-  const validEmail = process.env.ADMIN_EMAIL;
-  const validHash = process.env.ADMIN_PASSWORD_HASH;
+  const { code } = await req.json().catch(() => ({ code: '' }));
 
-  if (!email || !password) {
-    return NextResponse.json({ error: 'Missing credentials' }, { status: 400 });
-  }
-  if (!validEmail || !validHash) {
-    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 });
+  if (typeof code !== 'string' || !code.trim()) {
+    return NextResponse.json({ error: 'Enter your code' }, { status: 400 });
   }
 
-  const emailMatch = email.toLowerCase().trim() === validEmail.toLowerCase().trim();
-  if (!emailMatch) {
-    return NextResponse.json({ error: 'Invalid credentials (email)' }, { status: 401 });
+  if (code.trim() !== ADMIN_CODE) {
+    return NextResponse.json({ error: 'Wrong code' }, { status: 401 });
   }
 
-  const ok = await bcrypt.compare(password, validHash);
-
-  if (!ok) {
-    return NextResponse.json({ error: 'Invalid credentials (password)' }, { status: 401 });
-  }
-
-  const token = await createSession(email);
+  const token = await createSession('admin');
   await setSessionCookie(token);
   return NextResponse.json({ ok: true });
 }

@@ -34,7 +34,7 @@ export default function TermsPage() {
             <p>
               Prices shown on the site are starting prices and can vary with
               vehicle or property size and condition. We always confirm a
-              fixed price before any work begins — no work starts without
+              fixed price before any work begins. No work starts without
               your agreement to the quoted price.
             </p>
           </div>

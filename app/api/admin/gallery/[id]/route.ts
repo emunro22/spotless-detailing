@@ -33,7 +33,7 @@ export async function DELETE(_: Request, { params }: { params: Promise<{ id: str
     try {
       await del(removed.url);
     } catch {
-      // Non-fatal — DB row is already gone.
+      // Non-fatal, DB row is already gone.
     }
   }
 

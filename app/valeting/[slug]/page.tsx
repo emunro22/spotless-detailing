@@ -52,7 +52,7 @@ export default async function ValetingSlugPage({ params }: Props) {
             {page.type === 'area' ? 'Mobile Valeting' : 'Our Services'}
           </div>
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] text-balance">
-            {page.h1.split(' — ')[0].split(' — ')[0]}
+            {page.h1}
           </h1>
           <p className="mt-6 text-base md:text-lg text-cream/65 leading-relaxed max-w-2xl mx-auto">
             {page.description}
@@ -189,7 +189,7 @@ export default async function ValetingSlugPage({ params }: Props) {
                 <span className="gradient-text italic">same-day quote.</span>
               </h2>
               <p className="text-cream/60 leading-relaxed mb-6">
-                Tell us about your car and where you&apos;re based — we&apos;ll come
+                Tell us about your car and where you&apos;re based, we&apos;ll come
                 back with a fixed quote and available slots.
               </p>
               <div className="flex items-start gap-3 mb-3">

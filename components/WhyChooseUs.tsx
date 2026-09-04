@@ -8,7 +8,7 @@ const FEATURES = [
   {
     icon: Truck,
     title: 'Fully mobile across Glasgow',
-    body: 'Your driveway, your office, your spot. On a schedule that suits — at your work place at your convenience.',
+    body: 'Your driveway, your office, your spot. On a schedule that suits, at your work place at your convenience.',
   },
   {
     icon: Droplets,
@@ -18,7 +18,7 @@ const FEATURES = [
   {
     icon: ShieldCheck,
     title: 'Professional paint protection',
-    body: 'From hydrophobic sealants to 2, 3 or 5 year ceramic coatings — long-term gloss, easy washes, real protection.',
+    body: 'From hydrophobic sealants to 2, 3 or 5 year ceramic coatings: long-term gloss, easy washes, real protection.',
   },
   {
     icon: Wrench,

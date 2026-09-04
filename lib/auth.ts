@@ -6,8 +6,8 @@ const secret = new TextEncoder().encode(
   process.env.AUTH_SECRET || 'fallback-dev-secret-change-in-prod'
 );
 
-export async function createSession(email: string): Promise<string> {
-  return new SignJWT({ email })
+export async function createSession(user = 'admin'): Promise<string> {
+  return new SignJWT({ user })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
@@ -18,7 +18,8 @@ export async function verifySession(token: string | undefined) {
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, secret);
-    return { email: payload.email as string };
+    // Older sessions were issued with an { email } payload.
+    return { user: (payload.user as string) || (payload.email as string) || 'admin' };
   } catch {
     return null;
   }

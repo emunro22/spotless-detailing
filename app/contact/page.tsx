@@ -5,7 +5,7 @@ import { buildMetadata } from '@/lib/seo';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata = buildMetadata({
-  title: 'Contact — Get a Quote · Spotless Detailing Glasgow',
+  title: 'Contact & Quotes · Spotless Detailing Glasgow',
   description:
     'Get a same-day quote for mobile detailing in Glasgow. Call, WhatsApp, email or use the contact form.',
   path: '/contact',
@@ -33,7 +33,7 @@ export default function ContactPage() {
             <span className="gradient-text italic">quote.</span>
           </h1>
           <p className="mt-6 text-base md:text-lg text-cream/65 leading-relaxed">
-            Tell us about your car and where you're based — we'll come back
+            Tell us about your car and where you're based. We'll come back
             with a fixed quote and available slots.
           </p>
         </div>

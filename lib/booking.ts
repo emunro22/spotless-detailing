@@ -4,7 +4,7 @@ import type { Booking } from './types';
 export const OPEN_HOUR = 8;
 export const CLOSE_HOUR = 18;
 export const SLOT_INTERVAL_MINUTES = 30;
-export const BOOKING_BUFFER_MINUTES = 0; // back-to-back — next slot opens exactly when a job's duration ends
+export const BOOKING_BUFFER_MINUTES = 0; // back-to-back, next slot opens exactly when a job's duration ends
 
 function toMinutes(time: string): number {
   const [h, m] = time.split(':').map(Number);
@@ -30,7 +30,7 @@ export type SlotInfo = { time: string; available: boolean };
 /**
  * Every start time (HH:MM, 30-min grid) for a service of `durationMinutes`
  * on `dateStr`, each flagged available/unavailable against the day's
- * existing (non-cancelled) bookings — no customer details, just the grid.
+ * existing (non-cancelled) bookings. No customer details, just the grid.
  */
 export function getDaySlots(
   dateStr: string,

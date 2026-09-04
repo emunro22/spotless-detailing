@@ -14,6 +14,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html,
@@ -123,7 +125,7 @@ body {
   }
 }
 
-/* Hexagon studio motif used in the hero — references the LED grid in the brand photos */
+/* Hexagon studio motif used in the hero, references the LED grid in the brand photos */
 .hex-overlay {
   background-image:
     linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
@@ -131,7 +133,7 @@ body {
   background-size: auto, 80px 92px;
 }
 
-/* Subtle animated water drop ripple — used as small decoration */
+/* Subtle animated water drop ripple, used as small decoration */
 @keyframes ripple {
   0% {
     transform: scale(0.85);
@@ -154,4 +156,16 @@ input[type='number']::-webkit-inner-spin-button {
 }
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+/* iOS Safari zooms the page in whenever a focused field renders below 16px, and
+   that zoom sticks after you navigate (which is why the admin calendar used to
+   open zoomed in straight after signing in). Force every control to 16px on
+   touch-sized screens so focusing one never triggers it. */
+@media (max-width: 1024px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }

@@ -9,7 +9,7 @@ export const revalidate = 60;
 
 export const metadata = buildMetadata({
   title:
-    'Commercial & Domestic Cleaning | Pressure Washing Glasgow — Spotless Detailing',
+    'Commercial & Domestic Cleaning | Pressure Washing Glasgow | Spotless Detailing',
   description:
     'Professional pressure washing and exterior cleaning for homes and businesses across Glasgow. Driveways, patios, buildings, restaurants, golf courses. Free quotes.',
   path: '/cleaning',
@@ -40,8 +40,8 @@ export default async function CleaningPage() {
           </h1>
           <p className="mt-6 text-base md:text-lg text-cream/65 leading-relaxed max-w-2xl mx-auto">
             Professional cleaning for homes and businesses across Glasgow &
-            Lanarkshire. Driveways, patios, buildings, restaurants, golf courses
-            — we handle it all.
+            Lanarkshire. Driveways, patios, buildings, restaurants, golf
+            courses. We handle it all.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
             <a

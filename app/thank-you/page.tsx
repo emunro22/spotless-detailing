@@ -3,7 +3,7 @@ import { CheckCircle2, ArrowLeft } from 'lucide-react';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata = buildMetadata({
-  title: 'Thank You — Spotless Detailing',
+  title: 'Thank You | Spotless Detailing',
   description: 'Your enquiry has been received. We\'ll come back to you the same day.',
   path: '/thank-you',
 });
@@ -28,7 +28,7 @@ export default function ThankYouPage() {
           Enquiry received
         </div>
         <h1 className="font-display text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] text-balance">
-          Thanks — we'll be in{' '}
+          Thanks. We'll be in{' '}
           <span className="gradient-text italic">touch shortly.</span>
         </h1>
         <p className="mt-6 text-base md:text-lg text-cream/65 leading-relaxed max-w-xl mx-auto">

@@ -8,7 +8,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = buildMetadata({
   title: 'Car Detailing Advice & Guides | Spotless Detailing Blog',
   description:
-    'Ceramic coating vs wax, how often to detail your car, and what\'s actually included in each of our services — practical detailing advice from Spotless Detailing.',
+    'Ceramic coating vs wax, how often to detail your car, and what\'s actually included in each of our services. Practical detailing advice from Spotless Detailing.',
   path: '/blog',
 });
 
@@ -42,7 +42,7 @@ export default function BlogIndexPage() {
           </h1>
           <p className="mt-6 text-base md:text-lg text-cream/65 leading-relaxed max-w-2xl mx-auto">
             Practical guides on paint protection, maintenance schedules and
-            what&apos;s actually included in each of our services — so you know
+            what&apos;s actually included in each of our services, so you know
             exactly what to book.
           </p>
         </div>

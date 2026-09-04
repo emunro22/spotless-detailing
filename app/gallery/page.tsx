@@ -4,9 +4,9 @@ import { buildMetadata } from '@/lib/seo';
 import { getAllGalleryImages } from '@/lib/queries';
 
 export const metadata = buildMetadata({
-  title: 'Gallery — Recent Detailing Work in Glasgow',
+  title: 'Gallery | Recent Detailing Work in Glasgow',
   description:
-    'A selection of recent details by Spotless Detailing — from daily-drivers to high-end SUVs across Glasgow.',
+    'A selection of recent details by Spotless Detailing, from daily-drivers to high-end SUVs across Glasgow.',
   path: '/gallery',
 });
 

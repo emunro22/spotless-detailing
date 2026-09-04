@@ -119,7 +119,7 @@ export default function ContactForm() {
                 {s.name} · {s.priceLabel}
               </option>
             ))}
-            <option value="Not sure">Not sure — recommend something</option>
+            <option value="Not sure">Not sure, recommend something</option>
           </select>
         </div>
 
@@ -129,12 +129,12 @@ export default function ContactForm() {
             id="message"
             name="message"
             rows={5}
-            placeholder="Tell us about the car and any specific concerns — pet hair, spillages, paint defects, etc."
+            placeholder="Tell us about the car and any specific concerns: pet hair, spillages, paint defects, etc."
             className="w-full bg-midnight-700 border border-cream/10 rounded-xl px-4 py-3.5 text-cream placeholder-cream/30 focus:outline-none focus:border-cyan/40 focus:ring-2 focus:ring-cyan/15 transition-all resize-none"
           />
         </div>
 
-        {/* Honeypot — bots fill this, humans don't see it */}
+        {/* Honeypot, bots fill this, humans don't see it */}
         <input
           type="text"
           name="website"

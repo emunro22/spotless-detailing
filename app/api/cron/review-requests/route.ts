@@ -20,7 +20,7 @@ function ukTodayStr(): string {
 }
 
 // Triggered by Vercel Cron at 20:00 and 21:00 UTC (vercel.json) to cover both
-// BST and GMT — actually sends only when it's 9pm in the UK right now, so it
+// BST and GMT, actually sends only when it's 9pm in the UK right now, so it
 // runs at the correct local time year-round regardless of which invocation
 // fires. Safe to invoke twice: the second no-ops once review_requested_at is set.
 export async function GET(req: Request) {
@@ -48,7 +48,7 @@ export async function GET(req: Request) {
       await resend.emails.send({
         from: fromAddress,
         to: [job.email],
-        subject: `How did we do? — ${BUSINESS.name}`,
+        subject: `How did we do? ${BUSINESS.name} would love a review`,
         html: reviewRequestEmailHtml(job.customerName),
       });
       await markReviewRequested(job.id);

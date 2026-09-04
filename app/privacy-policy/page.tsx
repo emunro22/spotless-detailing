@@ -49,18 +49,18 @@ export default function PrivacyPolicyPage() {
             </h2>
             <ul className="list-disc pl-5 space-y-2">
               <li>
-                <strong className="text-cream">Booking &amp; enquiry details</strong> —
+                <strong className="text-cream">Booking &amp; enquiry details</strong>:
                 name, phone number, email address, vehicle or property details,
                 and address/postcode, submitted through our booking, contact
                 or cleaning enquiry forms.
               </li>
               <li>
-                <strong className="text-cream">Communications</strong> — messages
+                <strong className="text-cream">Communications</strong>: messages
                 you send us by email, WhatsApp or phone, including
                 review-request follow-ups sent after a completed booking.
               </li>
               <li>
-                <strong className="text-cream">Usage data</strong> — if
+                <strong className="text-cream">Usage data</strong>: if
                 analytics is enabled, anonymised or pseudonymised data about
                 how visitors use the site (pages viewed, device type,
                 approximate location), collected only after you consent via
@@ -89,8 +89,8 @@ export default function PrivacyPolicyPage() {
             <p>
               We do not sell your data. We share it only with the service
               providers that run the site and our booking system on our
-              behalf — our hosting provider, database provider and
-              transactional email provider — solely to deliver the service
+              behalf (our hosting provider, database provider and
+              transactional email provider), solely to deliver the service
               you&apos;ve requested. Where analytics is enabled, an
               analytics provider processes anonymised usage data.
             </p>
@@ -101,8 +101,8 @@ export default function PrivacyPolicyPage() {
               Cookies
             </h2>
             <p>
-              We use strictly necessary cookies to run the site, and — only
-              if you accept them via the cookie banner — analytics cookies to
+              We use strictly necessary cookies to run the site, and, only
+              if you accept them via the cookie banner, analytics cookies to
               understand site traffic. You can withdraw consent at any time
               by clearing your browser&apos;s site data and revisiting the
               banner.

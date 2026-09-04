@@ -54,7 +54,7 @@ export async function POST(req: Request) {
       from: `Spotless Detailing <${fromAddress}>`,
       to: [toAddress],
       replyTo: body.email,
-      subject: `New enquiry: ${body.name} — ${body.service}`,
+      subject: `New enquiry: ${body.name}, ${body.service}`,
       html: emailTemplate('New Website Lead', `You've received a new booking request from your website.`, adminContent),
     });
 
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: `Spotless Detailing <${fromAddress}>`,
       to: [body.email],
-      subject: 'We’ve received your enquiry — Spotless Detailing',
+      subject: 'We’ve received your enquiry',
       html: emailTemplate(
         'Booking Request', 
         `Hi ${body.name}, thanks for reaching out. We've received your request for a ${body.service} and we'll check our diary and get back to you shortly.`, 

@@ -105,7 +105,7 @@ export async function POST(req: Request) {
         resend.emails.send({
           from: `${BUSINESS.name} <${fromAddress}>`,
           to: [booking.email!],
-          subject: `Booking confirmed — ${service.name} on ${dateLabel}`,
+          subject: `Booking confirmed: ${service.name} on ${dateLabel}`,
           html: emailTemplate(
             'Booking Confirmed',
             `Hi ${escapeHtml(booking.customerName)}, you're booked in. Here are the details of your appointment.`,
@@ -116,7 +116,7 @@ export async function POST(req: Request) {
           from: `${BUSINESS.name} <${fromAddress}>`,
           to: [toAddress],
           replyTo: booking.email!,
-          subject: `New booking: ${booking.customerName} — ${service.name} on ${dateLabel}`,
+          subject: `New booking: ${booking.customerName}, ${service.name} on ${dateLabel}`,
           html: emailTemplate('New Booking', `A new job has been booked through the website.`, adminContent),
         }),
       ]);
